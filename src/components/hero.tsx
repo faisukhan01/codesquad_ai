@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { ChevronDown, ArrowRight, MessageCircle } from 'lucide-react';
+import { ChevronDown, ArrowRight, MessageCircle, Play, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ParticleBackground from '@/components/particle-background';
 
@@ -130,14 +130,18 @@ export default function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/10 mb-8"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 backdrop-blur-sm border border-white/15 mb-8 shadow-lg shadow-black/10"
           >
-            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            <span className="text-sm text-blue-100">Trusted by 50+ companies worldwide</span>
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-400" />
+            </span>
+            <span className="text-sm text-blue-100 font-medium">Trusted by 50+ companies worldwide</span>
+            <Sparkles className="w-3.5 h-3.5 text-blue-300" />
           </motion.div>
 
           {/* Headline with word-by-word animation */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[5.5rem] xl:text-7xl font-extrabold leading-[1.1] mb-8 tracking-tight">
             {headingWords.map((word, i) => (
               <span key={word}>
                 {i === 2 ? (
@@ -230,17 +234,28 @@ export default function Hero() {
       {/* Animated gradient border at bottom */}
       <div className="absolute bottom-0 left-0 right-0 h-px animated-gradient-line" />
 
-      {/* Scroll indicator */}
+      {/* Scroll indicator - mouse scroll animation */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 0.5 }}
-        className="absolute bottom-8 left-1/2 animate-bounce-scroll"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2"
       >
-        <div className="flex flex-col items-center gap-2">
-          <span className="text-xs text-blue-200/60 uppercase tracking-widest">Scroll</span>
-          <ChevronDown className="w-5 h-5 text-blue-200/60" />
-        </div>
+        <motion.button
+          onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+          className="flex flex-col items-center gap-2 group cursor-pointer"
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          <span className="text-[11px] text-blue-200/60 uppercase tracking-[0.2em] font-medium group-hover:text-blue-200/90 transition-colors">Scroll Down</span>
+          <div className="w-6 h-10 rounded-full border-2 border-blue-200/30 flex justify-center pt-2 group-hover:border-blue-200/50 transition-colors">
+            <motion.div
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+              className="w-1.5 h-1.5 rounded-full bg-blue-300/80"
+            />
+          </div>
+        </motion.button>
       </motion.div>
     </section>
   );

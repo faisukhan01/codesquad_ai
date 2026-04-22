@@ -33,11 +33,15 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#0A1628] text-white mt-auto">
+    <footer className="bg-[#0A1628] text-white mt-auto relative overflow-hidden">
+      {/* Subtle gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0A1628] via-[#0d1f35] to-[#0A1628]" />
+      <div className="absolute inset-0 grid-pattern opacity-30" />
+      
       {/* Gradient line at top */}
-      <div className="h-px animated-gradient-line" />
+      <div className="relative h-px animated-gradient-line" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
         {/* Back to Top */}
         <button
           onClick={scrollToTop}
@@ -141,10 +145,10 @@ export default function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-white/10">
+      <div className="relative border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-gray-500">
-            Crafted with ❤️ by CodeSquad &middot; &copy; {new Date().getFullYear()} CodeSquad. All rights reserved.
+            Crafted with <span className="text-red-400">❤️</span> by CodeSquad &middot; &copy; {new Date().getFullYear()} All rights reserved.
           </p>
           <div className="flex gap-6">
             <a href="#" className="text-sm text-gray-500 hover:text-gray-300 transition-colors gradient-underline">

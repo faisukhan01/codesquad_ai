@@ -3,6 +3,7 @@
 import React from 'react';
 import { Plus, Minus } from 'lucide-react';
 import { AnimatedSection } from '@/components/animated-section';
+import SectionHeader from '@/components/section-header';
 import {
   Accordion,
   AccordionContent,
@@ -58,18 +59,11 @@ export default function FAQ() {
     <section id="faq" className="section-padding bg-white">
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <AnimatedSection variant="fade-up" className="text-center mb-14">
-          <span className="inline-block text-sm font-semibold text-[#0066FF] uppercase tracking-widest mb-3">
-            FAQ
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0A1628] mb-4">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-            Everything you need to know about working with us. Can&apos;t find an answer?{' '}
-            <a href="#contact" className="text-[#0066FF] hover:underline">Get in touch</a>.
-          </p>
-        </AnimatedSection>
+        <SectionHeader
+          label="FAQ"
+          title="Frequently Asked Questions"
+          description="Everything you need to know about working with CodeSquad"
+        />
 
         {/* FAQ Items */}
         <AnimatedSection variant="fade-up" delay={0.2}>

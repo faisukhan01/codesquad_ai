@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Clock, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AnimatedSection, AnimatedItem } from '@/components/animated-section';
+import SectionHeader from '@/components/section-header';
 
 const articles = [
   {
@@ -128,18 +129,11 @@ export default function Blog() {
     <section id="blog" className="section-padding bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <AnimatedSection variant="fade-up" className="text-center mb-16">
-          <span className="inline-block text-sm font-semibold text-[#0066FF] uppercase tracking-widest mb-3">
-            Our Blog
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0A1628] mb-4">
-            Latest Insights
-          </h2>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-            Stay ahead with our latest thinking on technology, innovation, and
-            digital transformation.
-          </p>
-        </AnimatedSection>
+        <SectionHeader
+          label="Our Blog"
+          title="Latest Insights"
+          description="Stay ahead with our latest thinking on technology, innovation, and digital transformation."
+        />
 
         {/* Blog Cards Grid */}
         <AnimatedSection

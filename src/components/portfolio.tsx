@@ -11,6 +11,7 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 import { AnimatedSection, AnimatedItem } from '@/components/animated-section';
+import SectionHeader from '@/components/section-header';
 
 interface PortfolioItem {
   title: string;
@@ -121,17 +122,11 @@ export default function Portfolio() {
     <section id="portfolio" className="section-padding bg-gray-50/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <AnimatedSection variant="fade-up" className="text-center mb-16">
-          <span className="inline-block text-sm font-semibold text-[#0066FF] uppercase tracking-widest mb-3">
-            Portfolio
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0A1628] mb-4">
-            Our Work
-          </h2>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-            Explore some of our most impactful projects across diverse industries
-          </p>
-        </AnimatedSection>
+        <SectionHeader
+          label="Portfolio"
+          title="Our Work"
+          description="Explore some of our most impactful projects across diverse industries"
+        />
 
         {/* Portfolio Grid */}
         <AnimatedSection variant="stagger-children" className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">

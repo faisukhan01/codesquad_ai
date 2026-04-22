@@ -1,10 +1,10 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'framer-motion';
 import { ArrowRight, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AnimatedSection } from '@/components/animated-section';
+import SectionHeader from '@/components/section-header';
 
 export default function CTASection() {
   return (
@@ -29,21 +29,14 @@ export default function CTASection() {
       />
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <AnimatedSection variant="fade-up">
-          <motion.div
-            animate={{ y: [0, -10, 0] }}
-            transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-          >
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight">
-              Ready to Transform Your Business?
-            </h2>
-          </motion.div>
+        <SectionHeader
+          label="Get Started"
+          title="Ready to Build Something Amazing?"
+          description="Let's turn your vision into reality. Start your project with CodeSquad today."
+          light
+        />
 
-          <p className="text-lg sm:text-xl text-blue-100/90 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Let&apos;s discuss how CodeSquad can help you achieve your digital goals
-            and accelerate your growth journey.
-          </p>
-
+        <AnimatedSection variant="fade-up" delay={0.2}>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Button
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}

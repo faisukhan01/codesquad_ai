@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import LoadingScreen from '@/components/loading-screen';
+import ScrollProgress from '@/components/scroll-progress';
 import Navigation from '@/components/navigation';
 import Hero from '@/components/hero';
 import Clients from '@/components/clients';
@@ -9,6 +10,8 @@ import Partners from '@/components/partners';
 import Services from '@/components/services';
 import SectionDivider from '@/components/section-divider';
 import About from '@/components/about';
+import CompanyValues from '@/components/company-values';
+import Awards from '@/components/awards';
 import Technologies from '@/components/technologies';
 import Process from '@/components/process';
 import Portfolio from '@/components/portfolio';
@@ -21,6 +24,7 @@ import Team from '@/components/team';
 import CTASection from '@/components/cta-section';
 import Contact from '@/components/contact';
 import Footer from '@/components/footer';
+import LiveChat from '@/components/live-chat';
 import CookieConsent from '@/components/cookie-consent';
 import BackToTop from '@/components/back-to-top';
 
@@ -35,6 +39,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
       <LoadingScreen isVisible={isLoading} />
+      <ScrollProgress />
       <Navigation />
       <main className="flex-1">
         <Hero />
@@ -43,6 +48,8 @@ export default function Home() {
         <Services />
         <SectionDivider variant="wave" colorFrom="white" colorTo="#f9fafb" />
         <About />
+        <CompanyValues />
+        <Awards />
         <Technologies />
         <Process />
         <SectionDivider variant="curve" colorFrom="#f9fafb" colorTo="white" />
@@ -57,6 +64,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
+      <LiveChat />
       <CookieConsent />
       <BackToTop />
     </div>

@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/carousel';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { AnimatedSection } from '@/components/animated-section';
+import SectionHeader from '@/components/section-header';
 
 const testimonials = [
   {
@@ -102,17 +103,11 @@ export default function Testimonials() {
     <section id="testimonials" className="section-padding bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <AnimatedSection variant="fade-up" className="text-center mb-16">
-          <span className="inline-block text-sm font-semibold text-[#0066FF] uppercase tracking-widest mb-3">
-            Testimonials
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0A1628] mb-4">
-            What Our Clients Say
-          </h2>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-            Hear from the businesses we&apos;ve helped transform through technology
-          </p>
-        </AnimatedSection>
+        <SectionHeader
+          label="Testimonials"
+          title="What Our Clients Say"
+          description="Don't just take our word for it — hear from the companies we've helped transform"
+        />
 
         {/* Carousel */}
         <AnimatedSection variant="fade-up" delay={0.2}>
