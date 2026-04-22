@@ -2,48 +2,122 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
+import {
+  Monitor,
+  Server,
+  Cloud,
+  Smartphone,
+  Database,
+  Settings,
+  Code2,
+  Cpu,
+  Globe,
+  Shield,
+  GitBranch,
+  Container,
+} from 'lucide-react';
 import { AnimatedSection, AnimatedItem } from '@/components/animated-section';
 import SectionHeader from '@/components/section-header';
 
 const categories = [
   {
     name: 'Frontend',
-    techs: ['React', 'Next.js', 'Vue.js', 'Angular', 'TypeScript'],
+    icon: Monitor,
+    gradient: 'from-blue-500 to-cyan-500',
+    bgColor: 'bg-blue-50',
+    techs: [
+      { name: 'React', popular: true },
+      { name: 'Next.js', popular: true },
+      { name: 'Vue.js', popular: false },
+      { name: 'Angular', popular: false },
+      { name: 'TypeScript', popular: true },
+      { name: 'Tailwind CSS', popular: true },
+    ],
   },
   {
     name: 'Backend',
-    techs: ['Node.js', 'Python', 'Java', '.NET', 'Go'],
+    icon: Server,
+    gradient: 'from-violet-500 to-purple-500',
+    bgColor: 'bg-violet-50',
+    techs: [
+      { name: 'Node.js', popular: true },
+      { name: 'Python', popular: true },
+      { name: 'Java', popular: false },
+      { name: '.NET', popular: false },
+      { name: 'Go', popular: false },
+      { name: 'GraphQL', popular: true },
+    ],
   },
   {
-    name: 'Cloud',
-    techs: ['AWS', 'Azure', 'Google Cloud', 'DigitalOcean'],
+    name: 'Cloud & DevOps',
+    icon: Cloud,
+    gradient: 'from-sky-500 to-blue-500',
+    bgColor: 'bg-sky-50',
+    techs: [
+      { name: 'AWS', popular: true },
+      { name: 'Azure', popular: true },
+      { name: 'Google Cloud', popular: false },
+      { name: 'Docker', popular: true },
+      { name: 'Kubernetes', popular: true },
+      { name: 'Terraform', popular: false },
+    ],
   },
   {
     name: 'Mobile',
-    techs: ['React Native', 'Flutter', 'Swift', 'Kotlin'],
+    icon: Smartphone,
+    gradient: 'from-emerald-500 to-teal-500',
+    bgColor: 'bg-emerald-50',
+    techs: [
+      { name: 'React Native', popular: true },
+      { name: 'Flutter', popular: true },
+      { name: 'Swift', popular: false },
+      { name: 'Kotlin', popular: false },
+      { name: 'iOS', popular: false },
+      { name: 'Android', popular: false },
+    ],
   },
   {
     name: 'Database',
-    techs: ['PostgreSQL', 'MongoDB', 'Redis', 'MySQL', 'Elasticsearch'],
+    icon: Database,
+    gradient: 'from-amber-500 to-orange-500',
+    bgColor: 'bg-amber-50',
+    techs: [
+      { name: 'PostgreSQL', popular: true },
+      { name: 'MongoDB', popular: true },
+      { name: 'Redis', popular: true },
+      { name: 'MySQL', popular: false },
+      { name: 'Elasticsearch', popular: false },
+      { name: 'Firebase', popular: true },
+    ],
   },
   {
-    name: 'DevOps',
-    techs: ['Docker', 'Kubernetes', 'CI/CD', 'Terraform', 'GitHub Actions'],
+    name: 'AI & Data',
+    icon: Cpu,
+    gradient: 'from-rose-500 to-pink-500',
+    bgColor: 'bg-rose-50',
+    techs: [
+      { name: 'TensorFlow', popular: true },
+      { name: 'PyTorch', popular: true },
+      { name: 'OpenAI', popular: true },
+      { name: 'LangChain', popular: false },
+      { name: 'Pandas', popular: false },
+      { name: 'Spark', popular: false },
+    ],
   },
 ];
 
-const techColors = [
-  'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100 hover:border-blue-300',
-  'bg-cyan-50 text-cyan-700 border-cyan-200 hover:bg-cyan-100 hover:border-cyan-300',
-  'bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100 hover:border-sky-300',
-  'bg-teal-50 text-teal-700 border-teal-200 hover:bg-teal-100 hover:border-teal-300',
-  'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100 hover:border-emerald-300',
-  'bg-violet-50 text-violet-700 border-violet-200 hover:bg-violet-100 hover:border-violet-300',
+const secondaryTechs = [
+  { name: 'Git', icon: GitBranch },
+  { name: 'CI/CD', icon: Settings },
+  { name: 'REST APIs', icon: Code2 },
+  { name: 'Microservices', icon: Globe },
+  { name: 'Security', icon: Shield },
+  { name: 'Containers', icon: Container },
 ];
 
 export default function Technologies() {
   return (
-    <section id="technologies" className="section-padding bg-white">
+    <section id="technologies" className="section-padding bg-gradient-to-b from-white to-gray-50/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <SectionHeader
@@ -52,38 +126,70 @@ export default function Technologies() {
           description="We stay at the forefront of technology to deliver the best solutions for your business"
         />
 
-        {/* Tech Grid */}
-        <AnimatedSection variant="stagger-children" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Tech Category Grid */}
+        <AnimatedSection variant="stagger-children" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {categories.map((category, catIdx) => (
             <AnimatedItem key={category.name} variant="fade-up" delay={0.05}>
-              <div className="bg-gray-50/80 rounded-2xl p-6 border border-gray-100 hover:shadow-md transition-shadow duration-300">
-                <h3 className="text-base font-semibold text-[#0A1628] mb-4 flex items-center gap-2">
-                  <span className={`w-2 h-2 rounded-full ${
-                    catIdx === 0 ? 'bg-blue-500' :
-                    catIdx === 1 ? 'bg-cyan-500' :
-                    catIdx === 2 ? 'bg-sky-500' :
-                    catIdx === 3 ? 'bg-teal-500' :
-                    catIdx === 4 ? 'bg-emerald-500' : 'bg-violet-500'
-                  }`} />
-                  {category.name}
-                </h3>
+              <motion.div
+                whileHover={{ y: -4, transition: { duration: 0.3 } }}
+                className="group bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-lg hover:shadow-blue-500/5 hover:border-gray-200 transition-all duration-300"
+              >
+                {/* Category Header */}
+                <div className="flex items-center gap-3.5 mb-5">
+                  <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${category.gradient} flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300`}>
+                    <category.icon className="w-5 h-5 text-white" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-semibold text-[#0A1628]">{category.name}</h3>
+                    <p className="text-xs text-gray-400">{category.techs.length} technologies</p>
+                  </div>
+                </div>
+
+                {/* Tech Pills */}
                 <div className="flex flex-wrap gap-2">
-                  {category.techs.map((tech, techIdx) => (
+                  {category.techs.map((tech) => (
                     <motion.span
-                      key={tech}
-                      whileHover={{ scale: 1.05, y: -2 }}
+                      key={tech.name}
+                      whileHover={{ scale: 1.05, y: -1 }}
                       whileTap={{ scale: 0.95 }}
                       className={`inline-flex items-center px-3 py-1.5 rounded-lg text-sm font-medium border transition-all duration-200 cursor-default ${
-                        techColors[catIdx % techColors.length]
+                        tech.popular
+                          ? `${category.bgColor} border-gray-200/60`
+                          : 'bg-gray-50 border-gray-100 text-gray-500'
+                      } ${
+                        tech.popular
+                          ? `text-[#0A1628]`
+                          : ''
                       }`}
                     >
-                      {tech}
+                      {tech.name}
+                      {tech.popular && (
+                        <span className="ml-1.5 w-1.5 h-1.5 rounded-full bg-[#0066FF]" />
+                      )}
                     </motion.span>
                   ))}
                 </div>
-              </div>
+              </motion.div>
             </AnimatedItem>
           ))}
+        </AnimatedSection>
+
+        {/* Secondary Tech Bar */}
+        <AnimatedSection variant="fade-up" delay={0.3}>
+          <div className="bg-gradient-to-r from-gray-50 to-white rounded-2xl border border-gray-100 p-6 sm:p-8">
+            <p className="text-sm font-medium text-gray-400 uppercase tracking-widest mb-5 text-center">Also Expert In</p>
+            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
+              {secondaryTechs.map((tech, idx) => (
+                <div
+                  key={tech.name}
+                  className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-white border border-gray-100 hover:border-blue-200 hover:shadow-sm transition-all duration-300 group cursor-default"
+                >
+                  <tech.icon className="w-4 h-4 text-gray-400 group-hover:text-[#0066FF] transition-colors duration-300" />
+                  <span className="text-sm font-medium text-gray-600 group-hover:text-[#0A1628] transition-colors duration-300">{tech.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </AnimatedSection>
       </div>
     </section>

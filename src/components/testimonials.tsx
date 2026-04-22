@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useCallback, useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Star, ChevronLeft, ChevronRight, Quote } from 'lucide-react';
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
@@ -24,7 +24,8 @@ const testimonials = [
       'CodeSquad transformed our entire digital infrastructure. Their team\'s expertise in cloud migration and modern architecture helped us reduce operational costs by 35% while improving system reliability.',
     rating: 5,
     initials: 'SJ',
-    color: 'bg-blue-500',
+    color: 'from-blue-500 to-cyan-500',
+    result: '35% cost reduction',
   },
   {
     name: 'Michael Chen',
@@ -34,7 +35,8 @@ const testimonials = [
       'Their team delivered our fintech platform ahead of schedule with exceptional quality. The attention to security compliance and user experience was remarkable. Highly recommended for any financial technology project.',
     rating: 5,
     initials: 'MC',
-    color: 'bg-cyan-500',
+    color: 'from-violet-500 to-purple-500',
+    result: 'Delivered 2 weeks early',
   },
   {
     name: 'Emily Rodriguez',
@@ -44,7 +46,8 @@ const testimonials = [
       'The mobile app they built for us exceeded all expectations. Patient engagement increased by 200% within the first quarter. Their understanding of healthcare regulations was impressive.',
     rating: 5,
     initials: 'ER',
-    color: 'bg-teal-500',
+    color: 'from-emerald-500 to-teal-500',
+    result: '200% engagement boost',
   },
   {
     name: 'David Kim',
@@ -54,7 +57,8 @@ const testimonials = [
       'CodeSquad\'s AI solutions helped us reduce operational costs by 40%. Their machine learning models for predictive analytics have become core to our business strategy. Exceptional technical depth.',
     rating: 5,
     initials: 'DK',
-    color: 'bg-sky-500',
+    color: 'from-sky-500 to-blue-500',
+    result: '40% ops cost savings',
   },
   {
     name: 'Lisa Thompson',
@@ -64,13 +68,14 @@ const testimonials = [
       'Professional, responsive, and incredibly talented team. They delivered our e-commerce platform on time and within budget, handling complex requirements with ease. A true partner in digital transformation.',
     rating: 5,
     initials: 'LT',
-    color: 'bg-emerald-500',
+    color: 'from-amber-500 to-orange-500',
+    result: 'On-time & on-budget',
   },
 ];
 
 function Stars({ count }: { count: number }) {
   return (
-    <div className="flex gap-1">
+    <div className="flex gap-0.5">
       {Array.from({ length: count }).map((_, i) => (
         <Star key={i} className="w-4 h-4 fill-amber-400 text-amber-400" />
       ))}
@@ -82,16 +87,20 @@ export default function Testimonials() {
   const [api, setApi] = useState<CarouselApi>();
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(false);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [scrollSnaps, setScrollSnaps] = useState<number[]>([]);
 
   const onSelect = useCallback((api: CarouselApi) => {
     if (!api) return;
     setCanScrollPrev(api.canScrollPrev());
     setCanScrollNext(api.canScrollNext());
+    setSelectedIndex(api.selectedScrollSnap());
   }, []);
 
   useEffect(() => {
     if (!api) return;
     onSelect(api);
+    setScrollSnaps(api.scrollSnapList());
     api.on('reInit', onSelect);
     api.on('select', onSelect);
     return () => {
@@ -99,8 +108,12 @@ export default function Testimonials() {
     };
   }, [api, onSelect]);
 
+  const scrollTo = useCallback((index: number) => {
+    api?.scrollTo(index);
+  }, [api]);
+
   return (
-    <section id="testimonials" className="section-padding bg-white">
+    <section id="testimonials" className="section-padding bg-gradient-to-b from-gray-50/50 to-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <SectionHeader
@@ -130,29 +143,38 @@ export default function Testimonials() {
                 {testimonials.map((testimonial) => (
                   <CarouselItem key={testimonial.name} className="pl-4 md:basis-1/2 lg:basis-1/3">
                     <motion.div
-                      whileHover={{ y: -4 }}
-                      className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 h-full hover:shadow-lg hover:shadow-blue-500/5 hover:border-blue-100 transition-all duration-300"
+                      whileHover={{ y: -6, transition: { duration: 0.3 } }}
+                      className="group bg-white rounded-2xl border border-gray-100 shadow-sm p-7 h-full hover:shadow-xl hover:shadow-blue-500/5 hover:border-gray-200 transition-all duration-300 flex flex-col"
                     >
-                      {/* Quote icon */}
-                      <Quote className="w-8 h-8 text-blue-100 mb-4" />
+                      {/* Quote icon + rating */}
+                      <div className="flex items-start justify-between mb-4">
+                        <div className={`w-10 h-10 rounded-xl bg-gradient-to-br ${testimonial.color} flex items-center justify-center shadow-sm`}>
+                          <Quote className="w-4 h-4 text-white" />
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Stars count={testimonial.rating} />
+                          <span className="text-xs font-semibold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full">
+                            {testimonial.rating}.0
+                          </span>
+                        </div>
+                      </div>
 
-                      {/* Stars */}
-                      <div className="flex items-center gap-3 mb-4">
-                        <Stars count={testimonial.rating} />
-                        <span className="text-xs font-medium text-amber-600/80 bg-amber-50 px-2 py-0.5 rounded-full">
-                          {testimonial.rating}.0
+                      {/* Result badge */}
+                      <div className="mb-4">
+                        <span className="inline-flex items-center px-2.5 py-1 rounded-lg bg-blue-50 text-[#0066FF] text-xs font-semibold">
+                          ✓ {testimonial.result}
                         </span>
                       </div>
 
                       {/* Quote */}
-                      <p className="text-gray-600 text-sm leading-relaxed mt-4 mb-6 line-clamp-4">
+                      <p className="text-gray-600 text-sm leading-relaxed flex-1">
                         &ldquo;{testimonial.quote}&rdquo;
                       </p>
 
                       {/* Author */}
-                      <div className="flex items-center gap-3 mt-auto pt-4 border-t border-gray-50">
-                        <Avatar className="h-10 w-10">
-                          <AvatarFallback className={`${testimonial.color} text-white text-sm font-semibold`}>
+                      <div className="flex items-center gap-3 mt-6 pt-5 border-t border-gray-50">
+                        <Avatar className="h-11 w-11 ring-2 ring-white shadow-sm">
+                          <AvatarFallback className={`bg-gradient-to-br ${testimonial.color} text-white text-sm font-semibold`}>
                             {testimonial.initials}
                           </AvatarFallback>
                         </Avatar>
@@ -171,21 +193,38 @@ export default function Testimonials() {
               </CarouselContent>
             </Carousel>
 
-            {/* Navigation buttons */}
-            <div className="flex items-center justify-center gap-2 mt-8">
+            {/* Navigation + Progress Dots */}
+            <div className="flex items-center justify-center gap-6 mt-8">
               <button
                 onClick={() => api?.scrollPrev()}
                 disabled={!canScrollPrev}
-                className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 hover:border-gray-300 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-[#0066FF] hover:border-[#0066FF] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-600 disabled:hover:border-gray-200 text-gray-600 transition-all duration-300"
               >
-                <ChevronLeft className="w-4 h-4 text-gray-600" />
+                <ChevronLeft className="w-4 h-4" />
               </button>
+
+              {/* Progress Dots */}
+              <div className="flex gap-2">
+                {scrollSnaps.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => scrollTo(idx)}
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      idx === selectedIndex
+                        ? 'w-6 bg-[#0066FF]'
+                        : 'w-2 bg-gray-200 hover:bg-gray-300'
+                    }`}
+                    aria-label={`Go to slide ${idx + 1}`}
+                  />
+                ))}
+              </div>
+
               <button
                 onClick={() => api?.scrollNext()}
                 disabled={!canScrollNext}
-                className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-gray-50 hover:border-gray-300 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center hover:bg-[#0066FF] hover:border-[#0066FF] hover:text-white disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-white disabled:hover:text-gray-600 disabled:hover:border-gray-200 text-gray-600 transition-all duration-300"
               >
-                <ChevronRight className="w-4 h-4 text-gray-600" />
+                <ChevronRight className="w-4 h-4" />
               </button>
             </div>
           </div>

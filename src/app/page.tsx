@@ -17,19 +17,21 @@ import Process from '@/components/process';
 import Portfolio from '@/components/portfolio';
 import Testimonials from '@/components/testimonials';
 import StatsBanner from '@/components/stats-banner';
+import Trust from '@/components/trust';
 import FAQ from '@/components/faq';
 import Blog from '@/components/blog';
 import Newsletter from '@/components/newsletter';
+import Industries from '@/components/industries';
+import WhyChooseUs from '@/components/why-choose-us';
 import Team from '@/components/team';
+import Milestones from '@/components/milestones';
+import EngagementModels from '@/components/engagement-models';
+import Careers from '@/components/careers';
 import CTASection from '@/components/cta-section';
 import Contact from '@/components/contact';
 import Footer from '@/components/footer';
 import LiveChat from '@/components/live-chat';
 import CookieConsent from '@/components/cookie-consent';
-import EngagementModels from '@/components/engagement-models';
-import Careers from '@/components/careers';
-import Industries from '@/components/industries';
-import WhyChooseUs from '@/components/why-choose-us';
 import BackToTop from '@/components/back-to-top';
 
 export default function Home() {
@@ -54,18 +56,20 @@ export default function Home() {
         <About />
         <CompanyValues />
         <Awards />
+        <SectionDivider variant="curve" colorFrom="#f9fafb" colorTo="white" />
         <Technologies />
         <Process />
-        <SectionDivider variant="curve" colorFrom="#f9fafb" colorTo="white" />
         <Industries />
         <Portfolio />
         <Testimonials />
         <StatsBanner />
+        <Trust />
+        <WhyChooseUs />
         <FAQ />
         <Blog />
         <Newsletter />
-        <WhyChooseUs />
         <Team />
+        <Milestones />
         <EngagementModels />
         <Careers />
         <CTASection />

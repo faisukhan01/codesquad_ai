@@ -105,7 +105,7 @@ export default function Industries() {
                     <industry.icon className={`w-6 h-6 ${industry.textColor}`} />
                   </div>
                   <span
-                    className={`text-xs font-bold ${industry.bgColor} ${industry.textColor} px-3 py-1.5 rounded-full`}
+                    className="text-xs font-bold bg-gray-100 text-gray-600 px-3 py-1.5 rounded-full hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300"
                   >
                     {industry.projects} projects
                   </span>

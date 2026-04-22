@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Mail, Phone, Send, Linkedin, Twitter, Github } from 'lucide-react';
+import { MapPin, Mail, Phone, Send, Linkedin, Twitter, Github, Clock, ArrowUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -14,7 +14,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { AnimatedSection } from '@/components/animated-section';
+import { AnimatedSection, AnimatedItem } from '@/components/animated-section';
+import SectionHeader from '@/components/section-header';
 import { useToast } from '@/hooks/use-toast';
 
 const serviceOptions = [
@@ -24,6 +25,30 @@ const serviceOptions = [
   'Mobile App',
   'UI/UX Design',
   'DevOps',
+];
+
+const contactMethods = [
+  {
+    icon: Mail,
+    title: 'Email Us',
+    value: 'hello@codesquad.dev',
+    description: 'We reply within 24 hours',
+    color: 'from-blue-500 to-cyan-500',
+  },
+  {
+    icon: Phone,
+    title: 'Call Us',
+    value: '+1 (555) 123-4567',
+    description: 'Mon-Fri, 9AM to 6PM PST',
+    color: 'from-emerald-500 to-teal-500',
+  },
+  {
+    icon: MapPin,
+    title: 'Visit Us',
+    value: '123 Innovation Drive',
+    description: 'Tech Valley, CA 94025',
+    color: 'from-violet-500 to-purple-500',
+  },
 ];
 
 export default function Contact() {
@@ -93,98 +118,103 @@ export default function Contact() {
   return (
     <section id="contact" className="section-padding bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-16">
-          {/* Left: Contact Info */}
+        <SectionHeader
+          label="Contact"
+          title="Let's Build Something Great"
+          description="Have a project in mind? We'd love to hear about it. Reach out and let's start a conversation."
+        />
+
+        {/* Contact Method Cards */}
+        <AnimatedSection variant="stagger-children" className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
+          {contactMethods.map((method) => (
+            <AnimatedItem key={method.title} variant="fade-up" delay={0.05}>
+              <motion.div
+                whileHover={{ y: -4, transition: { duration: 0.3 } }}
+                className="group relative bg-gray-50/80 rounded-2xl border border-gray-100 p-6 hover:shadow-lg hover:shadow-blue-500/5 hover:border-gray-200 transition-all duration-300"
+              >
+                <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${method.color} flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform duration-300`}>
+                  <method.icon className="w-5 h-5 text-white" />
+                </div>
+                <h4 className="font-semibold text-[#0A1628] text-sm mb-1">{method.title}</h4>
+                <p className="text-sm text-[#0066FF] font-medium mb-1">{method.value}</p>
+                <p className="text-xs text-gray-400">{method.description}</p>
+              </motion.div>
+            </AnimatedItem>
+          ))}
+        </AnimatedSection>
+
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-14">
+          {/* Left: Info Panel */}
           <AnimatedSection variant="fade-right" className="lg:col-span-2">
-            <span className="inline-block text-sm font-semibold text-[#0066FF] uppercase tracking-widest mb-3">
-              Contact
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-bold text-[#0A1628] mb-4">
-              Get in Touch
-            </h2>
-            <p className="text-gray-500 text-lg leading-relaxed mb-8">
-              Have a project in mind? We&apos;d love to hear about it. Drop us a message
-              and we&apos;ll get back to you as soon as possible.
-            </p>
+            <div className="bg-gradient-to-br from-[#0A1628] to-[#0d1f35] rounded-2xl p-7 sm:p-8 text-white relative overflow-hidden">
+              {/* Background pattern */}
+              <div className="absolute inset-0 grid-pattern opacity-30" />
+              <div className="absolute top-0 right-0 w-40 h-40 bg-[#0066FF]/10 rounded-full blur-3xl" />
 
-            <div className="space-y-5">
-              <div className="flex items-start gap-4 group">
-                <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 group-hover:bg-[#0066FF] group-hover:text-white transition-all duration-300">
-                  <MapPin className="w-5 h-5 text-[#0066FF] group-hover:text-white transition-colors duration-300" />
-                </div>
-                <div>
-                  <h4 className="font-semibold text-[#0A1628] text-sm mb-1">Office Address</h4>
-                  <p className="text-gray-500 text-sm">
-                    123 Innovation Drive, Tech Valley, CA 94025
-                  </p>
-                </div>
-              </div>
+              <div className="relative z-10">
+                <h3 className="text-xl font-bold mb-3">Ready to get started?</h3>
+                <p className="text-blue-200/70 text-sm leading-relaxed mb-8">
+                  Whether you have a detailed brief or just a rough idea, our team is ready to help you bring your vision to life.
+                </p>
 
-              <div className="flex items-start gap-4 group">
-                <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 group-hover:bg-[#0066FF] group-hover:text-white transition-all duration-300">
-                  <Mail className="w-5 h-5 text-[#0066FF] group-hover:text-white transition-colors duration-300" />
+                {/* Working Hours */}
+                <div className="space-y-4 mb-8">
+                  <div className="flex items-start gap-3">
+                    <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+                      <Clock className="w-4 h-4 text-blue-300" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-blue-100 mb-2.5">Working Hours</p>
+                      <div className="space-y-1.5 text-xs">
+                        <div className="flex justify-between gap-4">
+                          <span className="text-blue-200/60">Mon - Fri</span>
+                          <span className="text-blue-100 font-medium">9AM - 6PM PST</span>
+                        </div>
+                        <div className="flex justify-between gap-4">
+                          <span className="text-blue-200/60">Saturday</span>
+                          <span className="text-blue-100 font-medium">10AM - 2PM PST</span>
+                        </div>
+                        <div className="flex justify-between gap-4">
+                          <span className="text-blue-200/60">Sunday</span>
+                          <span className="text-blue-200/40 font-medium">Closed</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <div>
-                  <h4 className="font-semibold text-[#0A1628] text-sm mb-1">Email</h4>
-                  <p className="text-gray-500 text-sm">hello@codesquad.dev</p>
-                </div>
-              </div>
 
-              <div className="flex items-start gap-4 group">
-                <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 group-hover:bg-[#0066FF] group-hover:text-white transition-all duration-300">
-                  <Phone className="w-5 h-5 text-[#0066FF] group-hover:text-white transition-colors duration-300" />
+                {/* Availability */}
+                <div className="bg-white/5 rounded-xl border border-white/10 p-4 mb-8">
+                  <div className="flex items-center gap-2.5 mb-1.5">
+                    <span className="relative flex h-2.5 w-2.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-400" />
+                    </span>
+                    <span className="text-sm font-medium text-green-300">Available for new projects</span>
+                  </div>
+                  <p className="text-xs text-blue-200/50 ml-5">Average response time: 2 hours</p>
                 </div>
-                <div>
-                  <h4 className="font-semibold text-[#0A1628] text-sm mb-1">Phone</h4>
-                  <p className="text-gray-500 text-sm">+1 (555) 123-4567</p>
-                </div>
-              </div>
-            </div>
 
-            {/* Working Hours Card */}
-            <div className="mt-8 bg-gradient-to-br from-blue-50 to-blue-100/30 rounded-xl border border-blue-100/60 p-5">
-              <h4 className="text-sm font-semibold text-[#0A1628] mb-3">Working Hours</h4>
-              <div className="space-y-2 text-sm">
-                <div className="flex justify-between">
-                  <span className="text-gray-500">Monday - Friday</span>
-                  <span className="font-medium text-[#0A1628]">9:00 AM - 6:00 PM PST</span>
+                {/* Social Links */}
+                <div className="pt-6 border-t border-white/10">
+                  <p className="text-xs text-blue-200/50 uppercase tracking-widest mb-4">Follow Us</p>
+                  <div className="flex gap-3">
+                    {[
+                      { icon: Linkedin, label: 'LinkedIn' },
+                      { icon: Twitter, label: 'Twitter' },
+                      { icon: Github, label: 'GitHub' },
+                    ].map(({ icon: Icon, label }) => (
+                      <motion.a
+                        key={label}
+                        href="#"
+                        whileHover={{ y: -2 }}
+                        className="w-10 h-10 rounded-xl bg-white/8 border border-white/10 flex items-center justify-center hover:bg-white/15 hover:border-white/20 text-blue-200/60 hover:text-white transition-all duration-300"
+                      >
+                        <Icon className="w-4 h-4" />
+                      </motion.a>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-500">Saturday</span>
-                  <span className="font-medium text-[#0A1628]">10:00 AM - 2:00 PM PST</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="text-gray-500">Sunday</span>
-                  <span className="font-medium text-gray-400">Closed</span>
-                </div>
-              </div>
-              <div className="mt-3 pt-3 border-t border-blue-200/40 flex items-center gap-2">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
-                </span>
-                <span className="text-xs text-green-700 font-medium">Available for new projects</span>
-              </div>
-            </div>
-
-            {/* Social Links */}
-            <div className="mt-8 pt-8 border-t border-gray-100">
-              <h4 className="text-sm font-semibold text-[#0A1628] mb-4">Follow Us</h4>
-              <div className="flex gap-3">
-                {[
-                  { icon: Linkedin, label: 'LinkedIn' },
-                  { icon: Twitter, label: 'Twitter' },
-                  { icon: Github, label: 'GitHub' },
-                ].map(({ icon: Icon, label }) => (
-                  <motion.a
-                    key={label}
-                    href="#"
-                    whileHover={{ y: -2 }}
-                    className="w-10 h-10 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center hover:bg-blue-50 hover:border-blue-200 hover:text-[#0066FF] transition-colors text-gray-500"
-                  >
-                    <Icon className="w-4 h-4" />
-                  </motion.a>
-                ))}
               </div>
             </div>
           </AnimatedSection>
@@ -193,7 +223,7 @@ export default function Contact() {
           <AnimatedSection variant="fade-left" className="lg:col-span-3">
             <form
               onSubmit={handleSubmit}
-              className="bg-gray-50/80 rounded-2xl border border-gray-100 p-6 sm:p-8"
+              className="bg-gray-50/60 rounded-2xl border border-gray-100 p-6 sm:p-8"
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
                 <div className="space-y-2">
@@ -205,7 +235,7 @@ export default function Contact() {
                     placeholder="John Doe"
                     value={formData.name}
                     onChange={(e) => handleChange('name', e.target.value)}
-                    className="bg-white border-gray-200 rounded-xl h-11 focus:border-[#0066FF]"
+                    className="bg-white border-gray-200 rounded-xl h-11 focus:border-[#0066FF] transition-colors"
                   />
                 </div>
                 <div className="space-y-2">
@@ -218,7 +248,7 @@ export default function Contact() {
                     placeholder="john@company.com"
                     value={formData.email}
                     onChange={(e) => handleChange('email', e.target.value)}
-                    className="bg-white border-gray-200 rounded-xl h-11 focus:border-[#0066FF]"
+                    className="bg-white border-gray-200 rounded-xl h-11 focus:border-[#0066FF] transition-colors"
                   />
                 </div>
               </div>
@@ -233,7 +263,7 @@ export default function Contact() {
                     placeholder="Company name"
                     value={formData.company}
                     onChange={(e) => handleChange('company', e.target.value)}
-                    className="bg-white border-gray-200 rounded-xl h-11 focus:border-[#0066FF]"
+                    className="bg-white border-gray-200 rounded-xl h-11 focus:border-[#0066FF] transition-colors"
                   />
                 </div>
                 <div className="space-y-2">
@@ -264,11 +294,11 @@ export default function Contact() {
                 </Label>
                 <Textarea
                   id="message"
-                  placeholder="Tell us about your project..."
+                  placeholder="Tell us about your project, goals, and timeline..."
                   rows={5}
                   value={formData.message}
                   onChange={(e) => handleChange('message', e.target.value)}
-                  className="bg-white border-gray-200 rounded-xl focus:border-[#0066FF] resize-none"
+                  className="bg-white border-gray-200 rounded-xl focus:border-[#0066FF] resize-none transition-colors"
                 />
               </div>
 
@@ -276,7 +306,7 @@ export default function Contact() {
                 type="submit"
                 disabled={isSubmitting}
                 size="lg"
-                className="w-full bg-[#0066FF] hover:bg-[#0052CC] text-white rounded-xl h-12 text-base font-semibold shadow-md shadow-blue-500/25 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300"
+                className="w-full bg-gradient-to-r from-[#0066FF] to-[#0052CC] hover:from-[#0052CC] hover:to-[#0040A0] text-white rounded-xl h-12 text-base font-semibold shadow-lg shadow-blue-500/25 hover:shadow-xl hover:shadow-blue-500/35 transition-all duration-300 group"
               >
                 {isSubmitting ? (
                   <span className="flex items-center gap-2">
@@ -291,6 +321,7 @@ export default function Contact() {
                   <span className="flex items-center gap-2">
                     <Send className="w-4 h-4" />
                     Send Message
+                    <ArrowUpRight className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                   </span>
                 )}
               </Button>

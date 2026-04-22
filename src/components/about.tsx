@@ -94,7 +94,7 @@ export default function About() {
               About CodeSquad
             </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0A1628] mb-6 leading-tight">
-              Why Choose <span className="gradient-text">CodeSquad?</span>
+              Building the Future of <span className="gradient-text">Digital Innovation</span>
             </h2>
             <p className="text-gray-500 text-lg leading-relaxed mb-8">
               We are a team of passionate engineers, designers, and strategists dedicated to
