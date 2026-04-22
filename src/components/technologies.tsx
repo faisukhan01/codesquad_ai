@@ -156,13 +156,10 @@ export default function Technologies() {
                   <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${category.gradient} flex items-center justify-center shadow-sm group-hover:scale-110 transition-transform duration-300`}>
                     <category.icon className="w-5 h-5 text-white" />
                   </div>
-                  <div className="flex-1">
+                <div className="flex-1">
                     <h3 className="text-base font-semibold text-[#0A1628]">{category.name}</h3>
                     <p className="text-xs text-gray-400 leading-relaxed">{category.description}</p>
                   </div>
-                  <span className="text-xs font-bold text-gray-300 bg-gray-50 px-2 py-0.5 rounded-md">
-                    {category.techs.filter(t => t.popular).length}/{category.techs.length}
-                  </span>
                 </div>
 
                 {/* Tech Pills */}

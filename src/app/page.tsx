@@ -26,6 +26,7 @@ import WhyChooseUs from '@/components/why-choose-us';
 import Team from '@/components/team';
 import Milestones from '@/components/milestones';
 import EngagementModels from '@/components/engagement-models';
+import ROICalculator from '@/components/roi-calculator';
 import VideoShowcase from '@/components/video-showcase';
 import Careers from '@/components/careers';
 import CTASection from '@/components/cta-section';
@@ -73,6 +74,7 @@ export default function Home() {
         <Team />
         <Milestones />
         <EngagementModels />
+        <ROICalculator />
         <Careers />
         <VideoShowcase />
         <Resources />
