@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { Code2, Linkedin, Twitter, Github, ArrowUpRight } from 'lucide-react';
+import { Code2, Linkedin, Twitter, Github, ArrowUpRight, ArrowUp } from 'lucide-react';
 
 const footerServices = [
   'Custom Software',
@@ -26,9 +28,25 @@ export default function Footer() {
     }
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <footer className="bg-[#0A1628] text-white mt-auto">
+      {/* Gradient line at top */}
+      <div className="h-px animated-gradient-line" />
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-20">
+        {/* Back to Top */}
+        <button
+          onClick={scrollToTop}
+          className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300 mb-12 group cursor-pointer"
+        >
+          <ArrowUp className="w-4 h-4 group-hover:-translate-y-0.5 transition-transform duration-200" />
+          <span className="text-sm">Back to Top</span>
+        </button>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Column 1: Logo & Info */}
           <div className="sm:col-span-2 lg:col-span-1">
@@ -54,7 +72,7 @@ export default function Footer() {
                   key={label}
                   href="#"
                   aria-label={label}
-                  className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[#0066FF] hover:border-[#0066FF] transition-all duration-300 text-gray-400 hover:text-white"
+                  className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[#0066FF] hover:border-[#0066FF] transition-all duration-300 text-gray-400 hover:text-white social-glow"
                 >
                   <Icon className="w-4 h-4" />
                 </a>
@@ -75,7 +93,7 @@ export default function Footer() {
                     onClick={(e) => { e.preventDefault(); scrollTo('#services'); }}
                     className="text-sm text-gray-400 hover:text-white transition-colors duration-200 inline-flex items-center gap-1 group"
                   >
-                    {service}
+                    <span className="gradient-underline">{service}</span>
                     <ArrowUpRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                   </a>
                 </li>
@@ -99,7 +117,7 @@ export default function Footer() {
                         scrollTo(item.href);
                       }
                     }}
-                    className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
+                    className="text-sm text-gray-400 hover:text-white transition-colors duration-200 gradient-underline"
                   >
                     {item.label}
                   </a>
@@ -126,13 +144,13 @@ export default function Footer() {
       <div className="border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-sm text-gray-500">
-            &copy; {new Date().getFullYear()} CodeSquad. All rights reserved.
+            Crafted with ❤️ by CodeSquad &middot; &copy; {new Date().getFullYear()} CodeSquad. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <a href="#" className="text-sm text-gray-500 hover:text-gray-300 transition-colors">
+            <a href="#" className="text-sm text-gray-500 hover:text-gray-300 transition-colors gradient-underline">
               Privacy Policy
             </a>
-            <a href="#" className="text-sm text-gray-500 hover:text-gray-300 transition-colors">
+            <a href="#" className="text-sm text-gray-500 hover:text-gray-300 transition-colors gradient-underline">
               Terms of Service
             </a>
           </div>

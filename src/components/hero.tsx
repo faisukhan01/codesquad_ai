@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronDown, ArrowRight, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -14,6 +14,34 @@ const stats = [
 ];
 
 const headingWords = ['Engineering', 'Digital', 'Excellence'];
+
+const subtitleText = 'We build world-class software solutions that transform businesses and drive innovation.';
+
+function useTypewriter(text: string, speed = 40, startDelay = 1200) {
+  const [displayed, setDisplayed] = useState('');
+  const [started, setStarted] = useState(false);
+
+  useEffect(() => {
+    const delayTimer = setTimeout(() => setStarted(true), startDelay);
+    return () => clearTimeout(delayTimer);
+  }, [startDelay]);
+
+  useEffect(() => {
+    if (!started) return;
+    let i = 0;
+    const interval = setInterval(() => {
+      if (i <= text.length) {
+        setDisplayed(text.slice(0, i));
+        i++;
+      } else {
+        clearInterval(interval);
+      }
+    }, speed);
+    return () => clearInterval(interval);
+  }, [text, speed, started]);
+
+  return displayed;
+}
 
 function CounterStat({ value, suffix, label }: { value: number; suffix: string; label: string }) {
   return (
@@ -39,6 +67,8 @@ function CounterStat({ value, suffix, label }: { value: number; suffix: string; 
 }
 
 export default function Hero() {
+  const typedText = useTypewriter(subtitleText);
+
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Background image with overlay */}
@@ -49,6 +79,9 @@ export default function Hero() {
         />
         <div className="absolute inset-0 bg-gradient-to-br from-[#0A1628]/95 via-[#0d2137]/90 to-[#0A1628]/95" />
       </div>
+
+      {/* Grid pattern overlay */}
+      <div className="absolute inset-0 grid-pattern" />
 
       {/* Particle animation */}
       <ParticleBackground />
@@ -105,15 +138,17 @@ export default function Hero() {
             ))}
           </h1>
 
-          {/* Subtitle */}
+          {/* Subtitle with typewriter effect */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.1 }}
-            className="text-lg sm:text-xl text-blue-100/80 max-w-2xl mx-auto mb-10 leading-relaxed"
+            className="text-lg sm:text-xl text-blue-100/80 max-w-2xl mx-auto mb-10 leading-relaxed min-h-[3.5rem]"
           >
-            We build world-class software solutions that transform businesses
-            and drive innovation.
+            <span>{typedText}</span>
+            {typedText.length < subtitleText.length && (
+              <span className="inline-block w-[2px] h-[1.1em] bg-[#338AFF] ml-0.5 align-middle animate-[blink-cursor_1s_step-end_infinite]" />
+            )}
           </motion.p>
 
           {/* CTA Buttons */}
@@ -142,19 +177,26 @@ export default function Hero() {
             </Button>
           </motion.div>
 
-          {/* Stats row */}
+          {/* Stats row with glass-morphism */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 1.6 }}
-            className="mt-20 grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-3xl mx-auto"
+            className="mt-20 max-w-3xl mx-auto"
           >
-            {stats.map((stat) => (
-              <CounterStat key={stat.label} {...stat} />
-            ))}
+            <div className="glass rounded-2xl px-6 py-8">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+                {stats.map((stat) => (
+                  <CounterStat key={stat.label} {...stat} />
+                ))}
+              </div>
+            </div>
           </motion.div>
         </div>
       </div>
+
+      {/* Animated gradient border at bottom */}
+      <div className="absolute bottom-0 left-0 right-0 h-px animated-gradient-line" />
 
       {/* Scroll indicator */}
       <motion.div

@@ -286,3 +286,127 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* Shimmer effect */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.shimmer-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer-effect::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.08) 40%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.08) 60%,
+    transparent 100%
+  );
+  transform: translateX(-100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.shimmer-effect:hover::after {
+  animation: shimmer 0.8s ease-in-out;
+}
+
+/* Typewriter cursor */
+@keyframes blink-cursor {
+  0%, 50% {
+    opacity: 1;
+  }
+  51%, 100% {
+    opacity: 0;
+  }
+}
+
+.typewriter-cursor::after {
+  content: '|';
+  animation: blink-cursor 1s step-end infinite;
+  color: #338AFF;
+  font-weight: 300;
+  margin-left: 2px;
+}
+
+/* Gradient underline for footer links */
+.gradient-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.gradient-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, #0066FF, #338AFF);
+  transition: width 0.3s ease;
+}
+
+.gradient-underline:hover::after {
+  width: 100%;
+}
+
+/* Glass morphism utility */
+.glass {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Dot pattern utility */
+.dot-pattern {
+  background-image: radial-gradient(circle, rgba(0, 102, 255, 0.06) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Animated gradient line */
+@keyframes gradient-line {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animated-gradient-line {
+  background: linear-gradient(90deg, #0066FF, #338AFF, #66B2FF, #338AFF, #0066FF);
+  background-size: 200% 100%;
+  animation: gradient-line 3s ease infinite;
+}
+
+/* Grid pattern overlay */
+.grid-pattern {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Social icon glow */
+.social-glow:hover {
+  box-shadow: 0 0 15px rgba(0, 102, 255, 0.4), 0 0 30px rgba(0, 102, 255, 0.2);
+}
