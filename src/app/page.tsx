@@ -26,12 +26,14 @@ import WhyChooseUs from '@/components/why-choose-us';
 import Team from '@/components/team';
 import Milestones from '@/components/milestones';
 import EngagementModels from '@/components/engagement-models';
+import VideoShowcase from '@/components/video-showcase';
 import Careers from '@/components/careers';
 import CTASection from '@/components/cta-section';
 import Contact from '@/components/contact';
 import Footer from '@/components/footer';
 import LiveChat from '@/components/live-chat';
 import CookieConsent from '@/components/cookie-consent';
+import Resources from '@/components/resources';
 import BackToTop from '@/components/back-to-top';
 
 export default function Home() {
@@ -47,7 +49,7 @@ export default function Home() {
       <LoadingScreen isVisible={isLoading} />
       <ScrollProgress />
       <Navigation />
-      <main className="flex-1">
+      <main className="flex-1 pb-4">
         <Hero />
         <Clients />
         <Partners />
@@ -72,6 +74,8 @@ export default function Home() {
         <Milestones />
         <EngagementModels />
         <Careers />
+        <VideoShowcase />
+        <Resources />
         <CTASection />
         <Contact />
       </main>

@@ -11,24 +11,28 @@ const stats = [
     suffix: '+',
     label: 'Projects Delivered',
     icon: Briefcase,
+    description: 'Across 12+ industries',
   },
   {
     value: 50,
     suffix: '+',
     label: 'Global Clients',
     icon: Globe,
+    description: 'From startups to Fortune 500',
   },
   {
     value: 99,
     suffix: '%',
     label: 'Client Satisfaction',
     icon: Heart,
+    description: 'Based on post-project surveys',
   },
   {
     value: 8,
     suffix: '+',
     label: 'Years of Excellence',
     icon: Award,
+    description: 'Consistent delivery since 2017',
   },
 ];
 
@@ -88,23 +92,27 @@ export default function StatsBanner() {
       {/* Dot pattern overlay */}
       <div className="absolute inset-0 stats-dot-pattern" />
 
+      {/* Decorative circles */}
+      <div className="absolute -top-20 -left-20 w-64 h-64 bg-white/5 rounded-full" />
+      <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/5 rounded-full" />
+
       <AnimatedSection
         variant="fade-up"
         className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
       >
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
           {stats.map((stat, idx) => (
             <div
               key={stat.label}
-              className="relative text-center flex flex-col items-center gap-3 group"
+              className="relative text-center flex flex-col items-center gap-2 group"
             >
               {/* Divider line (not on last item) */}
               {idx < stats.length - 1 && (
-                <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-16 bg-white/15" />
+                <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-20 bg-white/15" />
               )}
 
               {/* Icon */}
-              <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/15 group-hover:scale-110 transition-all duration-300">
+              <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 group-hover:scale-110 transition-all duration-300 mb-1">
                 <stat.icon className="w-6 h-6 text-white/90" />
               </div>
 
@@ -118,8 +126,13 @@ export default function StatsBanner() {
               </div>
 
               {/* Label */}
-              <p className="text-sm sm:text-base text-blue-100/80 font-medium">
+              <p className="text-sm sm:text-base text-blue-100/90 font-medium">
                 {stat.label}
+              </p>
+
+              {/* Description */}
+              <p className="text-xs text-blue-200/50 font-medium">
+                {stat.description}
               </p>
             </div>
           ))}

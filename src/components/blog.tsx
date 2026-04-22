@@ -75,8 +75,10 @@ function BlogCard({
             className="object-cover transition-transform duration-500 group-hover:scale-110"
             sizes="(max-width: 768px) 100vw, 33vw"
           />
+          {/* Gradient overlay on image */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
           {/* Category Badge */}
-          <div className="absolute top-4 left-4">
+          <div className="absolute top-4 left-4 z-10">
             <span
               className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${article.categoryColor}`}
             >

@@ -73,7 +73,7 @@ export default function CookieConsent() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 80, opacity: 0 }}
           transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-          className="fixed bottom-20 left-0 right-0 z-[55] px-3 sm:px-6"
+          className="fixed bottom-0 left-0 right-0 z-[55] px-3 sm:px-6 pb-4 pt-2"
         >
           <div className="max-w-5xl mx-auto">
             <div className="bg-white/95 backdrop-blur-xl shadow-2xl shadow-black/10 rounded-2xl border border-gray-200/80 overflow-hidden">

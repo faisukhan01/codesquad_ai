@@ -72,7 +72,7 @@ export default function Services() {
                 </div>
 
                 {/* Icon */}
-                <div className="relative z-10 w-14 h-14 rounded-xl bg-gradient-to-br from-[#0066FF] to-[#338AFF] flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <div className="relative z-10 w-14 h-14 rounded-xl bg-gradient-to-br from-[#0066FF] to-[#338AFF] flex items-center justify-center mb-6 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-blue-500/30 transition-all duration-300">
                   <service.icon className="w-7 h-7 text-white" />
                 </div>
 
@@ -81,15 +81,18 @@ export default function Services() {
                   <h3 className="text-xl font-semibold text-[#0A1628] mb-3 group-hover:text-[#0066FF] transition-colors duration-300">
                     {service.title}
                   </h3>
-                  <p className="text-gray-500 leading-relaxed mb-4">
+                  <p className="text-gray-500 leading-relaxed mb-5 text-[15px]">
                     {service.description}
                   </p>
 
                   {/* Learn More Link */}
-                  <div className="flex items-center gap-2 text-[#0066FF] font-medium text-sm group-hover:gap-3 transition-all duration-300">
+                  <motion.span
+                    className="inline-flex items-center gap-2 text-[#0066FF] font-semibold text-sm group-hover:gap-3 transition-all duration-300 cursor-pointer"
+                    whileHover={{ x: 4 }}
+                  >
                     Learn More
                     <ArrowRight className="w-4 h-4" />
-                  </div>
+                  </motion.span>
                 </div>
               </motion.div>
             </AnimatedItem>

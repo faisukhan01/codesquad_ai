@@ -605,3 +605,103 @@ img {
     opacity: 1;
   }
 }
+
+/* Number counter glow effect */
+.counter-glow {
+  text-shadow: 0 0 30px rgba(0, 102, 255, 0.3);
+}
+
+/* Subtle card shine effect */
+@keyframes card-shine {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 200%;
+  }
+}
+
+.card-shine-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-shine-hover::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
+  z-index: 2;
+  pointer-events: none;
+  transition: none;
+}
+
+.card-shine-hover:hover::before {
+  animation: card-shine 0.8s ease-in-out;
+}
+
+/* Smooth image zoom container */
+.img-zoom-container {
+  overflow: hidden;
+  border-radius: inherit;
+}
+
+.img-zoom-container img {
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.img-zoom-container:hover img {
+  transform: scale(1.08);
+}
+
+/* Enhanced focus ring for inputs */
+.input-focus-ring:focus {
+  border-color: #0066FF;
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.1);
+}
+
+/* Subtle text glow for headings */
+.text-glow-subtle {
+  text-shadow: 0 0 40px rgba(0, 102, 255, 0.1);
+}
+
+/* Smooth dropdown animation */
+@keyframes dropdown-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-dropdown-enter {
+  animation: dropdown-enter 0.2s ease-out forwards;
+}
+
+/* Skeleton loading placeholder */
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+}
+
+/* Smooth transition for all interactive elements */
+button, a, [role="button"] {
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
