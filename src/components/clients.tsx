@@ -24,7 +24,7 @@ export default function Clients() {
               key={`${client}-${i}`}
               className="flex items-center justify-center mx-8 sm:mx-12 lg:mx-16"
             >
-              <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-300 hover:text-gray-500 transition-colors duration-300 select-none tracking-tight">
+              <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-300 hover:text-gray-400 transition-all duration-300 select-none tracking-tight hover:scale-105 inline-block">
                 {client}
               </span>
             </div>

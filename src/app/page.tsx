@@ -26,6 +26,8 @@ import Contact from '@/components/contact';
 import Footer from '@/components/footer';
 import LiveChat from '@/components/live-chat';
 import CookieConsent from '@/components/cookie-consent';
+import EngagementModels from '@/components/engagement-models';
+import Careers from '@/components/careers';
 import BackToTop from '@/components/back-to-top';
 
 export default function Home() {
@@ -60,6 +62,8 @@ export default function Home() {
         <Blog />
         <Newsletter />
         <Team />
+        <EngagementModels />
+        <Careers />
         <CTASection />
         <Contact />
       </main>

@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Linkedin, Twitter, Globe } from 'lucide-react';
 import { AnimatedSection, AnimatedItem } from '@/components/animated-section';
+import SectionHeader from '@/components/section-header';
 
 const teamMembers = [
   {
@@ -45,17 +46,7 @@ export default function Team() {
     <section id="team" className="section-padding bg-gray-50/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <AnimatedSection variant="fade-up" className="text-center mb-16">
-          <span className="inline-block text-sm font-semibold text-[#0066FF] uppercase tracking-widest mb-3">
-            Our Team
-          </span>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0A1628] mb-4">
-            Meet Our Leadership
-          </h2>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-            The visionaries driving CodeSquad&apos;s mission to deliver excellence
-          </p>
-        </AnimatedSection>
+        <SectionHeader label="Our Team" title="Meet Our Leadership" description="The visionaries driving CodeSquad's mission to deliver excellence" />
 
         {/* Team Grid */}
         <AnimatedSection variant="stagger-children" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
@@ -110,6 +101,15 @@ export default function Team() {
                   </h3>
                   <p className="text-sm text-[#0066FF] font-medium mb-2">{member.title}</p>
                   <p className="text-sm text-gray-500 leading-relaxed">{member.bio}</p>
+                  <div className="mt-3 pt-3 border-t border-gray-100">
+                    <div className="flex flex-wrap justify-center gap-1.5">
+                      {[member.name === 'Alex Rivera' ? ['Strategy', 'Leadership', 'Enterprise'] : member.name === 'Priya Sharma' ? ['Architecture', 'Cloud', 'DevOps'] : member.name === 'Marcus Johnson' ? ['UI/UX', 'Branding', 'Research'] : ['Agile', 'Delivery', 'Scrum']].map((skill) => (
+                        <span key={skill} className="text-[11px] font-medium text-gray-500 bg-gray-50 px-2 py-0.5 rounded">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             </AnimatedItem>

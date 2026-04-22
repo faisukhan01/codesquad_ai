@@ -79,11 +79,9 @@ Work Log:
 - Created ScrollProgress (scroll-progress.tsx): Fixed top z-[60], 3px blue gradient bar, passive scroll listener
 - Created LiveChat (live-chat.tsx): 56px FAB with blue gradient, ping animation, unread badge, expandable chat panel, bot auto-replies after 1.5s, typing indicator
 - Fixed runtime error with unreadCount state
-- Updated page.tsx with new components
 
 Stage Summary:
 - 2 new interactive components: ScrollProgress, LiveChat
-- Full conversation flow with bot auto-replies
 
 ---
 Task ID: 4-b
@@ -98,7 +96,6 @@ Work Log:
 Stage Summary:
 - 1 reusable component: SectionHeader
 - 7 components refactored for consistent visual hierarchy
-- Cookie consent banner enhanced
 
 ---
 Task ID: 4-c
@@ -108,7 +105,6 @@ Task: Create company values and awards sections
 Work Log:
 - Created CompanyValues (company-values.tsx): 6 values, glass-morphism cards, numbered badges, hover effects
 - Created Awards (awards.tsx): 6 awards, amber/gold icons, year badges, differentiated design
-- Updated page.tsx: Added between About and Technologies
 
 Stage Summary:
 - 2 new sections with differentiated design (amber awards)
@@ -119,34 +115,65 @@ Agent: Main Orchestrator (QA Review Round)
 Task: Comprehensive QA, styling improvements, new features
 
 Work Log:
-- Reviewed full worklog history (4 previous phases)
 - Performed QA via agent-browser: 6 screenshots, VLM analysis (Hero 7/10, Values/Awards 8/10)
-- Enhanced hero: mouse scroll animation (rounded rectangle + bouncing dot), ping badge, Sparkles icon, font-extrabold typography, better sizing
-- Enhanced footer: gradient background (via-[#0d1f35]), grid-pattern overlay, relative positioning
+- Enhanced hero: mouse scroll animation, ping badge, Sparkles icon, font-extrabold typography
+- Enhanced footer: gradient background, grid-pattern overlay
 - Added global CSS: focus-visible accessibility styles, smooth transitions utility
-- All components verified rendering correctly
 
 Stage Summary:
-- Hero polished: better typography, interactive scroll indicator, improved badge
+- Hero polished: better typography, interactive scroll indicator
 - Footer enhanced with gradient and pattern overlays
-- Accessibility improvements: focus-visible outlines
 - Total: 28 components across 24+ sections
 
-## Current Project Status (Post Task 4-d)
-- Website fully functional with 28 components across 24+ sections
+---
+Task ID: 5-a
+Agent: Full-Stack Developer
+Task: Create Careers and Engagement Models sections
+
+Work Log:
+- Created Careers (careers.tsx): 4 company perks (Remote First, Competitive Pay, Health & Wellness, Learning Budget), 5 job listing cards (Senior Full-Stack Dev, Cloud Architect, UI/UX Designer, DevOps Engineer, Project Manager) with location badges, department tags, tech pills, hover effects, responsive grid
+- Created EngagementModels (engagement-models.tsx): 3 pricing/engagement cards (Fixed Price $25K+, Dedicated Teams $15K/mo with "Most Popular" badge and featured styling, Time & Material $120/hr), CheckCircle feature lists, gradient icons, CTA buttons
+- Updated page.tsx: Added both between Team and CTASection
+- ESLint passes with zero errors
+
+Stage Summary:
+- 2 new section components: Careers, EngagementModels
+- Total component count: 30 components across 26+ sections
+
+---
+Task ID: 5-b
+Agent: Full-Stack Developer
+Task: Enhance styling across 5 existing components
+
+Work Log:
+- Enhanced Team section: Replaced inline header with SectionHeader, added skills/expertise tags below each member bio (Strategy/Leadership/Enterprise for CEO, Architecture/Cloud/DevOps for CTO, UI/UX/Branding/Research for Design Head, Agile/Delivery/Scrum for Delivery Head)
+- Enhanced Cookie Consent: Added glass morphism (bg-white/95 backdrop-blur-xl) with translucent borders (border-white/20, border-t-blue-200) for better harmony with dark hero
+- Enhanced Hero CTA button: Changed to gradient (from-[#0066FF] to-[#0052CC]) with deeper shadow (shadow-blue-600/40) and animate-pulse-glow animation
+- Enhanced Clients marquee: Added transition-all, hover:scale-105 inline-block for polished scale-up hover effect
+- Enhanced SectionHeader: Replaced static dash lines with animated pulsing dots + gradient lines flanking the label
+- ESLint passes with zero errors
+
+Stage Summary:
+- 5 components enhanced with styling improvements
+- Consistent visual hierarchy across all sections via SectionHeader
+- Glass morphism cookie consent for dark hero compatibility
+- VLM QA score: 7/10 on new sections
+
+## Current Project Status (Post Task 5)
+- Website fully functional with **30 components across 26+ sections**
 - Zero ESLint errors, zero runtime errors
 - Light theme with blue (#0066FF) primary color
 - All interactive features verified: nav dropdown, carousel, dialogs, forms, animations, live chat, cookie consent
 - Responsive across all breakpoints (mobile, tablet, desktop)
 - Dev server running on port 3000
-- VLM QA scores: Hero 7/10, Values/Awards 8/10
+- VLM QA scores: Hero 7/10, Values/Awards 8/10, Careers/Pricing 7/10
 
-## Completed (Full Feature List - 28 components)
+## Completed (Full Feature List - 30 components)
 - Loading screen with animated logo and particles
 - Scroll progress indicator at top of viewport
-- Hero section with particle canvas, typewriter subtitle, glass-morphism stats, mouse scroll animation
+- Hero section with particle canvas, typewriter subtitle, glass-morphism stats, mouse scroll animation, pulsing glow CTA
 - Sticky navigation with scroll effect, mobile Sheet menu, services dropdown mega menu
-- Client logo marquee with infinite scroll and fade edges
+- Client logo marquee with scale-up hover effects and fade edges
 - Partners section with technology partner and certification badges
 - 6 service cards with shimmer effect, numbered labels, gradient borders (SectionHeader)
 - About section with team photo, 4 features, animated counter stats
@@ -160,26 +187,29 @@ Stage Summary:
 - FAQ accordion with 8 items (SectionHeader)
 - Blog section with 3 article cards (SectionHeader)
 - Newsletter section with email subscription
-- Team section with 4 leadership cards and social overlays
+- Team section with 4 leadership cards, skills/expertise tags, social overlays (SectionHeader)
+- **Engagement Models / Pricing** section with 3 tiers (Fixed Price, Dedicated Teams, T&M)
+- **Careers / Open Positions** section with 5 job listings and perks bar
 - CTA banner with floating animation (SectionHeader light mode)
 - Contact form with validation, select dropdown, and toast notifications
 - Professional footer with gradient background, grid pattern, social glow
 - Live chat widget with bot auto-replies
-- Cookie consent banner with preference management
+- Cookie consent banner with glass morphism and preference management
 - Back-to-top button with scroll progress ring
 - Section dividers (wave/curve/angled SVG shapes)
-- Reusable SectionHeader component with decorative label lines
+- Reusable SectionHeader component with animated pulsing dots
 - Custom CSS animations: marquee, float, pulse-glow, shimmer, gradient-shift, blink-cursor
 - Accessibility: focus-visible outlines, keyboard navigation, ARIA labels
 - 8 AI-generated images
 
 ## Unresolved Issues / Next Phase Recommendations
-- Implement dark mode toggle (next-themes integration)
+- Implement dark mode toggle (next-themes integration) — HIGH PRIORITY
 - Add more portfolio projects (currently 4)
-- Add careers/jobs section with open positions
-- Implement actual email API for contact form (backend endpoint)
+- Implement actual email API for contact form (backend endpoint with z-ai-web-dev-sdk)
 - Add SEO meta tags and Open Graph images
+- Add Google Maps or office location map to contact section
 - Consider individual case study detail pages (routes)
 - Add video testimonials or client video embeds
-- Add Google Maps or office location map to contact section
 - Performance optimization: lazy load below-fold images, optimize bundle size
+- Add "Industries We Serve" section (Healthcare, Fintech, E-Commerce, etc.)
+- Add case study video thumbnails in portfolio

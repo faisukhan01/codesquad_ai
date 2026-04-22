@@ -197,7 +197,7 @@ export default function Hero() {
             <Button
               onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
               size="lg"
-              className="bg-[#0066FF] hover:bg-[#0052CC] text-white rounded-xl px-8 h-13 text-base shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all duration-300 group"
+              className="bg-gradient-to-r from-[#0066FF] to-[#0052CC] hover:from-[#0052CC] hover:to-[#0040A0] text-white rounded-xl px-8 h-13 text-base shadow-lg shadow-blue-600/40 hover:shadow-xl hover:shadow-blue-600/50 transition-all duration-300 group animate-pulse-glow"
             >
               Explore Our Services
               <ArrowRight className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform" />
