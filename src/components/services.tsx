@@ -56,7 +56,7 @@ export default function Services() {
             <AnimatedItem key={service.title} variant="fade-up" delay={0.1}>
               <motion.div
                 whileHover={{ y: -8, transition: { duration: 0.3 } }}
-                className="group relative bg-white rounded-2xl border border-gray-100 p-8 h-full hover:shadow-xl hover:shadow-blue-500/5 transition-shadow duration-300 shimmer-effect"
+                className="group relative bg-white rounded-2xl border border-gray-100 p-8 h-full shadow-sm hover:shadow-xl hover:shadow-blue-500/8 transition-all duration-300 shimmer-effect hover:border-blue-100"
               >
                 {/* Service number in top-right */}
                 <span className="absolute top-4 right-5 text-xs font-semibold text-gray-200 group-hover:text-gray-300 transition-colors duration-300">

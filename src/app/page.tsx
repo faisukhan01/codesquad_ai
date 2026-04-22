@@ -28,6 +28,8 @@ import LiveChat from '@/components/live-chat';
 import CookieConsent from '@/components/cookie-consent';
 import EngagementModels from '@/components/engagement-models';
 import Careers from '@/components/careers';
+import Industries from '@/components/industries';
+import WhyChooseUs from '@/components/why-choose-us';
 import BackToTop from '@/components/back-to-top';
 
 export default function Home() {
@@ -55,12 +57,14 @@ export default function Home() {
         <Technologies />
         <Process />
         <SectionDivider variant="curve" colorFrom="#f9fafb" colorTo="white" />
+        <Industries />
         <Portfolio />
         <Testimonials />
         <StatsBanner />
         <FAQ />
         <Blog />
         <Newsletter />
+        <WhyChooseUs />
         <Team />
         <EngagementModels />
         <Careers />

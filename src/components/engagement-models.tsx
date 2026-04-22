@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Target, Users, Clock, CheckCircle } from 'lucide-react';
 import { AnimatedSection, AnimatedItem } from '@/components/animated-section';
+import SectionHeader from '@/components/section-header';
 
 const plans = [
   {
@@ -58,19 +59,11 @@ export default function EngagementModels() {
     <section id="engagement-models" className="section-padding bg-gradient-to-b from-white to-gray-50/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <AnimatedSection variant="fade-up" className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 mb-4">
-            <div className="w-8 h-px bg-[#0066FF]" />
-            <span className="text-sm font-semibold uppercase tracking-[0.2em] text-[#0066FF]">Engagement Models</span>
-            <div className="w-8 h-px bg-[#0066FF]" />
-          </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#0A1628] mb-4">
-            How We Work Together
-          </h2>
-          <p className="text-lg text-gray-500 max-w-2xl mx-auto">
-            Flexible engagement options tailored to your project needs and business goals
-          </p>
-        </AnimatedSection>
+        <SectionHeader
+          label="Engagement Models"
+          title="How We Work Together"
+          description="Flexible engagement options tailored to your project needs and business goals"
+        />
 
         {/* Pricing Cards Grid */}
         <AnimatedSection

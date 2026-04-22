@@ -92,14 +92,19 @@ export default function StatsBanner() {
         variant="fade-up"
         className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
       >
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-          {stats.map((stat) => (
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          {stats.map((stat, idx) => (
             <div
               key={stat.label}
-              className="text-center flex flex-col items-center gap-3"
+              className="relative text-center flex flex-col items-center gap-3 group"
             >
+              {/* Divider line (not on last item) */}
+              {idx < stats.length - 1 && (
+                <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-16 bg-white/15" />
+              )}
+
               {/* Icon */}
-              <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center">
+              <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/15 group-hover:scale-110 transition-all duration-300">
                 <stat.icon className="w-6 h-6 text-white/90" />
               </div>
 

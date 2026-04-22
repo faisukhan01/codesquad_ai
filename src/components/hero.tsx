@@ -238,21 +238,23 @@ export default function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 0.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
+        transition={{ delay: 2, duration: 0.8 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2"
       >
         <motion.button
           onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
-          className="flex flex-col items-center gap-2 group cursor-pointer"
-          whileHover={{ scale: 1.1 }}
+          className="flex flex-col items-center gap-3 group cursor-pointer"
+          whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          <span className="text-[11px] text-blue-200/60 uppercase tracking-[0.2em] font-medium group-hover:text-blue-200/90 transition-colors">Scroll Down</span>
-          <div className="w-6 h-10 rounded-full border-2 border-blue-200/30 flex justify-center pt-2 group-hover:border-blue-200/50 transition-colors">
+          <span className="text-xs text-blue-200/50 uppercase tracking-[0.25em] font-medium group-hover:text-blue-200/80 transition-colors duration-300">Explore</span>
+          <div className="relative w-8 h-12 rounded-full border-2 border-blue-200/25 flex justify-center pt-2.5 group-hover:border-blue-300/50 transition-all duration-300 shadow-lg shadow-black/10">
+            {/* Glow behind the mouse */}
+            <div className="absolute inset-0 rounded-full bg-blue-400/5 group-hover:bg-blue-400/10 transition-colors duration-300" />
             <motion.div
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
-              className="w-1.5 h-1.5 rounded-full bg-blue-300/80"
+              animate={{ y: [0, 16, 0] }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+              className="relative w-1.5 h-3 rounded-full bg-gradient-to-b from-blue-300 to-blue-400/60 shadow-sm shadow-blue-300/50"
             />
           </div>
         </motion.button>

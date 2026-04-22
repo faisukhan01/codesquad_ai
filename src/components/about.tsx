@@ -108,9 +108,9 @@ export default function About() {
                 <motion.div
                   key={feature.title}
                   whileHover={{ x: 4 }}
-                  className="flex gap-3 p-3 rounded-xl hover:bg-white hover:shadow-sm transition-all duration-300"
+                  className="flex gap-3.5 p-4 rounded-xl bg-white border border-gray-100 shadow-sm hover:shadow-md hover:border-blue-100 transition-all duration-300"
                 >
-                  <div className="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center shrink-0">
+                  <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100/80 flex items-center justify-center shrink-0">
                     <feature.icon className="w-5 h-5 text-[#0066FF]" />
                   </div>
                   <div>
@@ -128,11 +128,13 @@ export default function About() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((stat) => (
               <AnimatedItem key={stat.label} variant="scale-in">
-                <div className="bg-white rounded-2xl border border-gray-100 p-6 text-center hover:shadow-lg hover:shadow-blue-500/5 transition-shadow duration-300">
-                  <div className="text-3xl sm:text-4xl font-bold text-[#0A1628] mb-2">
-                    <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+                <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 text-center hover:shadow-lg hover:shadow-blue-500/8 hover:border-blue-100 transition-all duration-300">
+                  <div className="text-3xl sm:text-4xl font-bold mb-2">
+                    <span className="gradient-text">
+                      <AnimatedCounter target={stat.value} suffix={stat.suffix} />
+                    </span>
                   </div>
-                  <div className="text-sm text-gray-500">{stat.label}</div>
+                  <div className="text-sm text-gray-500 font-medium">{stat.label}</div>
                 </div>
               </AnimatedItem>
             ))}

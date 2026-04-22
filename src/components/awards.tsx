@@ -90,19 +90,19 @@ export default function Awards() {
                   y: -6,
                   transition: { duration: 0.3 },
                 }}
-                className="group relative bg-white rounded-2xl border border-gray-100 p-6 hover:shadow-xl hover:shadow-amber-500/5 transition-all duration-300"
+                className="group relative bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-xl hover:shadow-amber-500/5 hover:border-amber-200/60 transition-all duration-300"
               >
-                {/* Icon with amber/gold gradient */}
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-amber-400/30 transition-all duration-300">
+                {/* Icon with muted amber/gold gradient */}
+                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-400 to-amber-500/90 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-amber-400/20 transition-all duration-300">
                   <award.icon className="w-5 h-5 text-white" />
                 </div>
 
                 {/* Content */}
                 <div className="flex items-start justify-between gap-3 mb-2">
-                  <h3 className="text-sm font-semibold text-[#0A1628] group-hover:text-amber-600 transition-colors duration-300">
+                  <h3 className="text-sm font-semibold text-[#0A1628] group-hover:text-amber-700 transition-colors duration-300">
                     {award.title}
                   </h3>
-                  <span className="shrink-0 text-xs font-medium text-gray-400">
+                  <span className="shrink-0 text-xs font-bold text-amber-600/70 bg-amber-50 px-2 py-0.5 rounded-full">
                     {award.year}
                   </span>
                 </div>
