@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Code2 } from 'lucide-react';
 
@@ -9,11 +9,32 @@ interface LoadingScreenProps {
 }
 
 export default function LoadingScreen({ isVisible }: LoadingScreenProps) {
-  const [mounted, setMounted] = useState(false);
+  const [showAnimated, setShowAnimated] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setMounted(true);
+    // Use requestAnimationFrame to ensure we only render motion after first paint
+    const raf = requestAnimationFrame(() => {
+      setShowAnimated(true);
+    });
+    return () => cancelAnimationFrame(raf);
   }, []);
+
+  // If the loading screen should no longer be visible, don't render anything
+  if (!isVisible && showAnimated) {
+    return null;
+  }
+
+  // During SSR and initial client render, show a static placeholder
+  if (!showAnimated) {
+    return (
+      <div ref={containerRef} className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#0A1628]">
+        <div className="w-12 h-12 rounded-xl bg-[#0066FF] flex items-center justify-center">
+          <Code2 className="w-7 h-7 text-white" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <AnimatePresence>
@@ -24,32 +45,30 @@ export default function LoadingScreen({ isVisible }: LoadingScreenProps) {
           transition={{ duration: 0.6, ease: 'easeInOut' }}
           className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#0A1628]"
         >
-          {/* Animated background particles - only render on client to avoid hydration mismatch */}
-          {mounted && (
-            <div className="absolute inset-0 overflow-hidden">
-              {[...Array(20)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  className="absolute w-1 h-1 rounded-full bg-blue-400/30"
-                  initial={{
-                    x: Math.random() * window.innerWidth,
-                    y: Math.random() * window.innerHeight,
-                    opacity: 0,
-                  }}
-                  animate={{
-                    y: [null, -40, null],
-                    opacity: [0, 0.6, 0],
-                  }}
-                  transition={{
-                    duration: 2 + Math.random() * 2,
-                    repeat: Infinity,
-                    delay: Math.random() * 2,
-                    ease: 'easeInOut',
-                  }}
-                />
-              ))}
-            </div>
-          )}
+          {/* Animated background particles */}
+          <div className="absolute inset-0 overflow-hidden">
+            {[...Array(20)].map((_, i) => (
+              <motion.div
+                key={i}
+                className="absolute w-1 h-1 rounded-full bg-blue-400/30"
+                initial={{
+                  x: Math.random() * window.innerWidth,
+                  y: Math.random() * window.innerHeight,
+                  opacity: 0,
+                }}
+                animate={{
+                  y: [null, -40, null],
+                  opacity: [0, 0.6, 0],
+                }}
+                transition={{
+                  duration: 2 + Math.random() * 2,
+                  repeat: Infinity,
+                  delay: Math.random() * 2,
+                  ease: 'easeInOut',
+                }}
+              />
+            ))}
+          </div>
 
           <div className="flex flex-col items-center gap-8">
             {/* Logo */}

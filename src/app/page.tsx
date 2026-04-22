@@ -5,6 +5,7 @@ import LoadingScreen from '@/components/loading-screen';
 import Navigation from '@/components/navigation';
 import Hero from '@/components/hero';
 import Clients from '@/components/clients';
+import Partners from '@/components/partners';
 import Services from '@/components/services';
 import SectionDivider from '@/components/section-divider';
 import About from '@/components/about';
@@ -12,11 +13,15 @@ import Technologies from '@/components/technologies';
 import Process from '@/components/process';
 import Portfolio from '@/components/portfolio';
 import Testimonials from '@/components/testimonials';
+import StatsBanner from '@/components/stats-banner';
 import FAQ from '@/components/faq';
+import Blog from '@/components/blog';
+import Newsletter from '@/components/newsletter';
 import Team from '@/components/team';
 import CTASection from '@/components/cta-section';
 import Contact from '@/components/contact';
 import Footer from '@/components/footer';
+import CookieConsent from '@/components/cookie-consent';
 import BackToTop from '@/components/back-to-top';
 
 export default function Home() {
@@ -34,6 +39,7 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
         <Clients />
+        <Partners />
         <Services />
         <SectionDivider variant="wave" colorFrom="white" colorTo="#f9fafb" />
         <About />
@@ -42,12 +48,16 @@ export default function Home() {
         <SectionDivider variant="curve" colorFrom="#f9fafb" colorTo="white" />
         <Portfolio />
         <Testimonials />
+        <StatsBanner />
         <FAQ />
+        <Blog />
+        <Newsletter />
         <Team />
         <CTASection />
         <Contact />
       </main>
       <Footer />
+      <CookieConsent />
       <BackToTop />
     </div>
   );

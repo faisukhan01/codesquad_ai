@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import { ChevronDown, ArrowRight, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ParticleBackground from '@/components/particle-background';
@@ -43,9 +43,41 @@ function useTypewriter(text: string, speed = 40, startDelay = 1200) {
   return displayed;
 }
 
+function easeOutQuad(t: number): number {
+  return t * (2 - t);
+}
+
 function CounterStat({ value, suffix, label }: { value: number; suffix: string; label: string }) {
+  const [count, setCount] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const hasAnimated = useRef(false);
+
+  useEffect(() => {
+    if (!isInView || hasAnimated.current) return;
+    hasAnimated.current = true;
+
+    const duration = 2000; // 2 seconds
+    const startTime = Date.now();
+    const animate = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = easeOutQuad(progress);
+      const currentValue = Math.round(easedProgress * value);
+      setCount(currentValue);
+
+      if (progress < 1) {
+        requestAnimationFrame(animate);
+      } else {
+        setCount(value);
+      }
+    };
+    requestAnimationFrame(animate);
+  }, [isInView, value]);
+
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
@@ -57,7 +89,7 @@ function CounterStat({ value, suffix, label }: { value: number; suffix: string; 
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.3 }}
         >
-          {value}
+          {count}
         </motion.span>
         <span className="text-[#338AFF]">{suffix}</span>
       </div>

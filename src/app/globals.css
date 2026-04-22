@@ -410,3 +410,17 @@
 .social-glow:hover {
   box-shadow: 0 0 15px rgba(0, 102, 255, 0.4), 0 0 30px rgba(0, 102, 255, 0.2);
 }
+
+/* Newsletter pattern */
+.newsletter-pattern {
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Stats banner dot pattern */
+.stats-dot-pattern {
+  background-image:
+    radial-gradient(circle, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 20px 20px;
+}

@@ -1,23 +1,59 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Code2, Menu, X } from 'lucide-react';
+import { Code2, Menu, X, Cloud, Brain, Smartphone, Palette, Settings, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent, SheetTitle } from '@/components/ui/sheet';
 
 const navLinks = [
-  { label: 'Services', href: '#services' },
+  { label: 'Services', href: '#services', hasDropdown: true },
   { label: 'About', href: '#about' },
   { label: 'Portfolio', href: '#portfolio' },
   { label: 'Team', href: '#team' },
   { label: 'Contact', href: '#contact' },
 ];
 
+const servicesDropdown = [
+  {
+    icon: Code2,
+    title: 'Custom Software Development',
+    description: 'End-to-end custom software solutions.',
+  },
+  {
+    icon: Cloud,
+    title: 'Cloud Solutions',
+    description: 'Scalable cloud infrastructure and migration.',
+  },
+  {
+    icon: Brain,
+    title: 'AI & Machine Learning',
+    description: 'Intelligent AI/ML powered solutions.',
+  },
+  {
+    icon: Smartphone,
+    title: 'Mobile App Development',
+    description: 'Native and cross-platform mobile apps.',
+  },
+  {
+    icon: Palette,
+    title: 'UI/UX Design',
+    description: 'Human-centered design experiences.',
+  },
+  {
+    icon: Settings,
+    title: 'DevOps & Automation',
+    description: 'CI/CD, containerization, and IaC.',
+  },
+];
+
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,10 +75,25 @@ export default function Navigation() {
 
   const scrollTo = (href: string) => {
     setMobileOpen(false);
+    setDropdownOpen(false);
     const el = document.querySelector(href);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handleDropdownEnter = () => {
+    if (dropdownTimeoutRef.current) {
+      clearTimeout(dropdownTimeoutRef.current);
+      dropdownTimeoutRef.current = null;
+    }
+    setDropdownOpen(true);
+  };
+
+  const handleDropdownLeave = () => {
+    dropdownTimeoutRef.current = setTimeout(() => {
+      setDropdownOpen(false);
+    }, 150);
   };
 
   return (
@@ -81,24 +132,95 @@ export default function Navigation() {
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
-              <button
+              <div
                 key={link.href}
-                onClick={() => scrollTo(link.href)}
-                className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${
-                  activeSection === link.href.replace('#', '')
-                    ? scrolled ? 'text-[#0066FF]' : 'text-white'
-                    : scrolled ? 'text-gray-600 hover:text-[#0066FF] hover:bg-blue-50' : 'text-white/80 hover:text-white hover:bg-white/10'
-                }`}
+                className="relative"
+                onMouseEnter={link.hasDropdown ? handleDropdownEnter : undefined}
+                onMouseLeave={link.hasDropdown ? handleDropdownLeave : undefined}
               >
-                {link.label}
-                {activeSection === link.href.replace('#', '') && (
-                  <motion.div
-                    layoutId="activeNav"
-                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-5 h-0.5 bg-[#0066FF] rounded-full"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
+                <button
+                  onClick={() => {
+                    if (!link.hasDropdown) {
+                      scrollTo(link.href);
+                    }
+                  }}
+                  className={`relative px-4 py-2 text-sm font-medium rounded-lg transition-colors duration-200 flex items-center gap-1 ${
+                    activeSection === link.href.replace('#', '')
+                      ? scrolled ? 'text-[#0066FF]' : 'text-white'
+                      : scrolled ? 'text-gray-600 hover:text-[#0066FF] hover:bg-blue-50' : 'text-white/80 hover:text-white hover:bg-white/10'
+                  }`}
+                >
+                  {link.label}
+                  {link.hasDropdown && (
+                    <svg
+                      className={`w-3.5 h-3.5 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`}
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  )}
+                  {activeSection === link.href.replace('#', '') && (
+                    <motion.div
+                      layoutId="activeNav"
+                      className="absolute bottom-0 left-1/2 -translate-x-1/2 w-5 h-0.5 bg-[#0066FF] rounded-full"
+                      transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                    />
+                  )}
+                </button>
+
+                {/* Services Dropdown */}
+                {link.hasDropdown && (
+                  <AnimatePresence>
+                    {dropdownOpen && (
+                      <motion.div
+                        ref={dropdownRef}
+                        initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.98 }}
+                        transition={{ duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+                        className={`absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[540px] rounded-2xl shadow-2xl border p-6 z-50 ${
+                          scrolled ? 'bg-white border-gray-100' : 'bg-white border-gray-100'
+                        }`}
+                        onMouseEnter={handleDropdownEnter}
+                        onMouseLeave={handleDropdownLeave}
+                      >
+                        <div className="grid grid-cols-2 gap-1">
+                          {servicesDropdown.map((service) => (
+                            <button
+                              key={service.title}
+                              onClick={() => scrollTo('#services')}
+                              className="flex items-start gap-3 p-3 rounded-xl text-left transition-colors duration-200 hover:bg-blue-50 group/item"
+                            >
+                              <div className="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center flex-shrink-0 group-hover/item:bg-[#0066FF] transition-colors duration-200">
+                                <service.icon className="w-4.5 h-4.5 text-[#0066FF] group-hover/item:text-white transition-colors duration-200" />
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm font-semibold text-[#0A1628] group-hover/item:text-[#0066FF] transition-colors duration-200 leading-tight">
+                                  {service.title}
+                                </p>
+                                <p className="text-xs text-gray-400 mt-0.5 line-clamp-1">
+                                  {service.description}
+                                </p>
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                        <div className="mt-4 pt-4 border-t border-gray-100">
+                          <button
+                            onClick={() => scrollTo('#services')}
+                            className="flex items-center justify-center gap-2 w-full text-sm font-medium text-[#0066FF] hover:text-[#0052CC] transition-colors py-1"
+                          >
+                            View All Services
+                            <ArrowRight className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
                 )}
-              </button>
+              </div>
             ))}
           </div>
 
