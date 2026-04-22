@@ -55,16 +55,39 @@ export default function Contact() {
 
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
 
-    setIsSubmitting(false);
-    setFormData({ name: '', email: '', company: '', service: '', message: '' });
+      const data = await res.json();
 
-    toast({
-      title: 'Message sent successfully!',
-      description: 'We\'ll get back to you within 24 hours.',
-    });
+      if (!res.ok || !data.success) {
+        toast({
+          title: 'Submission failed',
+          description: data.message || 'Something went wrong. Please try again.',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      setFormData({ name: '', email: '', company: '', service: '', message: '' });
+
+      toast({
+        title: 'Message sent successfully!',
+        description: data.summary || "We'll get back to you within 24 hours.",
+      });
+    } catch {
+      toast({
+        title: 'Network error',
+        description: 'Unable to reach the server. Please check your connection and try again.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -85,9 +108,9 @@ export default function Contact() {
             </p>
 
             <div className="space-y-5">
-              <div className="flex items-start gap-4">
-                <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
-                  <MapPin className="w-5 h-5 text-[#0066FF]" />
+              <div className="flex items-start gap-4 group">
+                <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 group-hover:bg-[#0066FF] group-hover:text-white transition-all duration-300">
+                  <MapPin className="w-5 h-5 text-[#0066FF] group-hover:text-white transition-colors duration-300" />
                 </div>
                 <div>
                   <h4 className="font-semibold text-[#0A1628] text-sm mb-1">Office Address</h4>
@@ -97,9 +120,9 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
-                  <Mail className="w-5 h-5 text-[#0066FF]" />
+              <div className="flex items-start gap-4 group">
+                <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 group-hover:bg-[#0066FF] group-hover:text-white transition-all duration-300">
+                  <Mail className="w-5 h-5 text-[#0066FF] group-hover:text-white transition-colors duration-300" />
                 </div>
                 <div>
                   <h4 className="font-semibold text-[#0A1628] text-sm mb-1">Email</h4>
@@ -107,14 +130,40 @@ export default function Contact() {
                 </div>
               </div>
 
-              <div className="flex items-start gap-4">
-                <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0">
-                  <Phone className="w-5 h-5 text-[#0066FF]" />
+              <div className="flex items-start gap-4 group">
+                <div className="w-11 h-11 rounded-xl bg-blue-50 flex items-center justify-center shrink-0 group-hover:bg-[#0066FF] group-hover:text-white transition-all duration-300">
+                  <Phone className="w-5 h-5 text-[#0066FF] group-hover:text-white transition-colors duration-300" />
                 </div>
                 <div>
                   <h4 className="font-semibold text-[#0A1628] text-sm mb-1">Phone</h4>
                   <p className="text-gray-500 text-sm">+1 (555) 123-4567</p>
                 </div>
+              </div>
+            </div>
+
+            {/* Working Hours Card */}
+            <div className="mt-8 bg-gradient-to-br from-blue-50 to-blue-100/30 rounded-xl border border-blue-100/60 p-5">
+              <h4 className="text-sm font-semibold text-[#0A1628] mb-3">Working Hours</h4>
+              <div className="space-y-2 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Monday - Friday</span>
+                  <span className="font-medium text-[#0A1628]">9:00 AM - 6:00 PM PST</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Saturday</span>
+                  <span className="font-medium text-[#0A1628]">10:00 AM - 2:00 PM PST</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-500">Sunday</span>
+                  <span className="font-medium text-gray-400">Closed</span>
+                </div>
+              </div>
+              <div className="mt-3 pt-3 border-t border-blue-200/40 flex items-center gap-2">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500" />
+                </span>
+                <span className="text-xs text-green-700 font-medium">Available for new projects</span>
               </div>
             </div>
 

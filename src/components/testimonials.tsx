@@ -131,13 +131,18 @@ export default function Testimonials() {
                   <CarouselItem key={testimonial.name} className="pl-4 md:basis-1/2 lg:basis-1/3">
                     <motion.div
                       whileHover={{ y: -4 }}
-                      className="bg-white rounded-2xl border border-gray-100 p-6 h-full hover:shadow-lg hover:shadow-blue-500/5 transition-shadow duration-300"
+                      className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 h-full hover:shadow-lg hover:shadow-blue-500/5 hover:border-blue-100 transition-all duration-300"
                     >
                       {/* Quote icon */}
                       <Quote className="w-8 h-8 text-blue-100 mb-4" />
 
                       {/* Stars */}
-                      <Stars count={testimonial.rating} />
+                      <div className="flex items-center gap-3 mb-4">
+                        <Stars count={testimonial.rating} />
+                        <span className="text-xs font-medium text-amber-600/80 bg-amber-50 px-2 py-0.5 rounded-full">
+                          {testimonial.rating}.0
+                        </span>
+                      </div>
 
                       {/* Quote */}
                       <p className="text-gray-600 text-sm leading-relaxed mt-4 mb-6 line-clamp-4">

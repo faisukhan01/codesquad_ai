@@ -64,7 +64,7 @@ function BlogCard({
       <motion.article
         whileHover={{ y: -6 }}
         transition={{ duration: 0.3 }}
-        className="group bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 h-full flex flex-col"
+        className="group bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-xl hover:border-blue-100 transition-all duration-300 h-full flex flex-col"
       >
         {/* Image */}
         <div className="relative h-48 overflow-hidden">

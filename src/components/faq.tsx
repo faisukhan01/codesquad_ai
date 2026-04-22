@@ -67,28 +67,30 @@ export default function FAQ() {
 
         {/* FAQ Items */}
         <AnimatedSection variant="fade-up" delay={0.2}>
-          <Accordion type="single" collapsible className="w-full">
-            {faqs.map((faq, index) => (
-              <AccordionItem
-                key={index}
-                value={`item-${index}`}
-                className="border-b border-gray-100"
-              >
-                <CustomTrigger>
-                  <div className="flex items-center justify-between gap-4 pr-4">
-                    <span>{faq.question}</span>
-                    <div className="relative flex-shrink-0 w-6 h-6 flex items-center justify-center">
-                      <Plus className="w-4 h-4 text-[#0066FF] custom-icon" />
-                      <Minus className="w-4 h-4 text-[#0066FF] custom-icon-open hidden" />
+          <div className="bg-gray-50/60 rounded-2xl border border-gray-100 overflow-hidden">
+            <Accordion type="single" collapsible className="w-full">
+              {faqs.map((faq, index) => (
+                <AccordionItem
+                  key={index}
+                  value={`item-${index}`}
+                  className="border-b border-gray-100 last:border-b-0"
+                >
+                  <CustomTrigger>
+                    <div className="flex items-center justify-between gap-4 pr-4">
+                      <span className="transition-colors duration-200">{faq.question}</span>
+                      <div className="relative flex-shrink-0 w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center transition-colors duration-200 group-data-[state=open]:bg-[#0066FF] group-data-[state=open]:text-white">
+                        <Plus className="w-3.5 h-3.5 text-[#0066FF] custom-icon transition-colors duration-200" />
+                        <Minus className="w-3.5 h-3.5 text-[#0066FF] custom-icon-open hidden" />
+                      </div>
                     </div>
-                  </div>
-                </CustomTrigger>
-                <AccordionContent className="text-gray-500 leading-relaxed px-1">
-                  {faq.answer}
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+                  </CustomTrigger>
+                  <AccordionContent className="text-gray-500 leading-relaxed px-1 pb-5">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </AnimatedSection>
       </div>
     </section>

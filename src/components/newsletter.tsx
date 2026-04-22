@@ -75,8 +75,8 @@ export default function Newsletter() {
           </p>
         </motion.div>
 
-        {/* Email Form */}
-        <motion.form
+          {/* Email Form */}
+          <motion.form
           onSubmit={handleSubmit}
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -84,7 +84,7 @@ export default function Newsletter() {
           className="flex flex-col sm:flex-row items-center gap-3 max-w-lg mx-auto"
         >
           <div className="relative w-full">
-            <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
             <Input
               type="email"
               placeholder="Enter your email address"
