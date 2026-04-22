@@ -100,7 +100,7 @@ function PortfolioCard({ item, onOpen }: { item: PortfolioItem; onOpen: () => vo
       <motion.div
         whileHover={{ y: -6 }}
         transition={{ duration: 0.3 }}
-        className="group relative rounded-2xl overflow-hidden cursor-pointer border border-gray-100 bg-white shadow-sm hover:shadow-xl transition-all duration-300 h-full"
+        className="group relative rounded-2xl overflow-hidden cursor-pointer border border-gray-100 bg-white shadow-sm hover:shadow-xl hover:shadow-blue-500/8 hover:border-gray-200 transition-all duration-300 h-full"
         onClick={onOpen}
       >
         {/* Image */}
@@ -132,19 +132,19 @@ function PortfolioCard({ item, onOpen }: { item: PortfolioItem; onOpen: () => vo
         </div>
 
         {/* Card Footer */}
-        <div className="p-5">
-          <div className="flex items-center justify-between mb-3">
+        <div className="p-5 sm:p-6">
+          <div className="flex items-center justify-between mb-2">
             <h3 className="text-lg font-semibold text-[#0A1628] group-hover:text-[#0066FF] transition-colors duration-300">
               {item.title}
             </h3>
-            <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-[#0066FF] transition-colors duration-300" />
+            <ExternalLink className="w-4 h-4 text-gray-300 group-hover:text-[#0066FF] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
           </div>
-          <p className="text-sm text-gray-500 mb-4">{item.description}</p>
+          <p className="text-sm text-gray-500 mb-4 leading-relaxed">{item.description}</p>
           <div className="flex flex-wrap gap-2">
             {item.tags.map((tag) => (
               <span
                 key={tag}
-                className="inline-flex items-center px-2.5 py-1 rounded-md bg-blue-50 text-[#0066FF] text-xs font-medium"
+                className="inline-flex items-center px-2.5 py-1 rounded-md bg-gray-50 border border-gray-100 text-gray-600 text-xs font-medium group-hover:bg-blue-50 group-hover:text-[#0066FF] group-hover:border-blue-100 transition-colors duration-300"
               >
                 {tag}
               </span>

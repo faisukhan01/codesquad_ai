@@ -1,12 +1,15 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Phone, Sparkles, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AnimatedSection } from '@/components/animated-section';
+import ScheduleCallModal from '@/components/schedule-call-modal';
 
 export default function CTASection() {
+  const [callModalOpen, setCallModalOpen] = useState(false);
+
   return (
     <section className="relative py-24 md:py-32 overflow-hidden">
       {/* Background */}
@@ -84,6 +87,7 @@ export default function CTASection() {
             <Button
               size="lg"
               variant="outline"
+              onClick={() => setCallModalOpen(true)}
               className="border-2 border-white/30 text-white hover:bg-white/10 hover:border-white/50 rounded-xl px-8 h-13 text-base backdrop-blur-sm transition-all duration-300 group"
             >
               <Phone className="w-4 h-4 mr-2" />
@@ -91,6 +95,8 @@ export default function CTASection() {
             </Button>
           </div>
         </AnimatedSection>
+
+        <ScheduleCallModal open={callModalOpen} onOpenChange={setCallModalOpen} />
       </div>
     </section>
   );
