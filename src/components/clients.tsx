@@ -459,20 +459,6 @@ export default function Clients() {
             Powering innovation with the world&apos;s leading technologies.
             Join thousands of teams building the future.
           </p>
-
-          {/* Stats row */}
-          <div className="flex items-center justify-center gap-8 sm:gap-12 mt-8">
-            {[
-              { value: '500+', label: 'Companies' },
-              { value: '50K+', label: 'Developers' },
-              { value: '99.9%', label: 'Uptime' },
-            ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-xl sm:text-2xl font-bold text-gray-900">{stat.value}</div>
-                <div className="text-xs sm:text-sm text-gray-400 mt-0.5">{stat.label}</div>
-              </div>
-            ))}
-          </div>
         </AnimatedSection>
       </div>
 

@@ -21,6 +21,16 @@ const heroSlides = [
     heading: 'Your Trusted Technology Partner',
     subheading: 'Partner with a team of 200+ experts delivering scalable, reliable, and future-ready solutions.',
   },
+  {
+    image: '/images/hero-bg-4.jpg',
+    heading: 'Scaling Businesses with AI',
+    subheading: 'Leverage machine learning, computer vision, and intelligent automation to unlock new levels of efficiency and growth.',
+  },
+  {
+    image: '/images/hero-bg-5.jpg',
+    heading: 'End-to-End Product Development',
+    subheading: 'From ideation and design to development and deployment — we handle the full lifecycle so you can focus on what matters most.',
+  },
 ];
 
 export default function Hero() {
@@ -173,12 +183,11 @@ export default function Hero() {
             >
               <Button
                 size="lg"
-                variant="outline"
-                className="border-white/25 text-white hover:bg-white/10 hover:border-white/40 rounded-lg px-8 h-12 text-base font-medium backdrop-blur-sm transition-all duration-300 group w-full sm:w-auto"
+                className="bg-transparent border-2 border-white/30 text-white hover:bg-white/10 hover:border-white/50 rounded-lg px-8 h-12 text-base font-medium backdrop-blur-sm transition-all duration-300 group w-full sm:w-auto"
               >
                 <Phone className="w-4 h-4 mr-2.5" />
                 Book a Free Call
-                <ChevronRight className="w-4 h-4 ml-1.5 group-hover:translate-x-0.5 transition-transform opacity-60" />
+                <ChevronRight className="w-4 h-4 ml-1.5 group-hover:translate-x-0.5 transition-transform" />
               </Button>
             </a>
           </motion.div>

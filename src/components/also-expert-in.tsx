@@ -27,6 +27,7 @@ import {
   Terminal,
 } from 'lucide-react';
 import { AnimatedSection } from '@/components/animated-section';
+import SectionHeader from '@/components/section-header';
 
 /* ── Row 1: Core Practices ── */
 const row1 = [
@@ -71,9 +72,11 @@ function Chip({
     <motion.div
       whileHover={{ y: -2 }}
       transition={{ duration: 0.2 }}
-      className="inline-flex items-center gap-2.5 mx-3 sm:mx-4 py-2.5 px-5 rounded-full bg-white border border-gray-200/80 text-gray-600 text-sm font-medium select-none cursor-default shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:border-[#0066FF]/40 hover:shadow-[0_4px_12px_rgba(0,102,255,0.08)] hover:text-[#0066FF] transition-colors duration-300 whitespace-nowrap"
+      className="inline-flex items-center gap-2.5 mx-3 sm:mx-4 py-3 px-6 rounded-full bg-white border border-gray-200/80 text-gray-600 text-sm font-medium select-none cursor-default shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:border-[#0066FF]/40 hover:shadow-[0_4px_12px_rgba(0,102,255,0.08)] hover:text-[#0066FF] transition-colors duration-300 whitespace-nowrap"
     >
-      <Icon className="h-4 w-4 shrink-0 opacity-70" />
+      <span className="w-7 h-7 rounded-lg bg-gradient-to-br from-blue-50 to-blue-100/60 flex items-center justify-center shrink-0">
+        <Icon className="h-3.5 w-3.5 text-blue-500" />
+      </span>
       {name}
     </motion.div>
   );
@@ -81,43 +84,44 @@ function Chip({
 
 export default function AlsoExpertIn() {
   return (
-    <section className="py-16 md:py-20 bg-gradient-to-b from-white to-gray-50/50 overflow-hidden">
-      {/* ── Section Header ── */}
-      <AnimatedSection variant="fade-up" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 md:mb-14">
-        <div className="text-center">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 tracking-tight">
-            Also Expert In
-          </h2>
-          <p className="mt-3 text-gray-500 text-base sm:text-lg max-w-lg mx-auto">
-            Complementary technologies we master
-          </p>
-        </div>
-      </AnimatedSection>
+    <section className="relative py-16 md:py-20 overflow-hidden">
+      {/* Subtle background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white to-gray-50/50" />
 
-      {/* ── Row 1: Left → Right ── */}
-      <AnimatedSection variant="fade-up" delay={0.15} className="mb-5">
-        <div className="marquee-container">
-          <div className="flex animate-marquee whitespace-nowrap">
-            {[...row1, ...row1, ...row1].map((item, i) => (
-              <Chip key={`r1-${item.name}-${i}`} name={item.name} Icon={item.icon} />
-            ))}
-          </div>
-        </div>
-      </AnimatedSection>
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* ── Section Header ── */}
+        <AnimatedSection variant="fade-up" className="mb-10 md:mb-12">
+          <SectionHeader
+            label="Technologies"
+            title="Also Expert In"
+          />
+        </AnimatedSection>
 
-      {/* ── Row 2: Right → Left (reverse direction) ── */}
-      <AnimatedSection variant="fade-up" delay={0.3}>
-        <div className="marquee-container">
-          <div
-            className="flex animate-marquee-slow whitespace-nowrap"
-            style={{ animationDirection: 'reverse' }}
-          >
-            {[...row2, ...row2, ...row2].map((item, i) => (
-              <Chip key={`r2-${item.name}-${i}`} name={item.name} Icon={item.icon} />
-            ))}
+        {/* ── Row 1: Left → Right ── */}
+        <AnimatedSection variant="fade-up" delay={0.1} className="mb-4">
+          <div className="marquee-container">
+            <div className="flex animate-marquee whitespace-nowrap">
+              {[...row1, ...row1, ...row1].map((item, i) => (
+                <Chip key={`r1-${item.name}-${i}`} name={item.name} Icon={item.icon} />
+              ))}
+            </div>
           </div>
-        </div>
-      </AnimatedSection>
+        </AnimatedSection>
+
+        {/* ── Row 2: Right → Left (reverse direction) ── */}
+        <AnimatedSection variant="fade-up" delay={0.2} className="mb-10 md:mb-12">
+          <div className="marquee-container">
+            <div
+              className="flex animate-marquee-slow whitespace-nowrap"
+              style={{ animationDirection: 'reverse' }}
+            >
+              {[...row2, ...row2, ...row2].map((item, i) => (
+                <Chip key={`r2-${item.name}-${i}`} name={item.name} Icon={item.icon} />
+              ))}
+            </div>
+          </div>
+        </AnimatedSection>
+      </div>
     </section>
   );
 }

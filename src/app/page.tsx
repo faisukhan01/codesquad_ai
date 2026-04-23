@@ -8,10 +8,8 @@ import Hero from '@/components/hero';
 import Clients from '@/components/clients';
 import Services from '@/components/services';
 import AlsoExpertIn from '@/components/also-expert-in';
-import Industries from '@/components/industries';
-import WhyChooseUs from '@/components/why-choose-us';
 import Process from '@/components/process';
-import Portfolio from '@/components/portfolio';
+import Industries from '@/components/industries';
 import Resources from '@/components/resources';
 import CTASection from '@/components/cta-section';
 import Contact from '@/components/contact';
@@ -19,7 +17,6 @@ import FAQ from '@/components/faq';
 import Footer from '@/components/footer';
 import LiveChat from '@/components/live-chat';
 import CookieConsent from '@/components/cookie-consent';
-import BackToTop from '@/components/back-to-top';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -39,10 +36,8 @@ export default function Home() {
         <Clients />
         <Services />
         <AlsoExpertIn />
-        <WhyChooseUs />
         <Process />
         <Industries />
-        <Portfolio />
         <Resources />
         <FAQ />
         <CTASection />
@@ -51,7 +46,6 @@ export default function Home() {
       <Footer />
       <LiveChat />
       <CookieConsent />
-      <BackToTop />
     </div>
   );
 }

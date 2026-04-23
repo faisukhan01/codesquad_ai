@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send } from 'lucide-react';
+import { MessageCircle, X, Send, Headphones } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -459,7 +459,7 @@ export default function LiveChat() {
               exit={{ rotate: -90, opacity: 0 }}
               transition={{ duration: 0.15 }}
             >
-              <MessageCircle className="h-6 w-6" />
+              <Headphones className="h-6 w-6" />
             </motion.div>
           )}
         </AnimatePresence>
