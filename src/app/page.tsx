@@ -13,6 +13,7 @@ import About from '@/components/about';
 import CompanyValues from '@/components/company-values';
 import Awards from '@/components/awards';
 import Technologies from '@/components/technologies';
+import AIShowcase from '@/components/ai-showcase';
 import Process from '@/components/process';
 import Portfolio from '@/components/portfolio';
 import Testimonials from '@/components/testimonials';
@@ -61,6 +62,7 @@ export default function Home() {
         <Awards />
         <div className="gradient-divider max-w-7xl mx-auto" />
         <Technologies />
+        <AIShowcase />
         <Process />
         <Industries />
         <Portfolio />

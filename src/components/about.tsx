@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Users, Zap, Globe, TrendingUp, CheckCircle, ArrowRight, Award, Shield, Target, Lightbulb } from 'lucide-react';
+import { Users, Zap, Globe, TrendingUp, CheckCircle, ArrowRight, Award, Shield, Target, Lightbulb, BookOpen, Heart } from 'lucide-react';
 import { AnimatedSection, AnimatedItem } from '@/components/animated-section';
 import SectionHeader from '@/components/section-header';
 
@@ -85,8 +85,12 @@ function AnimatedCounter({ target, suffix }: { target: number; suffix: string })
 
 export default function About() {
   return (
-    <section id="about" className="section-padding bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="about" className="section-padding bg-white relative overflow-hidden">
+      {/* Subtle background accent */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-blue-50/60 via-cyan-50/30 to-transparent rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-violet-50/40 to-transparent rounded-full blur-3xl pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <SectionHeader
           label="About CodeSquad"
@@ -94,8 +98,22 @@ export default function About() {
           description="We are a team of passionate engineers, designers, and strategists dedicated to building exceptional digital products that drive measurable results."
         />
 
+        {/* Our Story Narrative */}
+        <AnimatedSection variant="fade-up" className="mb-14">
+          <div className="max-w-3xl mx-auto text-center">
+            <div className="relative inline-block mb-6">
+              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#0066FF] to-[#0052CC] flex items-center justify-center shadow-lg shadow-blue-500/15 mx-auto">
+                <BookOpen className="w-5 h-5 text-white" />
+              </div>
+            </div>
+            <p className="text-gray-600 text-lg leading-relaxed">
+              Founded in 2017, CodeSquad began with a simple mission: <span className="font-semibold text-[#0A1628]">bridge the gap between ambitious ideas and world-class technology</span>. What started as a small team of 5 engineers has grown into a 100+ strong global workforce delivering transformative solutions across 15+ countries. We believe in transparent partnerships, relentless innovation, and building software that doesn&apos;t just work — it <span className="text-[#0066FF] font-medium">inspires</span>.
+            </p>
+          </div>
+        </AnimatedSection>
+
         {/* Two-Column Layout */}
-        <AnimatedSection variant="stagger-children" className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-16">
+        <AnimatedSection variant="stagger-children" className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center mb-20">
           {/* Left: Image with premium treatment */}
           <AnimatedItem key="image" variant="fade-right" delay={0.1}>
             <div className="relative">
@@ -129,11 +147,29 @@ export default function About() {
                 </div>
               </motion.div>
 
+              {/* Second floating card - projects count */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.6, duration: 0.5 }}
+                className="absolute -top-4 -left-4 sm:-left-6 bg-white rounded-2xl shadow-xl shadow-gray-900/10 border border-gray-100/80 p-3 sm:p-4 premium-card-glow hidden sm:block"
+              >
+                <div className="flex items-center gap-2.5">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center shadow-md shadow-emerald-500/20">
+                    <CheckCircle className="w-4 h-4 text-white" />
+                  </div>
+                  <div>
+                    <p className="text-xl font-bold text-[#0A1628] leading-none">200+</p>
+                    <p className="text-[11px] text-gray-500 mt-0.5">Projects</p>
+                  </div>
+                </div>
+              </motion.div>
+
               {/* Floating accent shapes */}
-              <div className="absolute -top-4 -left-4 w-20 h-20 bg-gradient-to-br from-[#0066FF]/10 to-cyan-500/10 rounded-2xl -z-10 rotate-6" />
               <div className="absolute -bottom-3 -left-3 w-14 h-14 bg-gradient-to-br from-[#338AFF]/10 to-blue-400/10 rounded-xl -z-10 -rotate-3" />
 
-              {/* Decorative dots */}
+              {/* Decorative animated dots */}
               <div className="absolute top-1/2 -right-10 w-3 h-3 rounded-full bg-[#0066FF]/20 animate-breathe hidden lg:block" />
               <div className="absolute top-1/3 -left-8 w-2 h-2 rounded-full bg-cyan-400/30 animate-float-delayed hidden lg:block" />
             </div>
@@ -141,20 +177,24 @@ export default function About() {
 
           {/* Right: Features with premium cards */}
           <AnimatedItem key="features" variant="fade-left" delay={0.2}>
-            <div className="space-y-4">
+            <div className="space-y-5">
               {features.map((feature, idx) => (
                 <motion.div
                   key={feature.title}
                   whileHover={{ x: 6, transition: { duration: 0.3 } }}
-                  className="flex gap-4 p-4 sm:p-5 rounded-xl bg-white border border-gray-100/80 shadow-sm hover:shadow-lg hover:shadow-blue-500/5 hover:border-blue-200/50 transition-all duration-300 group premium-card-glow"
+                  className="flex gap-5 p-5 rounded-xl bg-white border border-gray-100/80 hover:shadow-lg hover:shadow-blue-500/5 hover:border-blue-200/50 transition-all duration-300 group premium-card-glow"
+                  style={{
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.02), 0 4px 12px rgba(0,0,0,0.02)',
+                  }}
                 >
-                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.accent} flex items-center justify-center shrink-0 shadow-md group-hover:scale-110 group-hover:shadow-lg transition-all duration-300`}>
-                    <feature.icon className="w-5 h-5 text-white icon-hover-float" />
+                  {/* Larger icon with gradient bg */}
+                  <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${feature.accent} flex items-center justify-center shrink-0 shadow-lg group-hover:scale-110 group-hover:shadow-xl transition-all duration-300`}>
+                    <feature.icon className="w-6 h-6 text-white icon-hover-float" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center justify-between mb-1">
-                      <h4 className="font-semibold text-[#0A1628] text-sm">{feature.title}</h4>
-                      <span className="text-[11px] font-bold text-[#0066FF]/70 bg-[#0066FF]/5 px-2 py-0.5 rounded-full shrink-0 ml-2">
+                    <div className="flex items-center justify-between mb-1.5">
+                      <h4 className="font-bold text-[#0A1628] text-[15px]">{feature.title}</h4>
+                      <span className="text-[11px] font-bold text-[#0066FF]/70 bg-[#0066FF]/5 px-2.5 py-0.5 rounded-full shrink-0 ml-2">
                         {feature.stat}
                       </span>
                     </div>
@@ -184,7 +224,7 @@ export default function About() {
         </AnimatedSection>
 
         {/* Differentiator strip */}
-        <AnimatedSection variant="fade-up" className="mb-16">
+        <AnimatedSection variant="fade-up" className="mb-20">
           <div className="bg-gradient-to-r from-[#0A1628] via-[#0d1f35] to-[#0A1628] rounded-2xl p-6 sm:p-8 relative overflow-hidden">
             {/* Background decoration */}
             <div className="absolute inset-0 grid-pattern opacity-20" />
@@ -192,7 +232,7 @@ export default function About() {
             <div className="absolute bottom-0 left-0 w-36 h-36 bg-cyan-500/5 rounded-full blur-3xl" />
 
             <div className="relative z-10 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
-              {differentiators.map((item, idx) => (
+              {differentiators.map((item) => (
                 <div key={item.text} className="flex items-center gap-3 justify-center sm:justify-start">
                   <div className="w-10 h-10 rounded-lg bg-white/8 border border-white/10 flex items-center justify-center shrink-0">
                     <item.icon className="w-4 h-4 text-blue-300" />
@@ -204,24 +244,42 @@ export default function About() {
           </div>
         </AnimatedSection>
 
-        {/* Stats Row */}
+        {/* Stats Row with improved design */}
         <AnimatedSection variant="stagger-children">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5 sm:gap-6">
             {stats.map((stat) => (
               <AnimatedItem key={stat.label} variant="fade-up" delay={0.05}>
-                <div className="premium-card rounded-2xl p-5 sm:p-6 text-center overflow-hidden group">
-                  <stat.icon className="w-5 h-5 text-[#0066FF]/40 mx-auto mb-3 group-hover:text-[#0066FF] group-hover:scale-110 transition-all duration-300" />
-                  <div className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-1">
-                    <span className="gradient-text">
+                <motion.div
+                  whileHover={{ y: -4, transition: { duration: 0.3 } }}
+                  className="bg-white rounded-2xl p-6 sm:p-7 text-center overflow-hidden group border border-gray-100/80 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/5 hover:border-blue-200/50"
+                  style={{
+                    boxShadow: '0 1px 3px rgba(0,0,0,0.02), 0 8px 24px rgba(0,0,0,0.03)',
+                  }}
+                >
+                  {/* Animated icon with gradient background */}
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0066FF]/10 to-[#338AFF]/10 flex items-center justify-center mx-auto mb-4 group-hover:from-[#0066FF] group-hover:to-[#0052CC] group-hover:shadow-lg group-hover:shadow-blue-500/20 transition-all duration-400">
+                    <stat.icon className="w-5 h-5 text-[#0066FF] group-hover:text-white transition-colors duration-400" />
+                  </div>
+                  <div className="text-3xl sm:text-4xl font-bold mb-1.5">
+                    <span className="gradient-text counter-glow">
                       <AnimatedCounter target={stat.value} suffix={stat.suffix} />
                     </span>
                   </div>
-                  <div className="text-xs sm:text-sm text-gray-500 font-medium">{stat.label}</div>
-                </div>
+                  <div className="text-sm text-gray-500 font-medium">{stat.label}</div>
+                </motion.div>
               </AnimatedItem>
             ))}
           </div>
         </AnimatedSection>
+
+        {/* Subtle animated accent element */}
+        <div className="mt-20 flex justify-center">
+          <motion.div
+            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.6, 0.3] }}
+            transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+            className="w-2 h-2 rounded-full bg-[#0066FF]/30"
+          />
+        </div>
       </div>
     </section>
   );
