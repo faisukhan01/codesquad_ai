@@ -2,83 +2,68 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import {
-  Zap,
-  Shield,
-  Clock,
-  Headphones,
-  Globe2,
-  Lightbulb,
-} from 'lucide-react';
+import { Target, TrendingUp, Zap, Users, Shield, Headphones } from 'lucide-react';
 import { AnimatedSection, AnimatedItem } from '@/components/animated-section';
 import SectionHeader from '@/components/section-header';
 
 const differentiators = [
   {
+    icon: Target,
+    title: 'Industry Expertise',
+    description: 'Deep domain knowledge across healthcare, agriculture, and computer vision.',
+    stat: '5+ Industries',
+  },
+  {
+    icon: TrendingUp,
+    title: 'Proven Track Record',
+    description: '200+ projects delivered with 99% client satisfaction rate.',
+    stat: '200+ Projects',
+  },
+  {
     icon: Zap,
-    title: 'Rapid Delivery',
-    description: 'From concept to launch in record time with our accelerated development methodology.',
-    stat: '2x',
-    statLabel: 'Faster',
+    title: 'Agile Development',
+    description: 'Sprint-based delivery with continuous feedback and rapid iteration.',
+    stat: '2x Faster',
+  },
+  {
+    icon: Users,
+    title: 'Dedicated Teams',
+    description: 'Experienced engineers fully embedded in your project.',
+    stat: '100+ Engineers',
   },
   {
     icon: Shield,
-    title: 'Enterprise Security',
-    description: 'SOC 2 compliant with end-to-end encryption and rigorous security audits.',
-    stat: '99.9%',
-    statLabel: 'Uptime',
-  },
-  {
-    icon: Clock,
-    title: '24/7 Support',
-    description: 'Round-the-clock support with dedicated account managers and SLA guarantees.',
-    stat: '24/7',
-    statLabel: 'Coverage',
+    title: 'Security First',
+    description: 'HIPAA-compliant practices with enterprise-grade security.',
+    stat: 'SOC 2 Ready',
   },
   {
     icon: Headphones,
-    title: 'Dedicated Teams',
-    description: 'Handpicked engineers fully embedded in your team, culture, and workflow.',
-    stat: '100+',
-    statLabel: 'Engineers',
-  },
-  {
-    icon: Globe2,
-    title: 'Global Reach',
-    description: 'Serving clients across 15+ countries with localized expertise and delivery.',
-    stat: '15+',
-    statLabel: 'Countries',
-  },
-  {
-    icon: Lightbulb,
-    title: 'Innovation First',
-    description: 'Cutting-edge tech stack with AI-powered solutions and modern architectures.',
-    stat: '50+',
-    statLabel: 'AI Projects',
+    title: '24/7 Support',
+    description: 'Round-the-clock monitoring and support across time zones.',
+    stat: '24/7 Coverage',
   },
 ];
 
 export default function WhyChooseUs() {
   return (
-    <section className="section-padding bg-[#0A1628] relative overflow-hidden">
-      {/* Background effects */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0A1628] via-[#0d1f35] to-[#0A1628]" />
+    <section id="why-choose-us" className="section-padding relative overflow-hidden">
+      {/* Dark gradient background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-[#0A1628] via-[#0d1f35] to-[#0A1628]" />
+
+      {/* Grid pattern overlay */}
       <div className="absolute inset-0 grid-pattern opacity-20" />
 
-      {/* Decorative orbs */}
-      <div className="absolute top-1/4 left-1/6 w-72 h-72 bg-[#0066FF]/5 rounded-full blur-3xl animate-float" />
-      <div className="absolute bottom-1/4 right-1/6 w-96 h-96 bg-[#338AFF]/5 rounded-full blur-3xl animate-float-delayed" />
+      {/* Decorative gradient orbs */}
+      <div className="absolute top-1/4 -left-20 w-80 h-80 bg-[#0066FF]/8 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-[#338AFF]/6 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#0066FF]/3 rounded-full blur-[150px] pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeader
-          label="Why CodeSquad"
-          title={
-            <span>
-              Built Different.{' '}
-              <span className="gradient-text">Deliver Better.</span>
-            </span>
-          }
-          description="What sets us apart from the rest — the numbers speak for themselves."
+          label="Why Choose Us"
+          title="Built for Excellence"
+          description="The competitive advantages that make CodeSquad the right technology partner for your business."
           light
         />
 
@@ -89,34 +74,29 @@ export default function WhyChooseUs() {
           {differentiators.map((item) => (
             <AnimatedItem key={item.title} variant="fade-up" delay={0.08}>
               <motion.div
-                whileHover={{ y: -4, transition: { duration: 0.3 } }}
-                className="group glass rounded-2xl p-6 hover:bg-white/[0.08] transition-all duration-300 h-full"
+                whileHover={{ y: -6, transition: { duration: 0.3 } }}
+                className="group relative bg-white/5 border border-white/10 backdrop-blur-sm rounded-2xl p-7 hover:bg-white/[0.08] hover:border-white/20 transition-all duration-300 h-full cursor-default"
               >
-                <div className="flex items-start gap-4">
-                  {/* Icon */}
-                  <div className="w-12 h-12 rounded-xl bg-[#0066FF]/20 flex items-center justify-center shrink-0 group-hover:bg-[#0066FF]/30 transition-colors duration-300">
-                    <item.icon className="w-6 h-6 text-[#338AFF]" />
-                  </div>
+                {/* Icon container with gradient */}
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0066FF]/25 to-[#0066FF]/10 flex items-center justify-center mb-5 group-hover:from-[#0066FF]/35 group-hover:to-[#0066FF]/15 transition-all duration-300">
+                  <item.icon className="w-6 h-6 text-[#338AFF] group-hover:text-[#66A5FF] transition-colors duration-300" />
+                </div>
 
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <h3 className="text-base font-semibold text-white mb-1.5">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm text-blue-200/60 leading-relaxed mb-3">
-                      {item.description}
-                    </p>
+                {/* Title */}
+                <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-white transition-colors duration-300">
+                  {item.title}
+                </h3>
 
-                    {/* Stat */}
-                    <div className="flex items-baseline gap-1.5">
-                      <span className="text-2xl font-bold text-[#338AFF]">
-                        {item.stat}
-                      </span>
-                      <span className="text-xs text-blue-200/50 font-medium uppercase tracking-wider">
-                        {item.statLabel}
-                      </span>
-                    </div>
-                  </div>
+                {/* Description */}
+                <p className="text-sm text-blue-200/60 leading-relaxed mb-5">
+                  {item.description}
+                </p>
+
+                {/* Stat badge */}
+                <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-[#0066FF]/15 border border-[#0066FF]/20">
+                  <span className="text-xs font-bold text-[#66B2FF] tracking-wide">
+                    {item.stat}
+                  </span>
                 </div>
               </motion.div>
             </AnimatedItem>

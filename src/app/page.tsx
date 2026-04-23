@@ -9,7 +9,10 @@ import Clients from '@/components/clients';
 import Services from '@/components/services';
 import AlsoExpertIn from '@/components/also-expert-in';
 import Industries from '@/components/industries';
+import WhyChooseUs from '@/components/why-choose-us';
+import Process from '@/components/process';
 import Portfolio from '@/components/portfolio';
+import Testimonials from '@/components/testimonials';
 import Resources from '@/components/resources';
 import CTASection from '@/components/cta-section';
 import Contact from '@/components/contact';
@@ -37,8 +40,11 @@ export default function Home() {
         <Clients />
         <Services />
         <AlsoExpertIn />
+        <WhyChooseUs />
+        <Process />
         <Industries />
         <Portfolio />
+        <Testimonials />
         <Resources />
         <FAQ />
         <CTASection />
