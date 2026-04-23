@@ -2,108 +2,151 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FileText, BarChart3, BookOpen, ShieldCheck, Layout, Rocket, Download, ArrowRight } from 'lucide-react';
+import { FileText, BookOpen, Headphones, Download, ArrowRight, Clock, User } from 'lucide-react';
 import { AnimatedSection, AnimatedItem } from '@/components/animated-section';
 import SectionHeader from '@/components/section-header';
 
+const tabs = ['All', 'Articles', 'White Papers', 'Podcasts'];
+
 const resources = [
   {
+    type: 'Article',
     icon: FileText,
-    title: 'The Complete Guide to Cloud Migration',
-    description: 'A comprehensive roadmap for migrating your infrastructure to the cloud with minimal downtime and maximum efficiency.',
-    type: 'PDF Guide',
-    downloads: '2.4k downloads',
+    title: 'How AI is Revolutionizing Healthcare Diagnostics',
+    description: 'Explore the latest advancements in AI-powered medical imaging and diagnostic tools that are transforming patient care.',
+    author: 'Dr. Sarah Mitchell',
+    readTime: '8 min read',
+    date: 'Jan 15, 2025',
     gradient: 'from-blue-500 to-cyan-500',
+    tag: 'Healthcare',
   },
   {
-    icon: BarChart3,
-    title: '2025 State of Enterprise AI Report',
-    description: 'In-depth analysis of AI adoption trends, challenges, and opportunities across enterprise organizations worldwide.',
-    type: 'Whitepaper',
-    downloads: '1.8k downloads',
-    gradient: 'from-violet-500 to-purple-500',
-  },
-  {
+    type: 'White Paper',
     icon: BookOpen,
-    title: 'DevOps Best Practices Handbook',
-    description: 'Proven strategies and methodologies to streamline your development pipeline and boost team productivity.',
-    type: 'eBook',
-    downloads: '3.1k downloads',
+    title: 'The Future of Precision Agriculture: A Comprehensive Guide',
+    description: 'An in-depth analysis of how IoT, computer vision, and machine learning are shaping modern farming practices.',
+    author: 'James Chen',
+    readTime: '15 min read',
+    date: 'Jan 8, 2025',
     gradient: 'from-emerald-500 to-teal-500',
+    tag: 'Agriculture',
   },
   {
-    icon: ShieldCheck,
-    title: 'API Security Checklist',
-    description: 'Essential security measures and best practices to protect your APIs from common vulnerabilities and threats.',
-    type: 'Checklist',
-    downloads: '1.5k downloads',
-    gradient: 'from-amber-500 to-orange-500',
+    type: 'Podcast',
+    icon: Headphones,
+    title: 'TechTalk: Engineering IoT for Smart Manufacturing',
+    description: 'Listen to our CTO discuss real-world IoT implementations and their impact on industrial efficiency.',
+    author: 'CodeSquad Team',
+    readTime: '32 min listen',
+    date: 'Dec 28, 2024',
+    gradient: 'from-violet-500 to-purple-500',
+    tag: 'IoT',
   },
   {
-    icon: Layout,
-    title: 'Microservices Architecture Blueprint',
-    description: 'A practical template for designing, implementing, and scaling microservices-based applications effectively.',
-    type: 'Template',
-    downloads: '2.0k downloads',
-    gradient: 'from-rose-500 to-pink-500',
-  },
-  {
-    icon: Rocket,
-    title: 'Mobile App Launch Playbook',
-    description: 'Step-by-step guide to successfully plan, build, and launch your mobile application on any platform.',
-    type: 'Playbook',
-    downloads: '1.2k downloads',
+    type: 'Article',
+    icon: FileText,
+    title: 'Computer Vision in Quality Control: Lessons from 50+ Implementations',
+    description: 'Key insights and best practices from deploying computer vision systems across manufacturing facilities.',
+    author: 'Alex Rivera',
+    readTime: '6 min read',
+    date: 'Dec 20, 2024',
     gradient: 'from-sky-500 to-blue-500',
+    tag: 'Computer Vision',
+  },
+  {
+    type: 'White Paper',
+    icon: BookOpen,
+    title: 'HIPAA-Compliant Software Development: A Security-First Approach',
+    description: 'Essential guidelines for building healthcare applications that meet regulatory requirements without sacrificing innovation.',
+    author: 'Priya Sharma',
+    readTime: '12 min read',
+    date: 'Dec 12, 2024',
+    gradient: 'from-rose-500 to-pink-500',
+    tag: 'Healthcare',
+  },
+  {
+    type: 'Podcast',
+    icon: Headphones,
+    title: 'From Farm to Future: Digital Transformation in Agriculture',
+    description: 'Industry leaders share how technology is creating a new era of sustainable and efficient farming.',
+    author: 'CodeSquad Team',
+    readTime: '28 min listen',
+    date: 'Dec 5, 2024',
+    gradient: 'from-amber-500 to-orange-500',
+    tag: 'Agriculture',
   },
 ];
 
 export default function Resources() {
   return (
-    <section id="resources" className="section-padding bg-gradient-to-b from-white to-gray-50/50">
+    <section id="resources" className="py-20 md:py-28 lg:py-32 bg-gradient-to-b from-white to-gray-50/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
         <SectionHeader
-          label="Free Resources"
-          title="Level Up Your Skills"
-          description="Download free guides, reports, and templates to stay ahead in the fast-moving world of software development"
+          label="Resources"
+          title="Articles, White Papers & Podcasts"
+          description="Stay ahead with our latest insights on healthcare, agriculture, computer vision, and IoT technologies."
         />
 
+        {/* Tab filter */}
+        <div className="flex flex-wrap justify-center gap-2 mb-12">
+          {tabs.map((tab) => (
+            <button
+              key={tab}
+              className="px-5 py-2 rounded-full text-sm font-medium bg-white text-gray-600 border border-gray-200 hover:border-[#0066FF]/50 hover:text-[#0066FF] hover:bg-blue-50/50 transition-all duration-300 first:bg-gradient-to-r first:from-[#0066FF] first:to-[#0052CC] first:text-white first:border-transparent first:shadow-md first:shadow-blue-500/20"
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+
         {/* Resources Grid */}
-        <AnimatedSection variant="stagger-children" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+        <AnimatedSection variant="stagger-children" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {resources.map((resource) => (
             <AnimatedItem key={resource.title} variant="fade-up" delay={0.1}>
               <motion.div
-                whileHover={{ y: -6, transition: { duration: 0.3 } }}
-                className="group relative bg-white rounded-2xl border border-gray-100 p-6 h-full shadow-sm hover:shadow-xl hover:border-gray-200 transition-all duration-300"
+                whileHover={{ y: -4, transition: { duration: 0.3 } }}
+                className="group bg-white rounded-2xl border border-gray-100 overflow-hidden h-full transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/5 hover:border-gray-200"
               >
-                {/* Content */}
-                <div className="relative z-10">
-                  {/* Icon + Type Badge Row */}
-                  <div className="flex items-start justify-between mb-5">
-                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${resource.gradient} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                      <resource.icon className="w-6 h-6 text-white" />
+                {/* Top accent bar */}
+                <div className={`h-1 w-full bg-gradient-to-r ${resource.gradient}`} />
+
+                <div className="p-6">
+                  <div className="flex items-start justify-between mb-4">
+                    <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${resource.gradient} flex items-center justify-center shadow-md`}>
+                      <resource.icon className="w-5 h-5 text-white" />
                     </div>
-                    <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${resource.gradient} text-white`}>
-                      {resource.type}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className="px-2.5 py-1 rounded-full bg-blue-50 text-[#0066FF] text-xs font-semibold">
+                        {resource.tag}
+                      </span>
+                      <span className={`px-2.5 py-1 rounded-full text-xs font-medium ${
+                        resource.type === 'Podcast' ? 'bg-violet-50 text-violet-600' :
+                        resource.type === 'White Paper' ? 'bg-amber-50 text-amber-600' :
+                        'bg-gray-50 text-gray-500'
+                      }`}>
+                        {resource.type}
+                      </span>
+                    </div>
                   </div>
 
-                  {/* Title */}
-                  <h3 className="text-lg font-semibold text-[#0A1628] mb-2 group-hover:text-[#0066FF] transition-colors duration-300">
+                  <h3 className="text-lg font-bold text-[#0A1628] mb-2 group-hover:text-[#0066FF] transition-colors duration-300 leading-snug">
                     {resource.title}
                   </h3>
-
-                  {/* Description */}
                   <p className="text-sm text-gray-500 leading-relaxed mb-5">
                     {resource.description}
                   </p>
 
-                  {/* Bottom Row */}
                   <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                    <span className="text-xs text-gray-400 font-medium">{resource.downloads}</span>
-                    <button className="inline-flex items-center gap-2 text-sm font-semibold text-[#0066FF] hover:text-[#0052CC] transition-colors duration-200">
-                      <Download className="w-4 h-4" />
-                      Download Free
+                    <div className="flex items-center gap-3 text-xs text-gray-400">
+                      <span className="flex items-center gap-1"><User className="w-3 h-3" /> {resource.author}</span>
+                      <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {resource.readTime}</span>
+                    </div>
+                    <button className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#0066FF] hover:text-[#0052CC] transition-colors duration-200">
+                      {resource.type === 'Podcast' ? (
+                        <><Headphones className="w-3.5 h-3.5" /> Listen</>
+                      ) : (
+                        <><Download className="w-3.5 h-3.5" /> Read</>
+                      )}
                     </button>
                   </div>
                 </div>
@@ -112,7 +155,7 @@ export default function Resources() {
           ))}
         </AnimatedSection>
 
-        {/* View All Button */}
+        {/* View All */}
         <AnimatedSection variant="fade-up" delay={0.3} className="mt-12 text-center">
           <button className="inline-flex items-center gap-2 px-8 py-3 rounded-full border-2 border-[#0066FF] text-[#0066FF] font-semibold text-sm hover:bg-[#0066FF] hover:text-white transition-all duration-300">
             View All Resources

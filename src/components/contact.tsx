@@ -19,12 +19,11 @@ import SectionHeader from '@/components/section-header';
 import { useToast } from '@/hooks/use-toast';
 
 const serviceOptions = [
-  'Custom Software',
-  'Cloud Solutions',
-  'AI / ML',
-  'Mobile App',
-  'UI/UX Design',
-  'DevOps',
+  'Healthcare Solutions',
+  'Computer Vision',
+  'Agriculture Technology',
+  'Engineering IoT',
+  'Engineering Tech',
 ];
 
 const contactMethods = [
@@ -320,7 +319,7 @@ export default function Contact() {
                     value={formData.service}
                     onValueChange={(value) => handleChange('service', value)}
                   >
-                    <SelectTrigger className="bg-white/80 border-gray-200 rounded-xl h-11 focus:ring-2 focus:ring-[#0066FF]/10">
+                    <SelectTrigger className="bg-white/80 border-gray-200 rounded-xl h-11 focus:border-[#0066FF] focus:ring-2 focus:ring-[#0066FF]/10">
                       <SelectValue placeholder="Select a service" />
                     </SelectTrigger>
                     <SelectContent>
