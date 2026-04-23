@@ -1,6 +1,7 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
+import { motion, useInView } from 'framer-motion';
 import {
   MessageSquare,
   Clock,
@@ -8,6 +9,8 @@ import {
   Cpu,
   Wrench,
   Users,
+  Plus,
+  Minus,
 } from 'lucide-react';
 import { AnimatedSection } from '@/components/animated-section';
 import SectionHeader from '@/components/section-header';
@@ -63,59 +66,154 @@ const faqs = [
   },
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.09,
+      delayChildren: 0.15,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 24, filter: 'blur(4px)' },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: {
+      duration: 0.5,
+      ease: [0.25, 0.46, 0.45, 0.94],
+    },
+  },
+};
+
 export default function FAQ() {
+  const faqRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(faqRef, { once: true, amount: 0.1 });
+
   return (
-    <section id="faq" className="section-padding section-gradient-bg">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <section id="faq" className="relative overflow-hidden bg-white">
+      {/* Decorative background elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute -top-32 -right-32 w-96 h-96 bg-gradient-to-bl from-blue-50 via-blue-100/40 to-transparent rounded-full blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-[28rem] h-[28rem] bg-gradient-to-tr from-blue-50 via-blue-50/30 to-transparent rounded-full blur-3xl" />
+        <div className="absolute top-24 left-16 w-3 h-3 rounded-full bg-gradient-to-br from-[#0066FF] to-[#338AFF] opacity-20" />
+        <div className="absolute bottom-32 right-24 w-2 h-2 rounded-full bg-gradient-to-br from-[#0066FF] to-[#338AFF] opacity-15" />
+        <div className="absolute top-1/2 -right-16 w-48 h-48 bg-gradient-to-l from-blue-50 to-transparent rounded-full blur-2xl" />
+      </div>
+
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20 md:py-24 lg:py-28">
         <SectionHeader
           label="FAQ"
           title="Frequently Asked Questions"
           description="Everything you need to know about working with CodeSquad"
         />
 
-        <AnimatedSection variant="fade-up" delay={0.2}>
-          <div className="bg-gray-50/80 backdrop-blur-sm rounded-2xl border border-gray-200/60 overflow-hidden shadow-sm">
-            <Accordion type="single" collapsible className="w-full divide-y divide-gray-100">
+        <motion.div
+          ref={faqRef}
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? 'visible' : 'hidden'}
+          className="relative"
+        >
+          <div className="relative bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#0066FF]/20 to-transparent" />
+
+            <Accordion type="single" collapsible className="w-full">
               {faqs.map((faq, index) => {
                 const num = String(index + 1).padStart(2, '0');
                 const Icon = faq.icon;
                 return (
-                  <AccordionItem
-                    key={index}
-                    value={`item-${index}`}
-                    className="border-0 last:border-0"
-                  >
-                    <AccordionTrigger
-                      className="text-left text-[15px] sm:text-base font-medium text-[#0A1628] hover:text-[#0066FF] hover:no-underline py-5 px-6 sm:px-8 group transition-colors duration-200 [&[data-state=open]]:bg-blue-50/40 [&[data-state=open]>svg:last-child]:text-[#0066FF]"
+                  <motion.div key={index} variants={itemVariants}>
+                    <AccordionItem
+                      value={`item-${index}`}
+                      className="border-0 last:border-0"
                     >
-                      <div className="flex items-center gap-4 sm:gap-5 flex-1 pr-4">
-                        {/* Number indicator */}
-                        <span className="text-xs font-bold tracking-wider text-gray-300 group-data-[state=open]:text-[#0066FF] transition-colors duration-300 select-none w-6 text-center">
-                          {num}
-                        </span>
+                      <AccordionTrigger
+                        className={`
+                          faq-trigger group relative text-left text-[15px] sm:text-base font-medium text-[#0A1628]
+                          hover:no-underline py-6 px-6 sm:px-8
+                          transition-all duration-300 ease-out
+                          hover:bg-blue-50/40
+                          after:content-[''] after:absolute after:bottom-0 after:left-6 after:right-6 sm:after:left-8 sm:after:right-8 after:h-px after:bg-gradient-to-r after:from-transparent after:via-gray-200/80 after:to-transparent
+                          last:after:hidden
+                        `}
+                      >
+                        <div className="flex items-center gap-4 sm:gap-5 flex-1 pr-4">
+                          <span className="faq-num relative flex items-center justify-center w-10 h-10 rounded-full text-xs font-bold tracking-wider shrink-0 transition-all duration-300 ease-out bg-blue-50 text-[#0066FF]/70 group-hover:bg-blue-100 group-hover:text-[#0066FF] group-hover:scale-105">
+                            {num}
+                          </span>
 
-                        {/* Minimal icon */}
-                        <Icon className="w-4 h-4 text-gray-300 group-data-[state=open]:text-[#0066FF] shrink-0 transition-colors duration-300" />
+                          <div className="faq-icon w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-all duration-300 text-gray-300 group-hover:text-[#0066FF]/60 group-hover:bg-blue-50/60">
+                            <Icon className="w-4 h-4" />
+                          </div>
 
-                        {/* Question text */}
-                        <span className="transition-colors duration-200 leading-snug">
-                          {faq.question}
-                        </span>
-                      </div>
-                    </AccordionTrigger>
+                          <span className="faq-question flex-1 transition-colors duration-300 leading-snug text-[#0A1628] group-hover:text-[#0066FF]/80">
+                            {faq.question}
+                          </span>
 
-                    <AccordionContent className="text-gray-500 leading-relaxed text-[14px] sm:text-[15px] px-6 sm:px-8 pb-6 pt-0">
-                      <div className="border-l-2 border-[#0066FF]/30 pl-5 ml-[1.35rem] sm:ml-[1.85rem]">
-                        {faq.answer}
-                      </div>
-                    </AccordionContent>
-                  </AccordionItem>
+                          <div className="faq-toggle w-7 h-7 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ease-out bg-gray-100 group-hover:bg-blue-50">
+                            <Plus className="faq-plus w-3.5 h-3.5 text-gray-400 group-hover:text-[#0066FF] transition-all duration-300" />
+                            <Minus className="faq-minus w-3.5 h-3.5 text-white transition-all duration-300 opacity-0 scale-50" />
+                          </div>
+                        </div>
+                      </AccordionTrigger>
+
+                      <AccordionContent className="px-6 sm:px-8 pb-0 pt-0">
+                        <div className="pb-6 pl-[4.5rem] sm:pl-[5.25rem]">
+                          <div className="relative pl-5">
+                            <div className="absolute left-0 top-0 bottom-0 w-0.5 rounded-full bg-gradient-to-b from-[#0066FF] via-[#338AFF] to-[#0066FF]/30" />
+                            <p className="text-[14px] sm:text-[15px] leading-[1.75] text-gray-500">
+                              {faq.answer}
+                            </p>
+                          </div>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  </motion.div>
                 );
               })}
             </Accordion>
           </div>
-        </AnimatedSection>
+
+          <div className="mt-8 h-px bg-gradient-to-r from-transparent via-[#0066FF]/15 to-transparent" />
+        </motion.div>
       </div>
+
+      {/* Scoped styles for open state transitions */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        .faq-trigger[data-state="open"] {
+          background: linear-gradient(to right, rgba(0, 102, 255, 0.06), white) !important;
+        }
+        .faq-trigger[data-state="open"] .faq-num {
+          background: #0066FF !important;
+          color: white !important;
+          box-shadow: 0 4px 14px rgba(0, 102, 255, 0.25) !important;
+          transform: scale(1.1) !important;
+        }
+        .faq-trigger[data-state="open"] .faq-icon {
+          background: rgba(0, 102, 255, 0.1) !important;
+          color: #0066FF !important;
+        }
+        .faq-trigger[data-state="open"] .faq-question {
+          color: #0066FF !important;
+          font-weight: 600 !important;
+        }
+        .faq-trigger[data-state="open"] .faq-toggle {
+          background: #0066FF !important;
+        }
+        .faq-trigger[data-state="open"] .faq-plus {
+          opacity: 0 !important;
+          transform: scale(0.5) rotate(90deg) !important;
+        }
+        .faq-trigger[data-state="open"] .faq-minus {
+          opacity: 1 !important;
+          transform: scale(1) !important;
+        }
+      ` }} />
     </section>
   );
 }

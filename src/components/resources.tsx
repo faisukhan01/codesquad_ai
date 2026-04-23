@@ -11,8 +11,9 @@ import {
   ChevronLeft,
   ChevronRight,
   Clock,
-  User,
   Search,
+  FolderSearch,
+  Sparkles,
 } from 'lucide-react';
 import { AnimatedSection, AnimatedItem } from '@/components/animated-section';
 import SectionHeader from '@/components/section-header';
@@ -25,18 +26,46 @@ type FilterTab = 'All' | 'Articles' | 'White Papers' | 'Podcasts';
 interface Resource {
   id: number;
   type: ResourceType;
-  icon: typeof FileText;
   title: string;
   description: string;
   author: string;
   readTime: string;
   date: string;
   tag: string;
-  tagColor: string;
-  iconBg: string;
-  iconColor: string;
   actionLabel: string;
 }
+
+// ── Color Mapping ───────────────────────────────────────────────────────────
+
+const typeColors: Record<ResourceType, { accent: string; gradient: string; badge: string; badgeText: string; iconBg: string }> = {
+  Article: {
+    accent: 'bg-[#0066FF]',
+    gradient: 'from-blue-500/90 via-blue-600/80 to-[#0066FF]/70',
+    badge: 'bg-blue-50/80 border-blue-100/60',
+    badgeText: 'text-blue-700',
+    iconBg: 'bg-blue-500/10 text-blue-600',
+  },
+  'White Paper': {
+    accent: 'bg-amber-500',
+    gradient: 'from-amber-400/90 via-amber-500/80 to-orange-500/70',
+    badge: 'bg-amber-50/80 border-amber-100/60',
+    badgeText: 'text-amber-700',
+    iconBg: 'bg-amber-500/10 text-amber-600',
+  },
+  Podcast: {
+    accent: 'bg-violet-500',
+    gradient: 'from-violet-500/90 via-purple-500/80 to-fuchsia-500/70',
+    badge: 'bg-violet-50/80 border-violet-100/60',
+    badgeText: 'text-violet-700',
+    iconBg: 'bg-violet-500/10 text-violet-600',
+  },
+};
+
+const typeIcons: Record<ResourceType, typeof FileText> = {
+  Article: FileText,
+  'White Paper': BookOpen,
+  Podcast: Headphones,
+};
 
 // ── Data ────────────────────────────────────────────────────────────────────
 
@@ -44,71 +73,54 @@ const resources: Resource[] = [
   {
     id: 1,
     type: 'Article',
-    icon: FileText,
     title: 'How AI is Revolutionizing Healthcare Diagnostics',
     description:
-      'Explore the latest advancements in AI-powered medical imaging and diagnostic tools that are transforming patient care outcomes.',
+      'Explore the latest advancements in AI-powered medical imaging and diagnostic tools that are transforming patient care outcomes across hospitals worldwide.',
     author: 'Dr. Sarah Mitchell',
     readTime: '8 min read',
     date: 'Jan 15, 2025',
     tag: 'Healthcare',
-    tagColor: 'bg-blue-50 text-blue-700',
-    iconBg: 'bg-blue-500',
-    iconColor: 'text-blue-600',
-    actionLabel: 'Read',
+    actionLabel: 'Read Article',
   },
   {
     id: 2,
     type: 'Article',
-    icon: FileText,
     title: 'Computer Vision in Quality Control: Lessons from 50+ Implementations',
     description:
-      'Key insights and best practices from deploying computer vision systems across manufacturing facilities worldwide.',
+      'Key insights and battle-tested best practices from deploying computer vision systems across manufacturing facilities worldwide.',
     author: 'Alex Rivera',
     readTime: '6 min read',
     date: 'Dec 20, 2024',
     tag: 'Computer Vision',
-    tagColor: 'bg-violet-50 text-violet-700',
-    iconBg: 'bg-sky-500',
-    iconColor: 'text-sky-600',
-    actionLabel: 'Read',
+    actionLabel: 'Read Article',
   },
   {
     id: 3,
     type: 'Article',
-    icon: FileText,
-    title: 'Building HIPAA-Compliant Applications: A Developer\'s Guide',
+    title: "Building HIPAA-Compliant Applications: A Developer's Guide",
     description:
-      'Essential guidelines for building healthcare applications that meet regulatory requirements without sacrificing innovation.',
+      'Essential guidelines for building healthcare applications that meet regulatory requirements without sacrificing innovation or speed.',
     author: 'Priya Sharma',
     readTime: '10 min read',
     date: 'Dec 12, 2024',
     tag: 'Healthcare',
-    tagColor: 'bg-blue-50 text-blue-700',
-    iconBg: 'bg-indigo-500',
-    iconColor: 'text-indigo-600',
-    actionLabel: 'Read',
+    actionLabel: 'Read Article',
   },
   {
     id: 4,
     type: 'White Paper',
-    icon: BookOpen,
     title: 'The Future of Precision Agriculture: A Comprehensive Guide',
     description:
-      'An in-depth analysis of how IoT, computer vision, and machine learning are shaping modern farming practices.',
+      'An in-depth analysis of how IoT, computer vision, and machine learning are shaping modern farming practices and boosting yields.',
     author: 'James Chen',
     readTime: '15 min read',
     date: 'Jan 8, 2025',
     tag: 'Agriculture',
-    tagColor: 'bg-emerald-50 text-emerald-700',
-    iconBg: 'bg-emerald-500',
-    iconColor: 'text-emerald-600',
-    actionLabel: 'Download',
+    actionLabel: 'Download PDF',
   },
   {
     id: 5,
     type: 'White Paper',
-    icon: BookOpen,
     title: 'Enterprise IoT Security: Threats and Solutions',
     description:
       'A thorough examination of the current threat landscape in enterprise IoT and practical countermeasures for security teams.',
@@ -116,42 +128,31 @@ const resources: Resource[] = [
     readTime: '20 min read',
     date: 'Nov 28, 2024',
     tag: 'IoT',
-    tagColor: 'bg-amber-50 text-amber-700',
-    iconBg: 'bg-amber-500',
-    iconColor: 'text-amber-600',
-    actionLabel: 'Download',
+    actionLabel: 'Download PDF',
   },
   {
     id: 6,
     type: 'Podcast',
-    icon: Headphones,
     title: 'TechTalk: Engineering IoT for Smart Manufacturing',
     description:
-      'Listen to our engineering leads discuss real-world IoT implementations and their impact on industrial efficiency.',
+      'Listen to our engineering leads discuss real-world IoT implementations and their measurable impact on industrial efficiency.',
     author: 'CodeSquad Team',
     readTime: '32 min listen',
     date: 'Dec 28, 2024',
     tag: 'IoT',
-    tagColor: 'bg-amber-50 text-amber-700',
-    iconBg: 'bg-violet-500',
-    iconColor: 'text-violet-600',
-    actionLabel: 'Listen',
+    actionLabel: 'Listen Now',
   },
   {
     id: 7,
     type: 'Podcast',
-    icon: Headphones,
     title: 'From Farm to Future: Digital Transformation in Agriculture',
     description:
-      'Industry leaders share how technology is creating a new era of sustainable and efficient farming operations.',
+      'Industry leaders share how technology is creating a new era of sustainable and efficient farming operations globally.',
     author: 'CodeSquad Team',
     readTime: '28 min listen',
     date: 'Dec 5, 2024',
     tag: 'Agriculture',
-    tagColor: 'bg-emerald-50 text-emerald-700',
-    iconBg: 'bg-orange-500',
-    iconColor: 'text-orange-600',
-    actionLabel: 'Listen',
+    actionLabel: 'Listen Now',
   },
 ];
 
@@ -169,18 +170,54 @@ function tabToType(tab: FilterTab): ResourceType | null {
   return null;
 }
 
-function ActionIcon({ type }: { type: ResourceType }) {
-  if (type === 'Podcast') return <Headphones className="w-3.5 h-3.5" />;
-  if (type === 'White Paper') return <Download className="w-3.5 h-3.5" />;
-  return <FileText className="w-3.5 h-3.5" />;
+function getCountForTab(tab: FilterTab): number {
+  if (tab === 'All') return resources.length;
+  const type = tabToType(tab);
+  return type ? resources.filter((r) => r.type === type).length : 0;
+}
+
+function getInitials(name: string): string {
+  return name
+    .split(' ')
+    .map((n) => n[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
 }
 
 // ── Animation variants ──────────────────────────────────────────────────────
 
+const cardContainerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.05 },
+  },
+  exit: {
+    opacity: 0,
+    transition: { staggerChildren: 0.05, staggerDirection: -1 },
+  },
+};
+
 const cardVariants = {
-  enter: { opacity: 0, y: 24, scale: 0.97 },
-  center: { opacity: 1, y: 0, scale: 1 },
-  exit: { opacity: 0, y: -16, scale: 0.97 },
+  hidden: { opacity: 0, y: 30, scale: 0.96 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+  },
+  exit: {
+    opacity: 0,
+    y: -20,
+    scale: 0.96,
+    transition: { duration: 0.25, ease: [0.22, 1, 0.36, 1] },
+  },
+};
+
+const dotVariants = {
+  inactive: { width: 8, backgroundColor: '#e2e8f0' },
+  active: { width: 32, backgroundColor: '#0066FF' },
 };
 
 // ── Component ───────────────────────────────────────────────────────────────
@@ -189,6 +226,7 @@ export default function Resources() {
   const [activeTab, setActiveTab] = useState<FilterTab>('All');
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(0);
+  const [direction, setDirection] = useState(0);
 
   // Reset page when filters change
   const handleTabChange = useCallback((tab: FilterTab) => {
@@ -200,6 +238,22 @@ export default function Resources() {
     setSearchQuery(e.target.value);
     setCurrentPage(0);
   }, []);
+
+  const goToPage = useCallback(
+    (page: number) => {
+      setDirection(page > currentPage ? 1 : -1);
+      setCurrentPage(page);
+    },
+    [currentPage],
+  );
+
+  const goToPrev = useCallback(() => {
+    if (currentPage > 0) goToPage(currentPage - 1);
+  }, [currentPage, goToPage]);
+
+  const goToNext = useCallback(() => {
+    goToPage(currentPage + 1);
+  }, [currentPage, goToPage]);
 
   // Filtered resources
   const filteredResources = useMemo(() => {
@@ -226,17 +280,22 @@ export default function Resources() {
     safeCurrentPage * ITEMS_PER_PAGE + ITEMS_PER_PAGE,
   );
 
-  const goToPrev = useCallback(() => {
-    setCurrentPage((p) => Math.max(0, p - 1));
-  }, []);
-
-  const goToNext = useCallback(() => {
-    setCurrentPage((p) => Math.min(totalPages - 1, p + 1));
-  }, [totalPages]);
+  // Slide animation direction
+  const slideX = direction >= 0 ? 60 : -60;
 
   return (
-    <section id="resources" className="py-20 md:py-28 lg:py-32 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section
+      id="resources"
+      className="relative py-20 md:py-28 lg:py-32 overflow-hidden"
+    >
+      {/* Subtle background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-white via-blue-50/30 to-gray-50/40 pointer-events-none" />
+      {/* Decorative top-right glow */}
+      <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-[#0066FF]/[0.03] rounded-full blur-3xl pointer-events-none" />
+      {/* Decorative bottom-left glow */}
+      <div className="absolute -bottom-40 -left-40 w-[400px] h-[400px] bg-blue-200/20 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <SectionHeader
           label="Resources"
@@ -253,145 +312,191 @@ export default function Resources() {
               value={searchQuery}
               onChange={handleSearchChange}
               placeholder="Search resources by title, topic, or author..."
-              className="w-full pl-11 pr-4 py-3 rounded-xl border border-gray-200 bg-gray-50/60 text-sm text-[#0A1628] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0066FF]/20 focus:border-[#0066FF] transition-all duration-300"
+              className="w-full pl-11 pr-4 py-3.5 rounded-2xl border border-gray-200/80 bg-white/70 backdrop-blur-sm text-sm text-[#0A1628] placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-[#0066FF]/20 focus:border-[#0066FF]/50 shadow-sm focus:shadow-md focus:shadow-blue-500/5 transition-all duration-300"
             />
           </div>
         </AnimatedSection>
 
         {/* Filter Tabs */}
-        <AnimatedSection variant="fade-up" className="mb-10">
-          <div className="flex flex-wrap justify-center gap-2">
+        <AnimatedSection variant="fade-up" className="mb-12">
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3">
             {filterTabs.map((tab) => {
               const isActive = activeTab === tab;
+              const count = getCountForTab(tab);
               return (
                 <button
                   key={tab}
                   onClick={() => handleTabChange(tab)}
-                  className={`relative px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  className={`relative px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 cursor-pointer ${
                     isActive
-                      ? 'bg-gradient-to-r from-[#0066FF] to-[#0052CC] text-white shadow-lg shadow-blue-500/25'
-                      : 'bg-white text-gray-500 border border-gray-200 hover:border-[#0066FF]/40 hover:text-[#0066FF] hover:bg-blue-50/40'
+                      ? 'bg-gradient-to-r from-[#0066FF] to-[#0052CC] text-white shadow-lg shadow-blue-500/20 scale-[1.02]'
+                      : 'bg-white/70 backdrop-blur-sm text-gray-500 border border-gray-200/80 hover:border-[#0066FF]/30 hover:text-[#0066FF] hover:bg-blue-50/30 hover:shadow-sm'
                   }`}
                 >
-                  {tab}
-                  {!isActive && (
-                    <span className="sr-only">– click to filter</span>
-                  )}
+                  <span className="flex items-center gap-2">
+                    {tab}
+                    <span
+                      className={`inline-flex items-center justify-center min-w-[22px] h-[22px] px-1.5 rounded-md text-xs font-bold ${
+                        isActive
+                          ? 'bg-white/20 text-white'
+                          : 'bg-gray-100 text-gray-400 group-hover:bg-blue-50 group-hover:text-blue-500'
+                      }`}
+                    >
+                      {count}
+                    </span>
+                  </span>
                 </button>
               );
             })}
           </div>
         </AnimatedSection>
 
-        {/* Resource Cards */}
-        <div className="relative min-h-[400px]">
-          <AnimatePresence mode="wait">
+        {/* Resource Cards Grid */}
+        <div className="relative min-h-[460px]">
+          <AnimatePresence mode="wait" custom={slideX}>
             <motion.div
               key={`${activeTab}-${searchQuery}-${safeCurrentPage}`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8"
+              custom={slideX}
+              variants={cardContainerVariants}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7"
             >
               {pagedResources.length > 0 ? (
-                pagedResources.map((resource, index) => (
-                  <motion.div
-                    key={resource.id}
-                    variants={cardVariants}
-                    initial="enter"
-                    animate="center"
-                    exit="exit"
-                    transition={{
-                      duration: 0.35,
-                      delay: index * 0.08,
-                      ease: [0.25, 0.46, 0.45, 0.94],
-                    }}
-                    className="h-full"
-                  >
-                    <motion.article
-                      whileHover={{ y: -6, transition: { duration: 0.25 } }}
-                      className="group bg-white rounded-2xl border border-gray-100 overflow-hidden h-full flex flex-col shadow-sm hover:shadow-xl hover:shadow-blue-500/5 hover:border-gray-200 transition-all duration-300"
-                    >
-                      {/* Top accent line */}
-                      <div className="h-1 w-full bg-gradient-to-r from-[#0066FF] to-[#338AFF] opacity-80" />
+                pagedResources.map((resource) => {
+                  const colors = typeColors[resource.type];
+                  const Icon = typeIcons[resource.type];
+                  const initials = getInitials(resource.author);
 
-                      <div className="flex-1 flex flex-col p-6">
-                        {/* Top row: type icon + badges */}
-                        <div className="flex items-start justify-between mb-4">
-                          <div
-                            className={`w-11 h-11 rounded-xl ${resource.iconBg} flex items-center justify-center shadow-md`}
+                  return (
+                    <motion.article
+                      key={resource.id}
+                      variants={cardVariants}
+                      whileHover={{ y: -8, transition: { duration: 0.3, ease: 'easeOut' } }}
+                      className="group relative bg-white rounded-2xl overflow-hidden h-full flex flex-col shadow-sm hover:shadow-xl hover:shadow-black/[0.08] border border-gray-100/80 hover:border-gray-200/80 transition-shadow duration-300 cursor-pointer"
+                    >
+                      {/* Left accent strip */}
+                      <div className={`absolute left-0 top-0 bottom-0 w-1 ${colors.accent} z-20 rounded-l-2xl`} />
+
+                      {/* Top thumbnail area with gradient */}
+                      <div className="relative h-44 overflow-hidden">
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-br ${colors.gradient}`}
+                        />
+                        {/* Decorative pattern overlay */}
+                        <div className="absolute inset-0 opacity-10">
+                          <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                              <pattern id={`grid-${resource.id}`} width="30" height="30" patternUnits="userSpaceOnUse">
+                                <circle cx="15" cy="15" r="1" fill="white" />
+                              </pattern>
+                            </defs>
+                            <rect width="100%" height="100%" fill={`url(#grid-${resource.id})`} />
+                          </svg>
+                        </div>
+                        {/* Floating icon */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-16 h-16 rounded-2xl bg-white/15 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500">
+                            <Icon className="w-8 h-8 text-white" />
+                          </div>
+                        </div>
+                        {/* Type badge positioned top-right */}
+                        <div className="absolute top-4 right-4">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/20 backdrop-blur-md border border-white/25 text-white text-xs font-semibold tracking-wide uppercase">
+                            <Icon className="w-3 h-3" />
+                            {resource.type}
+                          </span>
+                        </div>
+                        {/* Bottom fade */}
+                        <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-white to-transparent" />
+                      </div>
+
+                      {/* Content */}
+                      <div className="flex-1 flex flex-col px-5 pt-5 pb-5">
+                        {/* Tag + Date */}
+                        <div className="flex items-center gap-2.5 mb-3">
+                          <span
+                            className={`inline-flex items-center px-2.5 py-1 rounded-lg border text-xs font-semibold ${colors.badge} ${colors.badgeText}`}
                           >
-                            <resource.icon className="w-5 h-5 text-white" />
-                          </div>
-                          <div className="flex items-center gap-2">
-                            <span
-                              className={`px-2.5 py-1 rounded-full text-xs font-semibold ${resource.tagColor}`}
-                            >
-                              {resource.tag}
-                            </span>
-                            <span
-                              className={`px-2.5 py-1 rounded-full text-xs font-medium ${
-                                resource.type === 'Podcast'
-                                  ? 'bg-violet-50 text-violet-600'
-                                  : resource.type === 'White Paper'
-                                    ? 'bg-amber-50 text-amber-600'
-                                    : 'bg-gray-50 text-gray-500'
-                              }`}
-                            >
-                              {resource.type}
-                            </span>
-                          </div>
+                            {resource.tag}
+                          </span>
+                          <span className="text-xs text-gray-400 font-medium">
+                            {resource.date}
+                          </span>
                         </div>
 
                         {/* Title */}
-                        <h3 className="text-lg font-bold text-[#0A1628] mb-2 group-hover:text-[#0066FF] transition-colors duration-300 leading-snug line-clamp-2">
+                        <h3 className="text-lg font-bold text-[#0A1628] mb-2.5 leading-snug line-clamp-2 group-hover:text-[#0066FF] transition-colors duration-300">
                           {resource.title}
                         </h3>
 
                         {/* Description */}
-                        <p className="text-sm text-gray-500 leading-relaxed mb-5 line-clamp-3 flex-1">
+                        <p className="text-sm text-gray-500 leading-relaxed line-clamp-3 flex-1">
                           {resource.description}
                         </p>
 
-                        {/* Bottom: meta + action */}
-                        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
-                          <div className="flex items-center gap-3 text-xs text-gray-400">
-                            <span className="flex items-center gap-1">
-                              <User className="w-3 h-3" />
-                              {resource.author}
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <Clock className="w-3 h-3" />
-                              {resource.readTime}
-                            </span>
+                        {/* Bottom section: author + read time + CTA */}
+                        <div className="flex items-center justify-between mt-5 pt-4 border-t border-gray-100">
+                          <div className="flex items-center gap-3">
+                            {/* Author avatar with initials */}
+                            <div
+                              className={`w-8 h-8 rounded-full ${colors.iconBg} flex items-center justify-center flex-shrink-0`}
+                            >
+                              <span className={`text-xs font-bold ${colors.badgeText}`}>
+                                {initials}
+                              </span>
+                            </div>
+                            <div className="flex flex-col min-w-0">
+                              <span className="text-xs font-semibold text-[#0A1628] truncate max-w-[120px]">
+                                {resource.author}
+                              </span>
+                              <span className="text-[11px] text-gray-400 flex items-center gap-1">
+                                <Clock className="w-3 h-3" />
+                                {resource.readTime}
+                              </span>
+                            </div>
                           </div>
-                          <button className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#0066FF] hover:text-[#0052CC] transition-colors duration-200">
-                            <ActionIcon type={resource.type} />
+
+                          {/* CTA button */}
+                          <button className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#0066FF]/[0.06] text-[#0066FF] text-xs font-semibold hover:bg-[#0066FF] hover:text-white hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300 flex-shrink-0">
+                            {resource.type === 'Podcast' ? (
+                              <Headphones className="w-3.5 h-3.5" />
+                            ) : resource.type === 'White Paper' ? (
+                              <Download className="w-3.5 h-3.5" />
+                            ) : (
+                              <ArrowRight className="w-3.5 h-3.5" />
+                            )}
                             {resource.actionLabel}
                           </button>
                         </div>
                       </div>
                     </motion.article>
-                  </motion.div>
-                ))
+                  );
+                })
               ) : (
                 /* Empty state */
                 <motion.div
+                  key="empty"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className="col-span-full flex flex-col items-center justify-center py-20 text-center"
+                  className="col-span-full flex flex-col items-center justify-center py-24 text-center"
                 >
-                  <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mb-4">
-                    <Search className="w-7 h-7 text-gray-400" />
+                  {/* Illustration */}
+                  <div className="relative mb-6">
+                    <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center shadow-inner">
+                      <FolderSearch className="w-9 h-9 text-[#0066FF]/40" />
+                    </div>
+                    <div className="absolute -top-2 -right-2 w-7 h-7 rounded-lg bg-gradient-to-br from-amber-100 to-amber-200 flex items-center justify-center shadow-sm">
+                      <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                    </div>
                   </div>
-                  <h4 className="text-lg font-semibold text-[#0A1628] mb-1">
+                  <h4 className="text-lg font-bold text-[#0A1628] mb-2">
                     No resources found
                   </h4>
-                  <p className="text-sm text-gray-400 max-w-md">
-                    Try adjusting your search query or changing the filter tab to find what
-                    you&apos;re looking for.
+                  <p className="text-sm text-gray-400 max-w-sm leading-relaxed">
+                    We couldn&apos;t find anything matching your search. Try adjusting your query or changing the filter to discover more content.
                   </p>
                 </motion.div>
               )}
@@ -401,29 +506,28 @@ export default function Resources() {
 
         {/* Pagination */}
         {filteredResources.length > ITEMS_PER_PAGE && (
-          <AnimatedSection variant="fade-up" className="mt-10">
-            <div className="flex items-center justify-center gap-4">
+          <AnimatedSection variant="fade-up" className="mt-12">
+            <div className="flex items-center justify-center gap-5">
               <button
                 onClick={goToPrev}
                 disabled={safeCurrentPage === 0}
                 aria-label="Previous page"
-                className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 bg-white text-gray-500 hover:border-[#0066FF] hover:text-[#0066FF] hover:bg-blue-50/40 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-gray-200 disabled:hover:text-gray-500 disabled:hover:bg-white transition-all duration-300"
+                className="flex items-center justify-center w-11 h-11 rounded-xl border border-gray-200/80 bg-white/70 backdrop-blur-sm text-gray-400 hover:border-[#0066FF]/30 hover:text-[#0066FF] hover:bg-blue-50/30 hover:shadow-sm disabled:opacity-25 disabled:cursor-not-allowed disabled:hover:border-gray-200/80 disabled:hover:text-gray-400 disabled:hover:bg-white/70 disabled:hover:shadow-none transition-all duration-300"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
 
-              {/* Dots */}
-              <div className="flex items-center gap-2">
+              {/* Dots with slide animation */}
+              <div className="flex items-center gap-2.5">
                 {Array.from({ length: totalPages }).map((_, i) => (
-                  <button
+                  <motion.button
                     key={i}
-                    onClick={() => setCurrentPage(i)}
+                    onClick={() => goToPage(i)}
                     aria-label={`Page ${i + 1}`}
-                    className={`h-2.5 rounded-full transition-all duration-300 ${
-                      i === safeCurrentPage
-                        ? 'w-7 bg-[#0066FF]'
-                        : 'w-2.5 bg-gray-200 hover:bg-gray-300'
-                    }`}
+                    variants={dotVariants}
+                    animate={i === safeCurrentPage ? 'active' : 'inactive'}
+                    transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                    className="h-[8px] rounded-full cursor-pointer"
                   />
                 ))}
               </div>
@@ -432,7 +536,7 @@ export default function Resources() {
                 onClick={goToNext}
                 disabled={safeCurrentPage === totalPages - 1}
                 aria-label="Next page"
-                className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 bg-white text-gray-500 hover:border-[#0066FF] hover:text-[#0066FF] hover:bg-blue-50/40 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:border-gray-200 disabled:hover:text-gray-500 disabled:hover:bg-white transition-all duration-300"
+                className="flex items-center justify-center w-11 h-11 rounded-xl border border-gray-200/80 bg-white/70 backdrop-blur-sm text-gray-400 hover:border-[#0066FF]/30 hover:text-[#0066FF] hover:bg-blue-50/30 hover:shadow-sm disabled:opacity-25 disabled:cursor-not-allowed disabled:hover:border-gray-200/80 disabled:hover:text-gray-400 disabled:hover:bg-white/70 disabled:hover:shadow-none transition-all duration-300"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -440,11 +544,11 @@ export default function Resources() {
           </AnimatedSection>
         )}
 
-        {/* View All Resources */}
-        <AnimatedSection variant="fade-up" delay={0.2} className="mt-12 text-center">
-          <button className="inline-flex items-center gap-2 px-8 py-3 rounded-full border-2 border-[#0066FF] text-[#0066FF] font-semibold text-sm hover:bg-[#0066FF] hover:text-white hover:shadow-lg hover:shadow-blue-500/25 transition-all duration-300">
+        {/* View All CTA */}
+        <AnimatedSection variant="fade-up" delay={0.2} className="mt-14 text-center">
+          <button className="group inline-flex items-center gap-2.5 px-8 py-3.5 rounded-2xl border-2 border-[#0066FF]/20 text-[#0066FF] font-semibold text-sm hover:bg-[#0066FF] hover:text-white hover:border-[#0066FF] hover:shadow-xl hover:shadow-blue-500/20 transition-all duration-300 bg-white/50 backdrop-blur-sm">
             View All Resources
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" />
           </button>
         </AnimatedSection>
       </div>

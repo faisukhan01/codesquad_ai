@@ -12,7 +12,6 @@ import Industries from '@/components/industries';
 import WhyChooseUs from '@/components/why-choose-us';
 import Process from '@/components/process';
 import Portfolio from '@/components/portfolio';
-import Testimonials from '@/components/testimonials';
 import Resources from '@/components/resources';
 import CTASection from '@/components/cta-section';
 import Contact from '@/components/contact';
@@ -44,7 +43,6 @@ export default function Home() {
         <Process />
         <Industries />
         <Portfolio />
-        <Testimonials />
         <Resources />
         <FAQ />
         <CTASection />
