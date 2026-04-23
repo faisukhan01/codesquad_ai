@@ -682,3 +682,30 @@ Stage Summary:
 - CTA buttons: Get Free Checklist (codesquad-form.vercel.app) + Book a Free Call (calendly.com/code_squad/30min)
 - Scroll-responsive headings (1.8x → 1x) on all section headers
 - Clean section flow: Hero → Clients → Services → About → Tech → Industries → Portfolio → Testimonials → Stats → Resources → FAQ → CTA → Contact
+
+---
+Task ID: 14
+Agent: Main Orchestrator (Major Overhaul)
+Task: Comprehensive website overhaul - hero stats removal, clients redesign, services fix, section deletions, industries/resources/FAQ/contact/chatbot redesign, new AlsoExpertIn section
+
+Work Log:
+- **Hero section** (hero.tsx): Removed stats bar (CounterStat component, stats data, and bottom stats overlay). Hero now clean with just badge, rotating headings, subtitle, CTA buttons, and slide indicators.
+- **Clients section** (clients.tsx): Complete rewrite. Replaced single-row text-only marquee with TWO-ROW tech logo marquee going in opposite directions. Row 1: Major tech companies (Microsoft, Google Cloud, AWS, Oracle, SAP, Salesforce, IBM, Adobe, VMware, Cisco) with brand-colored icon boxes. Row 2: Framework/tools (React, Next.js, Node.js, Python, TypeScript, Docker, Kubernetes, TensorFlow, Flutter, PostgreSQL) with brand colors. Each item has spring hover animation. Uses marquee-container fade edges.
+- **Services section** (services.tsx): Complete rewrite. Healthcare now featured as full-width dark navy card with decorative orbs, rotating ring animations, "Core Service" badge, highlight pills, and CTA. Other 4 services in clean 2x2 grid with blue gradient top accent bars, corner arrow indicators, hover lift + shadow + border glow.
+- **AlsoExpertIn section** (also-expert-in.tsx): NEW standalone component. Two rows of scrolling tech chips in opposite directions (marquee). Row 1: Core practices (Git, CI/CD, REST APIs, Microservices, etc.). Row 2: Infrastructure tools (Redis, Nginx, Kafka, Elasticsearch, etc.). Clean white pill design with icons, blue hover effects.
+- **Industries section** (industries.tsx): Redesigned to clean professional 3-column grid. Removed featured/non-featured split. Consistent card design with subtle accent bar, icon, project count badge, hover lift + shadow. Refined color gradients.
+- **Resources section** (resources.tsx): Complete rewrite with functional search bar, tab filters (All/Articles/White Papers/Podcasts), 3-cards-per-page pagination with animated dots, professional card design with accent bars, type icons, tag badges, author/read time metadata, contextual action buttons (Read/Download/Listen). Empty state for no results.
+- **FAQ section** (faq.tsx): Redesigned with numbered indicators (01, 02...), minimal icons, section-gradient-bg background, professional accordion with blue left border accent on answers, open-state bg-blue-50/40 styling.
+- **Contact section** (contact.tsx): Redesigned with 3 contact method cards (Email/Call/Visit) as clickable links at top, dark info panel with contact info cards, working hours, availability indicator, social links. Professional form with clean inputs, trust badges (Lock, ShieldCheck, CheckCircle).
+- **LiveChat** (live-chat.tsx): Fixed responsiveness. Changed to w-[calc(100vw-2rem)] on mobile, 380px on sm+. Added min-h-[480px] max-h-[600px]. Added online status indicator with green ping dot. Updated initial messages. Added break-words and min-w-0 for text overflow prevention. Professional shadow styling.
+- **Page.tsx**: Removed About, Technologies, Testimonials, StatsBanner imports and sections. Added AlsoExpertIn between Services and Industries. Clean section order: Hero → Clients → Services → AlsoExpertIn → Industries → Portfolio → Resources → FAQ → CTASection → Contact.
+- **Removed sections**: About, Technologies (all 6 category cards + Also Expert In secondary bar), Testimonials, StatsBanner
+- ESLint passes with zero errors. Dev server compiles and serves successfully (200 responses).
+
+Stage Summary:
+- 1 NEW component: AlsoExpertIn (marquee-style animated tech chips)
+- 8 components rewritten/redesigned: Hero, Clients, Services, Industries, Resources, FAQ, Contact, LiveChat
+- 4 sections REMOVED from page: About, Technologies, Testimonials, StatsBanner
+- Functional features: Resources search + filter + pagination, responsive chatbot
+- Blue + white theme maintained throughout
+- Zero ESLint errors, zero runtime errors

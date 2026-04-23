@@ -1,7 +1,14 @@
 'use client';
 
 import React from 'react';
-import { Plus, Minus, HelpCircle, MessageSquare, Clock, CreditCard, Shield, Wrench, Users } from 'lucide-react';
+import {
+  MessageSquare,
+  Clock,
+  Shield,
+  Cpu,
+  Wrench,
+  Users,
+} from 'lucide-react';
 import { AnimatedSection } from '@/components/animated-section';
 import SectionHeader from '@/components/section-header';
 import {
@@ -14,50 +21,52 @@ import {
 const faqs = [
   {
     question: 'What industries do you specialize in?',
-    answer: 'We work across fintech, healthcare, e-commerce, education, logistics, and more. Our diverse experience allows us to adapt to any industry\'s unique challenges and deliver tailored solutions.',
+    answer:
+      'We specialize in healthcare, agriculture, computer vision, engineering IoT, and engineering technology solutions with deep domain expertise. Our teams combine technical excellence with industry-specific knowledge to deliver solutions that truly move the needle.',
     icon: Wrench,
   },
   {
     question: 'How do you handle project communication?',
-    answer: 'We assign a dedicated project manager and use tools like Slack, Jira, and weekly video calls. You get full transparency with real-time progress dashboards and regular status updates.',
+    answer:
+      'We assign a dedicated project manager to every engagement and use tools like Slack, Jira, and weekly video calls for full transparency. You\'ll have real-time access to progress dashboards, milestone tracking, and direct communication channels with your engineering team.',
     icon: MessageSquare,
   },
   {
     question: 'What is your typical project timeline?',
-    answer: 'Timelines vary based on complexity. A typical MVP takes 8-12 weeks, while enterprise solutions may take 3-6 months. We provide detailed estimates during the discovery phase.',
+    answer:
+      'Timelines vary by complexity. An MVP typically takes 8-12 weeks, while enterprise solutions may take 3-6 months. We provide detailed estimates and a clear roadmap during the discovery phase so there are never surprises.',
     icon: Clock,
   },
   {
     question: 'Do you offer post-launch support?',
-    answer: 'Absolutely. We offer flexible maintenance packages including bug fixes, feature updates, security patches, and 24/7 monitoring for critical applications.',
+    answer:
+      'Yes, we offer flexible maintenance packages including bug fixes, feature updates, security patches, and 24/7 monitoring. Our support tiers are designed to scale with your needs — from critical production support to ongoing feature development.',
     icon: Shield,
   },
   {
     question: 'What technologies do you use?',
-    answer: 'We\'re technology-agnostic but specialize in React, Next.js, Node.js, Python, cloud platforms (AWS, Azure, GCP), and modern DevOps practices. We choose the best stack for each project.',
-    icon: HelpCircle,
+    answer:
+      'We specialize in React, Next.js, Node.js, Python, cloud platforms (AWS, Azure, GCP), and modern DevOps practices. We stay on the cutting edge while choosing stable, battle-tested tools that deliver long-term maintainability.',
+    icon: Cpu,
   },
   {
     question: 'How do you ensure code quality?',
-    answer: 'We follow strict code review processes, automated testing (unit, integration, E2E), CI/CD pipelines, and adhere to industry best practices and coding standards.',
-    icon: Shield,
+    answer:
+      'We follow strict code reviews, automated testing (unit, integration, E2E), CI/CD pipelines, and coding standards across every project. Our quality assurance process is baked into every sprint — not bolted on at the end.',
+    icon: Wrench,
   },
   {
     question: 'Can you work with our existing team?',
-    answer: 'Yes, we offer staff augmentation and collaborative models. Our engineers seamlessly integrate with your existing workflows, tools, and development culture.',
+    answer:
+      'Yes, our engineers seamlessly integrate with your existing workflows, tools, and development culture. Whether you need staff augmentation, pair programming, or a fully embedded team, we adapt to how you work.',
     icon: Users,
-  },
-  {
-    question: 'What is your pricing model?',
-    answer: 'We offer flexible models: fixed-price for defined scopes, time-and-materials for evolving projects, and dedicated team arrangements for long-term partnerships.',
-    icon: CreditCard,
   },
 ];
 
 export default function FAQ() {
   return (
-    <section id="faq" className="section-padding bg-white">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="faq" className="section-padding section-gradient-bg">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <SectionHeader
           label="FAQ"
           title="Frequently Asked Questions"
@@ -65,33 +74,44 @@ export default function FAQ() {
         />
 
         <AnimatedSection variant="fade-up" delay={0.2}>
-          <div className="bg-gray-50/60 rounded-2xl border border-gray-100 overflow-hidden">
-            <Accordion type="single" collapsible className="w-full">
-              {faqs.map((faq, index) => (
-                <AccordionItem
-                  key={index}
-                  value={`item-${index}`}
-                  className="border-b border-gray-100 last:border-b-0"
-                >
-                  <AccordionTrigger className="text-left text-base sm:text-lg font-medium text-[#0A1628] hover:text-[#0066FF] hover:no-underline py-5 px-6 [&[data-state=open]>svg.custom-icon]:hidden [&[data-state=open]>svg.custom-icon-open]:block group">
-                    <div className="flex items-center justify-between gap-4 pr-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center shrink-0 group-data-[state=open]:bg-[#0066FF] transition-colors duration-200">
-                          <faq.icon className="w-4 h-4 text-[#0066FF] group-data-[state=open]:text-white transition-colors duration-200" />
-                        </div>
-                        <span className="transition-colors duration-200">{faq.question}</span>
+          <div className="bg-gray-50/80 backdrop-blur-sm rounded-2xl border border-gray-200/60 overflow-hidden shadow-sm">
+            <Accordion type="single" collapsible className="w-full divide-y divide-gray-100">
+              {faqs.map((faq, index) => {
+                const num = String(index + 1).padStart(2, '0');
+                const Icon = faq.icon;
+                return (
+                  <AccordionItem
+                    key={index}
+                    value={`item-${index}`}
+                    className="border-0 last:border-0"
+                  >
+                    <AccordionTrigger
+                      className="text-left text-[15px] sm:text-base font-medium text-[#0A1628] hover:text-[#0066FF] hover:no-underline py-5 px-6 sm:px-8 group transition-colors duration-200 [&[data-state=open]]:bg-blue-50/40 [&[data-state=open]>svg:last-child]:text-[#0066FF]"
+                    >
+                      <div className="flex items-center gap-4 sm:gap-5 flex-1 pr-4">
+                        {/* Number indicator */}
+                        <span className="text-xs font-bold tracking-wider text-gray-300 group-data-[state=open]:text-[#0066FF] transition-colors duration-300 select-none w-6 text-center">
+                          {num}
+                        </span>
+
+                        {/* Minimal icon */}
+                        <Icon className="w-4 h-4 text-gray-300 group-data-[state=open]:text-[#0066FF] shrink-0 transition-colors duration-300" />
+
+                        {/* Question text */}
+                        <span className="transition-colors duration-200 leading-snug">
+                          {faq.question}
+                        </span>
                       </div>
-                      <div className="relative flex-shrink-0 w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center transition-colors duration-200 group-data-[state=open]:bg-[#0066FF] group-data-[state=open]:text-white">
-                        <Plus className="w-3.5 h-3.5 text-[#0066FF] custom-icon transition-colors duration-200" />
-                        <Minus className="w-3.5 h-3.5 text-white custom-icon-open hidden" />
+                    </AccordionTrigger>
+
+                    <AccordionContent className="text-gray-500 leading-relaxed text-[14px] sm:text-[15px] px-6 sm:px-8 pb-6 pt-0">
+                      <div className="border-l-2 border-[#0066FF]/30 pl-5 ml-[1.35rem] sm:ml-[1.85rem]">
+                        {faq.answer}
                       </div>
-                    </div>
-                  </AccordionTrigger>
-                  <AccordionContent className="text-gray-500 leading-relaxed px-6 pb-5 pl-17">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
+                    </AccordionContent>
+                  </AccordionItem>
+                );
+              })}
             </Accordion>
           </div>
         </AnimatedSection>

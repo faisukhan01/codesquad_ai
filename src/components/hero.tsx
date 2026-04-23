@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Phone, ClipboardCheck, ChevronRight, Play } from 'lucide-react';
+import { ArrowRight, Phone, ClipboardCheck, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const heroSlides = [
@@ -22,58 +22,6 @@ const heroSlides = [
     subheading: 'Partner with a team of 200+ experts delivering scalable, reliable, and future-ready solutions.',
   },
 ];
-
-const stats = [
-  { value: 200, suffix: '+', label: 'Projects Delivered' },
-  { value: 50, suffix: '+', label: 'Global Clients' },
-  { value: 8, suffix: '+', label: 'Years of Excellence' },
-  { value: 99, suffix: '%', label: 'Client Satisfaction' },
-];
-
-function easeOutQuad(t: number) { return t * (2 - t); }
-
-function CounterStat({ value, suffix, label }: { value: number; suffix: string; label: string }) {
-  const [count, setCount] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
-  const hasAnimated = useRef(false);
-  const isInView = useRef(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          isInView.current = true;
-          if (!hasAnimated.current) {
-            hasAnimated.current = true;
-            const duration = 2000;
-            const startTime = Date.now();
-            const animate = () => {
-              const progress = Math.min((Date.now() - startTime) / duration, 1);
-              setCount(Math.round(easeOutQuad(progress) * value));
-              if (progress < 1) requestAnimationFrame(animate);
-              else setCount(value);
-            };
-            requestAnimationFrame(animate);
-          }
-        }
-      },
-      { threshold: 0.5 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [value]);
-
-  return (
-    <div ref={ref} className="text-center px-4 sm:px-6 lg:px-8">
-      <div className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-1">
-        {count}<span className="text-[#0066FF]">{suffix}</span>
-      </div>
-      <div className="text-xs sm:text-sm text-blue-200/60 font-medium uppercase tracking-wider">
-        {label}
-      </div>
-    </div>
-  );
-}
 
 export default function Hero() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -264,24 +212,6 @@ export default function Hero() {
           </motion.div>
         </div>
       </div>
-
-      {/* Stats Bar at Bottom */}
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7, delay: 0.9 }}
-        className="absolute bottom-0 left-0 right-0 z-10"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
-          <div className="bg-white/[0.06] backdrop-blur-xl border border-white/[0.08] rounded-2xl py-6">
-            <div className="grid grid-cols-2 sm:grid-cols-4 divide-x divide-white/[0.08]">
-              {stats.map((stat) => (
-                <CounterStat key={stat.label} {...stat} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </motion.div>
 
       {/* Bottom gradient line */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#0066FF]/30 to-transparent z-[11]" />

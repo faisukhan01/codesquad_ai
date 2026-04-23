@@ -15,23 +15,26 @@ interface ChatMessage {
 const INITIAL_MESSAGES: ChatMessage[] = [
   {
     id: 'bot-1',
-    text: '👋 Hi there! Welcome to CodeSquad.',
+    text: 'Hi there! Welcome to CodeSquad. 👋',
     sender: 'bot',
     timestamp: '10:00 AM',
   },
   {
     id: 'bot-2',
-    text: 'How can we help you today? Our team typically responds within minutes.',
+    text: 'How can we help you today?',
     sender: 'bot',
     timestamp: '10:00 AM',
   },
   {
     id: 'bot-3',
-    text: 'Feel free to ask about our services, pricing, or anything else!',
+    text: 'Ask about our services, pricing, or anything else!',
     sender: 'bot',
     timestamp: '10:01 AM',
   },
 ];
+
+const BOT_REPLY =
+  'Thanks for your message! Our team will get back to you shortly. In the meantime, feel free to explore our services or book a free consultation.';
 
 function formatTime(): string {
   const now = new Date();
@@ -42,8 +45,8 @@ export default function LiveChat() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>(INITIAL_MESSAGES);
   const [inputValue, setInputValue] = useState('');
-  const [unreadCount, setUnreadCount] = useState(1);
   const [isTyping, setIsTyping] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(1);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -60,7 +63,7 @@ export default function LiveChat() {
     setIsOpen(willOpen);
     if (willOpen) {
       setUnreadCount(0);
-      setTimeout(() => inputRef.current?.focus(), 300);
+      setTimeout(() => inputRef.current?.focus(), 350);
     }
   }, [isOpen]);
 
@@ -82,7 +85,7 @@ export default function LiveChat() {
     setTimeout(() => {
       const botReply: ChatMessage = {
         id: `bot-${Date.now()}`,
-        text: 'Thanks for your message! Our team will get back to you shortly via email. In the meantime, feel free to explore our services.',
+        text: BOT_REPLY,
         sender: 'bot',
         timestamp: formatTime(),
       };
@@ -102,46 +105,52 @@ export default function LiveChat() {
   );
 
   return (
-    <div className="fixed bottom-24 right-6 z-[45] flex flex-col items-end gap-3">
+    <div className="fixed bottom-6 right-4 sm:right-6 z-[50] flex flex-col items-end gap-3">
+      {/* Chat Window */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            initial={{ opacity: 0, scale: 0.85, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="w-[calc(100vw-3rem)] sm:w-[400px] h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden"
+            exit={{ opacity: 0, scale: 0.85, y: 20 }}
+            transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
+            className="w-[calc(100vw-2rem)] sm:w-[380px] min-h-[480px] max-h-[600px] bg-white rounded-2xl shadow-[0_8px_40px_rgba(0,0,0,0.12),0_2px_12px_rgba(0,0,0,0.06)] border border-gray-100 flex flex-col overflow-hidden origin-bottom-right"
           >
-            {/* Header */}
+            {/* ── Header ── */}
             <div
-              className="flex items-center justify-between px-5 py-4 shrink-0"
+              className="flex items-center justify-between px-4 py-3.5 shrink-0"
               style={{
                 background: 'linear-gradient(135deg, #0066FF, #338AFF)',
               }}
             >
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-white font-bold text-sm">
+                <div className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white font-bold text-sm ring-2 ring-white/30">
                   CS
                 </div>
                 <div>
-                  <h3 className="text-white font-semibold text-base leading-tight">
-                    Live Chat
+                  <h3 className="text-white font-semibold text-[15px] leading-tight">
+                    CodeSquad Support
                   </h3>
-                  <p className="text-white/70 text-xs">CodeSquad</p>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-300" />
+                    </span>
+                    <p className="text-white/80 text-xs">Online now</p>
+                  </div>
                 </div>
               </div>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-8 w-8 text-white hover:bg-white/20 hover:text-white rounded-full"
+              <button
                 onClick={() => setIsOpen(false)}
+                className="h-8 w-8 rounded-full flex items-center justify-center text-white/80 hover:text-white hover:bg-white/20 transition-colors"
+                aria-label="Close chat"
               >
                 <X className="h-4 w-4" />
-              </Button>
+              </button>
             </div>
 
-            {/* Messages area */}
-            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-4 bg-gray-50">
+            {/* ── Messages Area ── */}
+            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3.5 bg-gray-50 min-h-0">
               {messages.map((msg) => (
                 <div
                   key={msg.id}
@@ -151,7 +160,7 @@ export default function LiveChat() {
                 >
                   {msg.sender === 'bot' && (
                     <div
-                      className="w-8 h-8 rounded-full shrink-0 flex items-center justify-center text-white text-xs font-bold"
+                      className="w-7 h-7 rounded-full shrink-0 flex items-center justify-center text-white text-[10px] font-bold mt-1"
                       style={{
                         background:
                           'linear-gradient(135deg, #0066FF, #338AFF)',
@@ -160,18 +169,18 @@ export default function LiveChat() {
                       CS
                     </div>
                   )}
-                  <div className="max-w-[75%] flex flex-col">
+                  <div className="max-w-[78%] flex flex-col min-w-0">
                     <div
-                      className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
+                      className={`rounded-2xl px-3.5 py-2.5 text-[13px] leading-relaxed break-words ${
                         msg.sender === 'user'
                           ? 'bg-[#0066FF] text-white rounded-br-md'
-                          : 'bg-white text-gray-800 border border-gray-100 rounded-bl-md shadow-sm'
+                          : 'bg-white text-gray-800 rounded-bl-md shadow-[0_1px_4px_rgba(0,0,0,0.06)] border border-gray-100/80'
                       }`}
                     >
                       {msg.text}
                     </div>
                     <span
-                      className={`text-[10px] text-gray-400 mt-1 ${
+                      className={`text-[10px] text-gray-400 mt-1 px-1 ${
                         msg.sender === 'user' ? 'text-right' : 'text-left'
                       }`}
                     >
@@ -179,17 +188,18 @@ export default function LiveChat() {
                     </span>
                   </div>
                   {msg.sender === 'user' && (
-                    <div className="w-8 h-8 rounded-full shrink-0 flex items-center justify-center text-white text-xs font-bold bg-gray-500">
-                      Y
+                    <div className="w-7 h-7 rounded-full shrink-0 flex items-center justify-center text-white text-[10px] font-bold bg-gray-400 mt-1">
+                      U
                     </div>
                   )}
                 </div>
               ))}
 
+              {/* Typing indicator */}
               {isTyping && (
                 <div className="flex gap-2.5">
                   <div
-                    className="w-8 h-8 rounded-full shrink-0 flex items-center justify-center text-white text-xs font-bold"
+                    className="w-7 h-7 rounded-full shrink-0 flex items-center justify-center text-white text-[10px] font-bold mt-1"
                     style={{
                       background:
                         'linear-gradient(135deg, #0066FF, #338AFF)',
@@ -197,8 +207,8 @@ export default function LiveChat() {
                   >
                     CS
                   </div>
-                  <div className="bg-white border border-gray-100 rounded-2xl rounded-bl-md px-4 py-3 shadow-sm">
-                    <div className="flex gap-1.5">
+                  <div className="bg-white rounded-2xl rounded-bl-md px-4 py-3 shadow-[0_1px_4px_rgba(0,0,0,0.06)] border border-gray-100/80">
+                    <div className="flex gap-1.5 items-center">
                       <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:0ms]" />
                       <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:150ms]" />
                       <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce [animation-delay:300ms]" />
@@ -210,8 +220,8 @@ export default function LiveChat() {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input area */}
-            <div className="px-4 py-3 border-t border-gray-200 bg-white shrink-0">
+            {/* ── Input Area ── */}
+            <div className="px-4 py-3 border-t border-gray-100 bg-white shrink-0">
               <div className="flex items-center gap-2">
                 <input
                   ref={inputRef}
@@ -220,17 +230,17 @@ export default function LiveChat() {
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyDown={handleKeyDown}
                   placeholder="Type a message..."
-                  className="flex-1 bg-gray-100 rounded-full px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-[#0066FF]/30 transition-all placeholder:text-gray-400"
+                  className="flex-1 bg-gray-100 rounded-full px-4 py-2.5 text-sm text-gray-800 outline-none focus:ring-2 focus:ring-[#0066FF]/30 transition-all placeholder:text-gray-400"
                 />
                 <Button
                   size="icon"
                   onClick={handleSend}
                   disabled={!inputValue.trim()}
-                  className="h-10 w-10 rounded-full shrink-0 text-white"
+                  className="h-10 w-10 rounded-full shrink-0 text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all"
                   style={{
                     background: inputValue.trim()
                       ? 'linear-gradient(135deg, #0066FF, #338AFF)'
-                      : undefined,
+                      : '#cbd5e1',
                   }}
                 >
                   <Send className="h-4 w-4" />
@@ -241,19 +251,22 @@ export default function LiveChat() {
         )}
       </AnimatePresence>
 
-      {/* Floating Action Button */}
+      {/* ── Floating Action Button ── */}
       <motion.button
-        whileHover={{ scale: 1.1 }}
+        whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
         onClick={toggleChat}
-        className="relative w-14 h-14 rounded-full text-white shadow-lg flex items-center justify-center"
+        className="relative w-14 h-14 rounded-full text-white shadow-[0_4px_20px_rgba(0,102,255,0.4)] flex items-center justify-center"
         style={{
           background: 'linear-gradient(135deg, #0066FF, #338AFF)',
         }}
+        aria-label={isOpen ? 'Close chat' : 'Open chat'}
       >
+        {/* Ping ring when closed */}
         {!isOpen && (
           <span className="absolute inset-0 rounded-full animate-ping opacity-20 bg-white" />
         )}
+
         {isOpen ? (
           <X className="h-6 w-6" />
         ) : (
@@ -262,7 +275,7 @@ export default function LiveChat() {
 
         {/* Unread badge */}
         {!isOpen && unreadCount > 0 && (
-          <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center shadow-sm">
+          <span className="absolute -top-1 -right-1 min-w-[20px] h-5 px-1 bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center shadow-sm ring-2 ring-white">
             {unreadCount}
           </span>
         )}
