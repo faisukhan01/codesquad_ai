@@ -705,3 +705,201 @@ img {
 button, a, [role="button"] {
   transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
+
+/* =============================================
+   PREmium UTILITY CLASSES (Task 11)
+   ============================================= */
+
+/* Premium card: subtle gradient border, refined shadow, glass-like finish */
+.premium-card {
+  position: relative;
+  background: white;
+  border-radius: 1rem;
+  border: 1px solid rgba(0, 102, 255, 0.06);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    0 4px 12px rgba(0, 0, 0, 0.03),
+    0 12px 28px rgba(0, 0, 0, 0.02);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.premium-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    160deg,
+    rgba(0, 102, 255, 0.25),
+    rgba(51, 138, 255, 0.1) 40%,
+    transparent 60%,
+    rgba(0, 102, 255, 0.08)
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.premium-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(0, 102, 255, 0.12);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.04),
+    0 12px 24px rgba(0, 102, 255, 0.08),
+    0 24px 48px rgba(0, 102, 255, 0.04);
+}
+
+.premium-card:hover::before {
+  opacity: 1;
+}
+
+/* Section gradient background with subtle mesh-like pattern */
+.section-gradient-bg {
+  position: relative;
+  background: linear-gradient(
+    180deg,
+    #f8faff 0%,
+    #ffffff 40%,
+    #f0f6ff 100%
+  );
+}
+
+.section-gradient-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(0, 102, 255, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(51, 138, 255, 0.02) 0%, transparent 40%),
+    radial-gradient(circle at 50% 80%, rgba(0, 102, 255, 0.02) 0%, transparent 45%);
+  pointer-events: none;
+}
+
+/* Gradient text in blue tones */
+.text-gradient-blue {
+  background: linear-gradient(135deg, #0052CC 0%, #0066FF 35%, #338AFF 65%, #0052CC 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gradient divider line for between sections */
+.gradient-divider {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 102, 255, 0.08) 15%,
+    rgba(0, 102, 255, 0.2) 50%,
+    rgba(0, 102, 255, 0.08) 85%,
+    transparent 100%
+  );
+}
+
+.gradient-divider-thick {
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 102, 255, 0.1) 20%,
+    rgba(0, 102, 255, 0.3) 50%,
+    rgba(0, 102, 255, 0.1) 80%,
+    transparent 100%
+  );
+  border-radius: 2px;
+}
+
+/* Subtle icon float animation for hover */
+@keyframes icon-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-3px) rotate(2deg); }
+  75% { transform: translateY(-1px) rotate(-1deg); }
+}
+
+.icon-hover-float {
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.group:hover .icon-hover-float {
+  animation: icon-float 0.6s ease-in-out;
+}
+
+/* Premium image overlay with gradient */
+.premium-img-overlay {
+  position: relative;
+  overflow: hidden;
+}
+
+.premium-img-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(0, 102, 255, 0.08) 0%,
+    transparent 40%,
+    transparent 60%,
+    rgba(0, 82, 204, 0.05) 100%
+  );
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  opacity: 0;
+}
+
+.premium-img-overlay:hover::after {
+  opacity: 1;
+}
+
+/* Premium section separator with decorative elements */
+.premium-separator {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 0 2rem;
+}
+
+.premium-separator::before,
+.premium-separator::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 102, 255, 0.15),
+    transparent
+  );
+}
+
+.premium-separator-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0066FF, #338AFF);
+  box-shadow: 0 0 8px rgba(0, 102, 255, 0.3);
+}
+
+/* Subtle mesh pattern for premium backgrounds */
+.premium-mesh-bg {
+  background-image:
+    radial-gradient(at 27% 37%, rgba(0, 102, 255, 0.04) 0px, transparent 50%),
+    radial-gradient(at 97% 21%, rgba(51, 138, 255, 0.03) 0px, transparent 50%),
+    radial-gradient(at 52% 99%, rgba(0, 82, 204, 0.03) 0px, transparent 50%),
+    radial-gradient(at 10% 29%, rgba(0, 102, 255, 0.02) 0px, transparent 50%);
+}
+
+/* Elegant card glow on hover */
+@keyframes card-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 102, 255, 0); }
+  50% { box-shadow: 0 0 20px 0 rgba(0, 102, 255, 0.08); }
+}
+
+.premium-card-glow:hover {
+  animation: card-glow 1.5s ease-in-out;
+}

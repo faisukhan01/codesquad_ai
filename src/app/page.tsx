@@ -8,7 +8,7 @@ import Hero from '@/components/hero';
 import Clients from '@/components/clients';
 import Partners from '@/components/partners';
 import Services from '@/components/services';
-import SectionDivider from '@/components/section-divider';
+
 import About from '@/components/about';
 import CompanyValues from '@/components/company-values';
 import Awards from '@/components/awards';
@@ -55,15 +55,16 @@ export default function Home() {
         <Clients />
         <Partners />
         <Services />
-        <SectionDivider variant="wave" colorFrom="white" colorTo="#f9fafb" />
+        <div className="gradient-divider max-w-7xl mx-auto" />
         <About />
         <CompanyValues />
         <Awards />
-        <SectionDivider variant="curve" colorFrom="#f9fafb" colorTo="white" />
+        <div className="gradient-divider max-w-7xl mx-auto" />
         <Technologies />
         <Process />
         <Industries />
         <Portfolio />
+        <div className="gradient-divider-thick max-w-7xl mx-auto" />
         <Testimonials />
         <StatsBanner />
         <Trust />
@@ -79,6 +80,7 @@ export default function Home() {
         <VideoShowcase />
         <Resources />
         <CTASection />
+        <div className="gradient-divider max-w-7xl mx-auto" />
         <Contact />
       </main>
       <Footer />

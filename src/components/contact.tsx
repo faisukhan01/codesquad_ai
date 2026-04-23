@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Mail, Phone, Send, Linkedin, Twitter, Github, Clock, ArrowUpRight } from 'lucide-react';
+import { MapPin, Mail, Phone, Send, Linkedin, Twitter, Github, Clock, ArrowUpRight, CheckCircle, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -34,6 +34,7 @@ const contactMethods = [
     value: 'hello@codesquad.dev',
     description: 'We reply within 24 hours',
     color: 'from-blue-500 to-cyan-500',
+    detail: 'Preferred method',
   },
   {
     icon: Phone,
@@ -41,6 +42,7 @@ const contactMethods = [
     value: '+1 (555) 123-4567',
     description: 'Mon-Fri, 9AM to 6PM PST',
     color: 'from-emerald-500 to-teal-500',
+    detail: null,
   },
   {
     icon: MapPin,
@@ -48,6 +50,7 @@ const contactMethods = [
     value: '123 Innovation Drive',
     description: 'Tech Valley, CA 94025',
     color: 'from-violet-500 to-purple-500',
+    detail: 'By appointment',
   },
 ];
 
@@ -116,28 +119,40 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="section-padding bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="contact" className="section-padding section-gradient-bg">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <SectionHeader
           label="Contact"
           title="Let's Build Something Great"
           description="Have a project in mind? We'd love to hear about it. Reach out and let's start a conversation."
         />
 
-        {/* Contact Method Cards */}
+        {/* Contact Method Cards - Premium styled */}
         <AnimatedSection variant="stagger-children" className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
           {contactMethods.map((method) => (
             <AnimatedItem key={method.title} variant="fade-up" delay={0.05}>
               <motion.div
-                whileHover={{ y: -4, transition: { duration: 0.3 } }}
-                className="group relative bg-gray-50/80 rounded-2xl border border-gray-100 p-6 hover:shadow-lg hover:shadow-blue-500/5 hover:border-gray-200 transition-all duration-300"
+                whileHover={{ y: -6, transition: { duration: 0.4 } }}
+                className="group relative premium-card rounded-2xl p-6 overflow-hidden"
               >
-                <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${method.color} flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform duration-300`}>
-                  <method.icon className="w-5 h-5 text-white" />
+                {/* Corner gradient accent */}
+                <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-bl from-blue-50/60 to-transparent rounded-bl-full opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+                <div className="relative z-10">
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${method.color} flex items-center justify-center mb-4 shadow-md group-hover:shadow-xl group-hover:scale-110 transition-all duration-400`}>
+                    <method.icon className="w-5 h-5 text-white icon-hover-float" />
+                  </div>
+                  <h4 className="font-semibold text-[#0A1628] text-sm mb-1">{method.title}</h4>
+                  <p className="text-sm text-[#0066FF] font-semibold mb-1">{method.value}</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-xs text-gray-400">{method.description}</p>
+                    {method.detail && (
+                      <span className="text-[10px] font-bold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded">
+                        {method.detail}
+                      </span>
+                    )}
+                  </div>
                 </div>
-                <h4 className="font-semibold text-[#0A1628] text-sm mb-1">{method.title}</h4>
-                <p className="text-sm text-[#0066FF] font-medium mb-1">{method.value}</p>
-                <p className="text-xs text-gray-400">{method.description}</p>
               </motion.div>
             </AnimatedItem>
           ))}
@@ -146,37 +161,57 @@ export default function Contact() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-14">
           {/* Left: Info Panel */}
           <AnimatedSection variant="fade-right" className="lg:col-span-2">
-            <div className="bg-gradient-to-br from-[#0A1628] to-[#0d1f35] rounded-2xl p-7 sm:p-8 text-white relative overflow-hidden">
-              {/* Background pattern */}
-              <div className="absolute inset-0 grid-pattern opacity-30" />
-              <div className="absolute top-0 right-0 w-40 h-40 bg-[#0066FF]/10 rounded-full blur-3xl" />
+            <div className="bg-gradient-to-br from-[#0A1628] via-[#0d1f35] to-[#0A1628] rounded-2xl p-7 sm:p-8 text-white relative overflow-hidden">
+              {/* Background decorations */}
+              <div className="absolute inset-0 grid-pattern opacity-20" />
+              <div className="absolute top-0 right-0 w-48 h-48 bg-[#0066FF]/8 rounded-full blur-3xl" />
+              <div className="absolute bottom-0 left-0 w-36 h-36 bg-cyan-500/5 rounded-full blur-3xl" />
+              {/* Decorative dots */}
+              <div className="absolute top-6 right-6 w-1.5 h-1.5 rounded-full bg-blue-400/30" />
+              <div className="absolute top-10 right-16 w-1 h-1 rounded-full bg-cyan-400/20" />
+              <div className="absolute bottom-10 left-8 w-1 h-1 rounded-full bg-blue-300/25" />
 
               <div className="relative z-10">
-                <h3 className="text-xl font-bold mb-3">Ready to get started?</h3>
-                <p className="text-blue-200/70 text-sm leading-relaxed mb-8">
+                <h3 className="text-xl font-bold mb-2">Ready to get started?</h3>
+                <p className="text-blue-200/60 text-sm leading-relaxed mb-8">
                   Whether you have a detailed brief or just a rough idea, our team is ready to help you bring your vision to life.
                 </p>
+
+                {/* Quick response promises */}
+                <div className="grid grid-cols-2 gap-3 mb-8">
+                  {[
+                    { icon: CheckCircle, text: 'Free consultation' },
+                    { icon: MessageCircle, text: '2hr response time' },
+                    { icon: CheckCircle, text: 'No-obligation quote' },
+                    { icon: CheckCircle, text: 'NDA protection' },
+                  ].map(({ icon: Icon, text }) => (
+                    <div key={text} className="flex items-center gap-2">
+                      <Icon className="w-3.5 h-3.5 text-blue-400/60 shrink-0" />
+                      <span className="text-xs text-blue-200/50">{text}</span>
+                    </div>
+                  ))}
+                </div>
 
                 {/* Working Hours */}
                 <div className="space-y-4 mb-8">
                   <div className="flex items-start gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+                    <div className="w-9 h-9 rounded-lg bg-white/8 border border-white/10 flex items-center justify-center shrink-0">
                       <Clock className="w-4 h-4 text-blue-300" />
                     </div>
                     <div>
                       <p className="text-sm font-medium text-blue-100 mb-2.5">Working Hours</p>
                       <div className="space-y-1.5 text-xs">
                         <div className="flex justify-between gap-4">
-                          <span className="text-blue-200/60">Mon - Fri</span>
+                          <span className="text-blue-200/50">Mon - Fri</span>
                           <span className="text-blue-100 font-medium">9AM - 6PM PST</span>
                         </div>
                         <div className="flex justify-between gap-4">
-                          <span className="text-blue-200/60">Saturday</span>
+                          <span className="text-blue-200/50">Saturday</span>
                           <span className="text-blue-100 font-medium">10AM - 2PM PST</span>
                         </div>
                         <div className="flex justify-between gap-4">
-                          <span className="text-blue-200/60">Sunday</span>
-                          <span className="text-blue-200/40 font-medium">Closed</span>
+                          <span className="text-blue-200/50">Sunday</span>
+                          <span className="text-blue-200/30 font-medium">Closed</span>
                         </div>
                       </div>
                     </div>
@@ -192,12 +227,12 @@ export default function Contact() {
                     </span>
                     <span className="text-sm font-medium text-green-300">Available for new projects</span>
                   </div>
-                  <p className="text-xs text-blue-200/50 ml-5">Average response time: 2 hours</p>
+                  <p className="text-xs text-blue-200/40 ml-5">Average response time: 2 hours</p>
                 </div>
 
                 {/* Social Links */}
                 <div className="pt-6 border-t border-white/10">
-                  <p className="text-xs text-blue-200/50 uppercase tracking-widest mb-4">Follow Us</p>
+                  <p className="text-xs text-blue-200/40 uppercase tracking-widest mb-4">Follow Us</p>
                   <div className="flex gap-3">
                     {[
                       { icon: Linkedin, label: 'LinkedIn' },
@@ -208,7 +243,7 @@ export default function Contact() {
                         key={label}
                         href="#"
                         whileHover={{ y: -2 }}
-                        className="w-10 h-10 rounded-xl bg-white/8 border border-white/10 flex items-center justify-center hover:bg-white/15 hover:border-white/20 text-blue-200/60 hover:text-white transition-all duration-300"
+                        className="w-10 h-10 rounded-xl bg-white/8 border border-white/10 flex items-center justify-center hover:bg-white/15 hover:border-white/20 text-blue-200/50 hover:text-white transition-all duration-300"
                       >
                         <Icon className="w-4 h-4" />
                       </motion.a>
@@ -223,8 +258,19 @@ export default function Contact() {
           <AnimatedSection variant="fade-left" className="lg:col-span-3">
             <form
               onSubmit={handleSubmit}
-              className="bg-gray-50/60 rounded-2xl border border-gray-100 p-6 sm:p-8"
+              className="premium-card rounded-2xl p-6 sm:p-8"
             >
+              {/* Form header accent */}
+              <div className="flex items-center gap-3 mb-6 pb-5 border-b border-gray-100">
+                <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#0066FF] to-[#0052CC] flex items-center justify-center shadow-sm shadow-blue-500/20">
+                  <Send className="w-3.5 h-3.5 text-white" />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-[#0A1628]">Send us a message</h4>
+                  <p className="text-xs text-gray-400">We typically respond within 2 hours</p>
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
                 <div className="space-y-2">
                   <Label htmlFor="name" className="text-sm font-medium text-[#0A1628]">
@@ -235,7 +281,7 @@ export default function Contact() {
                     placeholder="John Doe"
                     value={formData.name}
                     onChange={(e) => handleChange('name', e.target.value)}
-                    className="bg-white border-gray-200 rounded-xl h-11 focus:border-[#0066FF] transition-colors"
+                    className="bg-white/80 border-gray-200 rounded-xl h-11 focus:border-[#0066FF] focus:ring-2 focus:ring-[#0066FF]/10 transition-all"
                   />
                 </div>
                 <div className="space-y-2">
@@ -248,7 +294,7 @@ export default function Contact() {
                     placeholder="john@company.com"
                     value={formData.email}
                     onChange={(e) => handleChange('email', e.target.value)}
-                    className="bg-white border-gray-200 rounded-xl h-11 focus:border-[#0066FF] transition-colors"
+                    className="bg-white/80 border-gray-200 rounded-xl h-11 focus:border-[#0066FF] focus:ring-2 focus:ring-[#0066FF]/10 transition-all"
                   />
                 </div>
               </div>
@@ -263,7 +309,7 @@ export default function Contact() {
                     placeholder="Company name"
                     value={formData.company}
                     onChange={(e) => handleChange('company', e.target.value)}
-                    className="bg-white border-gray-200 rounded-xl h-11 focus:border-[#0066FF] transition-colors"
+                    className="bg-white/80 border-gray-200 rounded-xl h-11 focus:border-[#0066FF] focus:ring-2 focus:ring-[#0066FF]/10 transition-all"
                   />
                 </div>
                 <div className="space-y-2">
@@ -274,7 +320,7 @@ export default function Contact() {
                     value={formData.service}
                     onValueChange={(value) => handleChange('service', value)}
                   >
-                    <SelectTrigger className="bg-white border-gray-200 rounded-xl h-11">
+                    <SelectTrigger className="bg-white/80 border-gray-200 rounded-xl h-11 focus:ring-2 focus:ring-[#0066FF]/10">
                       <SelectValue placeholder="Select a service" />
                     </SelectTrigger>
                     <SelectContent>
@@ -298,7 +344,7 @@ export default function Contact() {
                   rows={5}
                   value={formData.message}
                   onChange={(e) => handleChange('message', e.target.value)}
-                  className="bg-white border-gray-200 rounded-xl focus:border-[#0066FF] resize-none transition-colors"
+                  className="bg-white/80 border-gray-200 rounded-xl focus:border-[#0066FF] focus:ring-2 focus:ring-[#0066FF]/10 resize-none transition-all"
                 />
               </div>
 
@@ -325,6 +371,15 @@ export default function Contact() {
                   </span>
                 )}
               </Button>
+
+              {/* Trust badges */}
+              <div className="mt-4 flex items-center justify-center gap-4 text-[10px] text-gray-400">
+                <span className="flex items-center gap-1"><CheckCircle className="w-3 h-3" /> 256-bit encryption</span>
+                <span className="text-gray-200">•</span>
+                <span className="flex items-center gap-1"><CheckCircle className="w-3 h-3" /> GDPR compliant</span>
+                <span className="text-gray-200">•</span>
+                <span className="flex items-center gap-1"><CheckCircle className="w-3 h-3" /> No spam</span>
+              </div>
             </form>
           </AnimatedSection>
         </div>

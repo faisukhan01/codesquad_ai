@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ExternalLink } from 'lucide-react';
+import { ExternalLink, ArrowUpRight } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -21,6 +21,7 @@ interface PortfolioItem {
   tags: string[];
   category: string;
   result: string;
+  year?: string;
 }
 
 const categories = ['All', 'Financial Technology', 'Healthcare', 'E-Commerce', 'Artificial Intelligence', 'Cloud & DevOps'];
@@ -35,6 +36,7 @@ const portfolioItems: PortfolioItem[] = [
     tags: ['React', 'Node.js', 'AWS'],
     category: 'Financial Technology',
     result: '35% cost reduction',
+    year: '2024',
   },
   {
     title: 'HealthConnect App',
@@ -45,6 +47,7 @@ const portfolioItems: PortfolioItem[] = [
     tags: ['React Native', 'Python', 'Azure'],
     category: 'Healthcare',
     result: '200% engagement increase',
+    year: '2024',
   },
   {
     title: 'ShopSphere E-commerce',
@@ -55,6 +58,7 @@ const portfolioItems: PortfolioItem[] = [
     tags: ['Next.js', '.NET', 'Google Cloud'],
     category: 'E-Commerce',
     result: '$50M+ annual GMV',
+    year: '2023',
   },
   {
     title: 'AI Insights Engine',
@@ -65,6 +69,7 @@ const portfolioItems: PortfolioItem[] = [
     tags: ['Python', 'TensorFlow', 'Kubernetes'],
     category: 'Artificial Intelligence',
     result: '40% cost reduction',
+    year: '2024',
   },
   {
     title: 'CloudVault Platform',
@@ -75,6 +80,7 @@ const portfolioItems: PortfolioItem[] = [
     tags: ['Go', 'Terraform', 'AWS'],
     category: 'Cloud & DevOps',
     result: '60% faster deployments',
+    year: '2023',
   },
   {
     title: 'SmartLedger Pro',
@@ -85,6 +91,7 @@ const portfolioItems: PortfolioItem[] = [
     tags: ['Solidity', 'Node.js', 'PostgreSQL'],
     category: 'Financial Technology',
     result: '99.7% settlement accuracy',
+    year: '2024',
   },
 ];
 
@@ -98,53 +105,69 @@ function PortfolioCard({ item, onOpen }: { item: PortfolioItem; onOpen: () => vo
       transition={{ duration: 0.3 }}
     >
       <motion.div
-        whileHover={{ y: -6 }}
-        transition={{ duration: 0.3 }}
-        className="group relative rounded-2xl overflow-hidden cursor-pointer border border-gray-100 bg-white shadow-sm hover:shadow-xl hover:shadow-blue-500/8 hover:border-gray-200 transition-all duration-300 h-full"
+        whileHover={{ y: -8 }}
+        transition={{ duration: 0.4 }}
+        className="group relative rounded-2xl overflow-hidden cursor-pointer border border-gray-100/80 bg-white shadow-sm hover:shadow-2xl hover:shadow-blue-500/10 hover:border-blue-200/50 transition-all duration-400 h-full premium-card-glow"
         onClick={onOpen}
       >
-        {/* Image */}
+        {/* Image with enhanced overlay */}
         <div className="relative h-56 sm:h-64 overflow-hidden">
           <motion.img
             src={item.image}
             alt={item.title}
             className="w-full h-full object-cover"
             whileHover={{ scale: 1.08 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6 }}
           />
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/90 via-[#0A1628]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          <div className="absolute inset-0 flex items-end p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-            <div>
-              <span className="inline-block px-3 py-1 rounded-full bg-white/10 backdrop-blur-sm text-white text-xs font-medium mb-2">
-                {item.category}
-              </span>
-              <h3 className="text-xl font-bold text-white mb-1">{item.title}</h3>
-              <p className="text-sm text-blue-100/80">{item.description}</p>
-            </div>
+          {/* Base dark overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/90 via-[#0A1628]/30 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-400" />
+          {/* Blue tint overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-[#0066FF]/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-all duration-500" />
+
+          <div className="absolute inset-0 flex flex-col items-start justify-end p-6 opacity-0 group-hover:opacity-100 transition-all duration-400">
+            <span className="inline-block px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-white text-xs font-medium mb-2 border border-white/10">
+              {item.category}
+            </span>
+            <h3 className="text-xl font-bold text-white mb-1">{item.title}</h3>
+            <p className="text-sm text-blue-100/80 line-clamp-2">{item.description}</p>
           </div>
+
           {/* Result badge */}
           <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-            <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-[#0066FF]/90 backdrop-blur-sm text-white text-xs font-semibold shadow-lg">
+            <span className="inline-flex items-center px-3 py-1.5 rounded-full bg-gradient-to-r from-[#0066FF] to-[#0052CC] backdrop-blur-sm text-white text-xs font-bold shadow-lg shadow-blue-500/25">
               {item.result}
             </span>
+          </div>
+
+          {/* View project arrow */}
+          <div className="absolute top-4 left-4 opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-2 group-hover:translate-x-0">
+            <div className="w-8 h-8 rounded-full bg-white/15 backdrop-blur-md border border-white/20 flex items-center justify-center">
+              <ArrowUpRight className="w-4 h-4 text-white" />
+            </div>
           </div>
         </div>
 
         {/* Card Footer */}
         <div className="p-5 sm:p-6">
           <div className="flex items-center justify-between mb-2">
-            <h3 className="text-lg font-semibold text-[#0A1628] group-hover:text-[#0066FF] transition-colors duration-300">
+            <h3 className="text-lg font-bold text-[#0A1628] group-hover:text-gradient-blue transition-all duration-300">
               {item.title}
             </h3>
-            <ExternalLink className="w-4 h-4 text-gray-300 group-hover:text-[#0066FF] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+            <div className="flex items-center gap-2">
+              {item.year && (
+                <span className="text-[10px] font-semibold text-gray-400 bg-gray-50 px-2 py-0.5 rounded-md">
+                  {item.year}
+                </span>
+              )}
+              <ExternalLink className="w-4 h-4 text-gray-300 group-hover:text-[#0066FF] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+            </div>
           </div>
           <p className="text-sm text-gray-500 mb-4 leading-relaxed">{item.description}</p>
           <div className="flex flex-wrap gap-2">
             {item.tags.map((tag) => (
               <span
                 key={tag}
-                className="inline-flex items-center px-2.5 py-1 rounded-md bg-gray-50 border border-gray-100 text-gray-600 text-xs font-medium group-hover:bg-blue-50 group-hover:text-[#0066FF] group-hover:border-blue-100 transition-colors duration-300"
+                className="inline-flex items-center px-2.5 py-1 rounded-lg bg-gray-50/80 border border-gray-100 text-gray-600 text-xs font-medium group-hover:bg-blue-50/80 group-hover:text-[#0066FF] group-hover:border-blue-100/50 transition-colors duration-300"
               >
                 {tag}
               </span>
@@ -165,8 +188,8 @@ export default function Portfolio() {
     : portfolioItems.filter((item) => item.category === activeCategory);
 
   return (
-    <section id="portfolio" className="section-padding bg-gray-50/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="portfolio" className="section-padding premium-mesh-bg">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <SectionHeader
           label="Portfolio"
@@ -182,8 +205,8 @@ export default function Portfolio() {
               onClick={() => setActiveCategory(cat)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                 activeCategory === cat
-                  ? 'bg-[#0066FF] text-white shadow-md shadow-blue-500/25'
-                  : 'bg-white text-gray-600 border border-gray-200 hover:border-[#0066FF] hover:text-[#0066FF] hover:bg-blue-50'
+                  ? 'bg-gradient-to-r from-[#0066FF] to-[#0052CC] text-white shadow-lg shadow-blue-500/25'
+                  : 'bg-white text-gray-600 border border-gray-200 hover:border-[#0066FF]/50 hover:text-[#0066FF] hover:bg-blue-50/50 hover:shadow-sm'
               }`}
             >
               {cat}
@@ -225,9 +248,11 @@ export default function Portfolio() {
                   alt={selectedItem.title}
                   className="w-full h-full object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/80 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/90 via-[#0A1628]/40 to-transparent" />
+                {/* Blue accent overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-[#0066FF]/5 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6">
-                  <span className="inline-block px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm text-white text-xs font-medium mb-2">
+                  <span className="inline-block px-3 py-1 rounded-full bg-white/15 backdrop-blur-md text-white text-xs font-medium mb-2 border border-white/10">
                     {selectedItem.category}
                   </span>
                   <DialogTitle className="text-2xl font-bold text-white">
@@ -240,20 +265,20 @@ export default function Portfolio() {
                   {selectedItem.longDescription}
                 </DialogDescription>
                 {/* Result highlight */}
-                <div className="bg-blue-50 border border-blue-100 rounded-xl px-4 py-3 mb-4 flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-[#0066FF] flex items-center justify-center shrink-0">
+                <div className="bg-gradient-to-r from-blue-50 to-cyan-50/50 border border-blue-100/50 rounded-xl px-4 py-3 mb-4 flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#0066FF] to-[#0052CC] flex items-center justify-center shrink-0 shadow-sm shadow-blue-500/20">
                     <span className="text-white text-xs font-bold">✓</span>
                   </div>
                   <div>
                     <p className="text-xs text-gray-500 font-medium">Key Result</p>
-                    <p className="text-sm font-semibold text-[#0A1628]">{selectedItem.result}</p>
+                    <p className="text-sm font-bold text-[#0A1628]">{selectedItem.result}</p>
                   </div>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {selectedItem.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="inline-flex items-center px-3 py-1.5 rounded-lg bg-blue-50 text-[#0066FF] text-sm font-medium"
+                      className="inline-flex items-center px-3 py-1.5 rounded-lg bg-blue-50/80 text-[#0066FF] text-sm font-medium"
                     >
                       {tag}
                     </span>
