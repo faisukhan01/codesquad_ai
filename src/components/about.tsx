@@ -85,10 +85,11 @@ function AnimatedCounter({ target, suffix }: { target: number; suffix: string })
 
 export default function About() {
   return (
-    <section id="about" className="section-padding bg-white relative overflow-hidden">
+    <section id="about" className="relative py-20 md:py-28 bg-white overflow-hidden">
       {/* Subtle background accent */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-blue-50/60 via-cyan-50/30 to-transparent rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-violet-50/40 to-transparent rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-blue-50/50 via-cyan-50/20 to-transparent rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-violet-50/30 to-transparent rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
@@ -114,18 +115,33 @@ export default function About() {
 
         {/* Two-Column Layout */}
         <AnimatedSection variant="stagger-children" className="grid grid-cols-1 lg:grid-cols-2 gap-14 lg:gap-20 items-center mb-20">
-          {/* Left: Image with premium treatment */}
+          {/* Left: Visual panel */}
           <AnimatedItem key="image" variant="fade-right" delay={0.1}>
             <div className="relative">
-              {/* Main image with premium overlay */}
-              <div className="rounded-2xl overflow-hidden shadow-2xl shadow-blue-500/10 premium-img-overlay">
-                <img
-                  src="/images/about-team.png"
-                  alt="CodeSquad Team collaborating on a project"
-                  className="w-full h-auto object-cover"
-                />
-                {/* Built-in gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-[#0066FF]/10 via-transparent to-cyan-500/5 pointer-events-none" />
+              {/* Main visual — dark card with stats */}
+              <div className="rounded-2xl overflow-hidden shadow-2xl shadow-blue-500/10 bg-gradient-to-br from-[#0A1628] via-[#0d1f3a] to-[#0A1628] aspect-[4/3] relative">
+                <div className="absolute inset-0 grid-pattern opacity-30" />
+                <div className="absolute top-0 right-0 w-64 h-64 bg-[#0066FF]/10 rounded-full blur-[80px]" />
+                <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#338AFF]/8 rounded-full blur-[60px]" />
+                {/* Content inside */}
+                <div className="relative z-10 p-8 h-full flex flex-col justify-between">
+                  <div>
+                    <div className="w-10 h-10 rounded-xl bg-[#0066FF] flex items-center justify-center mb-4">
+                      <BookOpen className="w-5 h-5 text-white" />
+                    </div>
+                    <p className="text-blue-100/60 text-sm leading-relaxed max-w-xs">
+                      Founded in 2017 with a mission to bridge the gap between ambitious ideas and world-class technology.
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    {[{ n: '100+', l: 'Engineers' }, { n: '15+', l: 'Countries' }, { n: '200+', l: 'Projects' }, { n: '8+', l: 'Years' }].map((s) => (
+                      <div key={s.l} className="bg-white/[0.05] border border-white/[0.08] rounded-xl p-3">
+                        <p className="text-2xl font-bold text-white">{s.n}</p>
+                        <p className="text-xs text-blue-200/50 mt-0.5">{s.l}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               {/* Floating stat card - redesigned */}

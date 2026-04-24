@@ -42,10 +42,10 @@ const footerResources = [
 ];
 
 const socialLinks = [
-  { icon: Linkedin, label: 'LinkedIn', href: '#' },
+  { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/shahzaibhamid/' },
   { icon: Twitter, label: 'Twitter', href: '#' },
   { icon: Github, label: 'GitHub', href: '#' },
-  { icon: Mail, label: 'Mail', href: 'mailto:hello@codesquad.dev' },
+  { icon: Mail, label: 'Mail', href: 'mailto:shah@codesquad.ai' },
 ];
 
 const FooterLink = ({
@@ -99,8 +99,8 @@ export default function Footer() {
   return (
     <footer className="relative overflow-hidden mt-auto">
       {/* Background layers */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#0A1628] via-[#0d1f35] to-[#0A1628]" />
-      <div className="absolute inset-0 grid-pattern opacity-20" />
+      <div className="absolute inset-0 bg-gradient-to-b from-[#071020] via-[#0A1628] to-[#071020]" />
+      <div className="absolute inset-0 grid-pattern opacity-15" />
 
       {/* Top gradient divider */}
       <div className="relative h-px animated-gradient-line" />
@@ -250,11 +250,11 @@ export default function Footer() {
               <ul className="space-y-3.5">
                 <li>
                   <a
-                    href="mailto:hello@codesquad.dev"
+                    href="mailto:shah@codesquad.ai"
                     className="text-sm text-gray-400 hover:text-white transition-colors duration-200 inline-flex items-center gap-2 group"
                   >
                     <Mail className="w-3.5 h-3.5 text-gray-500 group-hover:text-[#0066FF] transition-colors duration-200" />
-                    hello@codesquad.dev
+                    shah@codesquad.ai
                   </a>
                 </li>
                 <li>

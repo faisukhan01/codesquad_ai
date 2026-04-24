@@ -432,7 +432,7 @@ function MarqueeRow({
 
 export default function Clients() {
   return (
-    <section className="relative py-20 md:py-28 bg-gradient-to-b from-white to-gray-50/60 overflow-hidden">
+    <section className="relative py-20 md:py-28 bg-gradient-to-b from-gray-50/60 to-white overflow-hidden">
       {/* Decorative top glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent opacity-60" />
 

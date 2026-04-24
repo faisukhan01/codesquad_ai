@@ -79,8 +79,9 @@ export default function FAQ() {
   const isInView = useInView(faqRef, { once: true, amount: 0.1 });
 
   return (
-    <section id="faq" className="relative overflow-hidden bg-white">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-16 md:py-20">
+    <section id="faq" className="relative overflow-hidden bg-gradient-to-b from-gray-50/60 to-white">
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 py-20 md:py-28">
         <SectionHeader
           label="FAQ"
           title="Frequently Asked Questions"

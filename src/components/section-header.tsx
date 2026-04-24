@@ -11,54 +11,123 @@ interface SectionHeaderProps {
   light?: boolean;
 }
 
-export default function SectionHeader({ label, title, description, centered = true, light = false }: SectionHeaderProps) {
+export default function SectionHeader({
+  label,
+  title,
+  description,
+  centered = true,
+  light = false,
+}: SectionHeaderProps) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 0.95", "start 0.1"],
+    offset: ['start 0.95', 'start 0.15'],
   });
 
-  // Scale from 1.8x to 1x as heading enters viewport
-  const rawScale = useTransform(scrollYProgress, [0, 0.3, 1], [1.8, 1.15, 1]);
-  const rawY = useTransform(scrollYProgress, [0, 1], [60, 0]);
-  const rawOpacity = useTransform(scrollYProgress, [0, 0.15], [0.3, 1]);
-  const rawLabelOpacity = useTransform(scrollYProgress, [0, 0.25], [0, 1]);
-  const rawDescOpacity = useTransform(scrollYProgress, [0, 0.3], [0, 1]);
+  // Font size: from ~15vw down to 0.7rem (the small label size)
+  const rawFontSize = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ['15vw', '0.7rem']
+  );
 
-  const scale = useSpring(rawScale, { stiffness: 100, damping: 25, mass: 0.8 });
-  const y = useSpring(rawY, { stiffness: 100, damping: 25, mass: 0.8 });
-  const opacity = useSpring(rawOpacity, { stiffness: 100, damping: 25, mass: 0.8 });
-  const labelOpacity = useSpring(rawLabelOpacity, { stiffness: 100, damping: 25, mass: 0.8 });
-  const descOpacity = useSpring(rawDescOpacity, { stiffness: 100, damping: 25, mass: 0.8 });
+  // Letter spacing: wide when big, tight tracking when small
+  const rawLetterSpacing = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ['-0.02em', '0.22em']
+  );
+
+  // Opacity: fades in quickly
+  const rawOpacity = useTransform(scrollYProgress, [0, 0.12], [0, 1]);
+
+  // Color: starts as a very light ghost, becomes the brand blue
+  const rawColorOpacity = useTransform(scrollYProgress, [0, 0.6, 1], [0.08, 0.4, 1]);
+
+  // Subtle Y movement
+  const rawY = useTransform(scrollYProgress, [0, 1], [30, 0]);
+
+  const fontSize = useSpring(rawFontSize as never, { stiffness: 55, damping: 20, mass: 0.7 });
+  const letterSpacing = useSpring(rawLetterSpacing as never, { stiffness: 55, damping: 20, mass: 0.7 });
+  const opacity = useSpring(rawOpacity, { stiffness: 55, damping: 20 });
+  const y = useSpring(rawY, { stiffness: 55, damping: 20 });
+
+  // Title and description fade in after label has mostly settled
+  const rawTitleOpacity = useTransform(scrollYProgress, [0.5, 0.85], [0, 1]);
+  const rawTitleY = useTransform(scrollYProgress, [0.5, 0.85], [20, 0]);
+  const titleOpacity = useSpring(rawTitleOpacity, { stiffness: 80, damping: 22 });
+  const titleY = useSpring(rawTitleY, { stiffness: 80, damping: 22 });
+
+  const rawDescOpacity = useTransform(scrollYProgress, [0.7, 1], [0, 1]);
+  const rawDescY = useTransform(scrollYProgress, [0.7, 1], [14, 0]);
+  const descOpacity = useSpring(rawDescOpacity, { stiffness: 80, damping: 22 });
+  const descY = useSpring(rawDescY, { stiffness: 80, damping: 22 });
+
+  // The decorative lines beside the label — fade in only when small
+  const rawLineOpacity = useTransform(scrollYProgress, [0.75, 1], [0, 1]);
+  const lineOpacity = useSpring(rawLineOpacity, { stiffness: 80, damping: 22 });
 
   return (
-    <div ref={containerRef} className={`mb-14 lg:mb-20 ${centered ? 'text-center' : ''}`}>
-      {/* Label */}
-      <motion.div
-        style={{ opacity: labelOpacity }}
-        className={`inline-flex items-center gap-3 mb-5`}
+    <div
+      ref={containerRef}
+      className={`mb-14 lg:mb-20 ${centered ? 'text-center' : ''}`}
+      style={{ overflow: 'clip' }}
+    >
+      {/* ── Animated label: giant → small ─────────────────────────── */}
+      <div
+        className={`relative flex items-center mb-5 ${
+          centered ? 'justify-center' : 'justify-start'
+        }`}
       >
-        <div className="w-8 h-px bg-gradient-to-r from-transparent to-[#0066FF]" />
-        <span className={`text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] ${light ? 'text-blue-300' : 'text-[#0066FF]'}`}>
-          {label}
-        </span>
-        <div className="w-8 h-px bg-gradient-to-l from-transparent to-[#0066FF]" />
-      </motion.div>
+        {/* Left line — only visible when label is small */}
+        <motion.div
+          style={{ opacity: lineOpacity }}
+          className={`w-6 h-px mr-3 shrink-0 ${
+            light ? 'bg-blue-400/60' : 'bg-[#0066FF]/40'
+          }`}
+        />
 
-      {/* Title with scroll-responsive scaling */}
+        <motion.span
+          style={{
+            fontSize,
+            letterSpacing,
+            opacity,
+            y,
+          }}
+          className={`font-black uppercase whitespace-nowrap will-change-transform block ${
+            light ? 'text-blue-300' : 'text-[#0066FF]'
+          }`}
+        >
+          {label}
+        </motion.span>
+
+        {/* Right line — only visible when label is small */}
+        <motion.div
+          style={{ opacity: lineOpacity }}
+          className={`w-6 h-px ml-3 shrink-0 ${
+            light ? 'bg-blue-400/60' : 'bg-[#0066FF]/40'
+          }`}
+        />
+      </div>
+
+      {/* ── Title ─────────────────────────────────────────────────── */}
       <motion.h2
-        style={{ scale, y, opacity }}
-        className={`text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-[1.1] mb-6 ${light ? 'text-white' : 'text-[#0A1628]'} origin-left ${centered ? 'origin-center' : ''}`}
+        style={{ opacity: titleOpacity, y: titleY }}
+        className={`text-3xl sm:text-4xl lg:text-5xl xl:text-[52px] font-bold leading-[1.12] tracking-tight mb-5 will-change-transform ${
+          light ? 'text-white' : 'text-[#0A1628]'
+        }`}
       >
         {title}
       </motion.h2>
 
-      {/* Description */}
+      {/* ── Description ───────────────────────────────────────────── */}
       {description && (
         <motion.p
-          style={{ opacity: descOpacity }}
-          className={`text-base sm:text-lg lg:text-xl max-w-2xl leading-relaxed ${centered ? 'mx-auto' : ''} ${light ? 'text-blue-100/70' : 'text-gray-500'}`}
+          style={{ opacity: descOpacity, y: descY }}
+          className={`text-base sm:text-lg leading-relaxed max-w-2xl will-change-transform ${
+            centered ? 'mx-auto' : ''
+          } ${light ? 'text-blue-200/60' : 'text-gray-500'}`}
         >
           {description}
         </motion.p>

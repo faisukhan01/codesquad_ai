@@ -93,7 +93,7 @@ export default function AlsoExpertIn() {
         <AnimatedSection variant="fade-up" className="mb-10 md:mb-12">
           <SectionHeader
             label="Technologies"
-            title="Also Expert In"
+            title="Expert In"
           />
         </AnimatedSection>
 

@@ -131,8 +131,10 @@ const secondaryTechs = [
 
 export default function Technologies() {
   return (
-    <section id="technologies" className="section-padding bg-gradient-to-b from-white to-gray-50/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="technologies" className="relative py-20 md:py-28 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-50/60 to-white" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
         <SectionHeader
           label="Tech Stack"
@@ -190,7 +192,7 @@ export default function Technologies() {
         {/* Secondary Tech Bar */}
         <AnimatedSection variant="fade-up" delay={0.3}>
           <div className="bg-gradient-to-r from-gray-50 to-white rounded-2xl border border-gray-100 p-6 sm:p-8">
-            <p className="text-sm font-medium text-gray-400 uppercase tracking-widest mb-5 text-center">Also Expert In</p>
+            <p className="text-sm font-medium text-gray-400 uppercase tracking-widest mb-5 text-center">Expert In</p>
             <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
               {secondaryTechs.map((tech) => (
                 <motion.div

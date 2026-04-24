@@ -133,8 +133,8 @@ export default function Careers() {
         {/* Bottom CTA */}
         <p className="text-center text-sm text-gray-500 mt-8">
           Don&apos;t see the right role? Send us your resume at{' '}
-          <a href="mailto:careers@codesquad.dev" className="text-[#0066FF] font-medium hover:underline">
-            careers@codesquad.dev
+          <a href="mailto:shah@codesquad.ai" className="text-[#0066FF] font-medium hover:underline">
+            shah@codesquad.ai
           </a>
         </p>
       </div>

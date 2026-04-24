@@ -37,13 +37,13 @@ const serviceOptions = [
 ];
 
 const contactDetails = [
-  { icon: Mail, label: 'Email', value: 'hello@codesquad.dev', href: 'mailto:hello@codesquad.dev' },
+  { icon: Mail, label: 'Email', value: 'shah@codesquad.ai', href: 'mailto:shah@codesquad.ai' },
   { icon: Phone, label: 'Phone', value: '+1 (555) 123-4567', href: 'tel:+15551234567' },
   { icon: MapPin, label: 'Office', value: 'Tech Valley, CA 94025', href: '#' },
 ];
 
 const socialLinks = [
-  { icon: Linkedin, label: 'LinkedIn', href: '#' },
+  { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/shahzaibhamid/' },
   { icon: Twitter, label: 'Twitter', href: '#' },
   { icon: Github, label: 'GitHub', href: '#' },
 ];
@@ -114,7 +114,8 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" className="relative bg-gray-50/50">
+    <section id="contact" className="relative bg-gradient-to-b from-white to-gray-50/40 overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-28">
         <SectionHeader
           label="Contact"

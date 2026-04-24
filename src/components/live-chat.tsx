@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, Headphones } from 'lucide-react';
+import { MessageCircle, X, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
@@ -393,7 +393,7 @@ export default function LiveChat() {
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.92 }}
         onClick={toggleChat}
-        className="relative w-14 h-14 rounded-full text-white shadow-[0_4px_20px_rgba(0,102,255,0.35)] flex items-center justify-center"
+        className="relative w-14 h-14 rounded-full text-white shadow-[0_4px_20px_rgba(0,102,255,0.45)] flex items-center justify-center overflow-visible isolate"
         style={{
           background: 'linear-gradient(135deg, #0066FF 0%, #338AFF 100%)',
         }}
@@ -403,7 +403,7 @@ export default function LiveChat() {
         {!isOpen && (
           <>
             <motion.span
-              className="absolute inset-0 rounded-full"
+              className="absolute inset-0 rounded-full -z-10"
               style={{
                 background: 'linear-gradient(135deg, #0066FF 0%, #338AFF 100%)',
               }}
@@ -421,7 +421,7 @@ export default function LiveChat() {
               }}
             />
             <motion.span
-              className="absolute inset-0 rounded-full"
+              className="absolute inset-0 rounded-full -z-10"
               animate={{
                 boxShadow: [
                   '0 0 0 0 rgba(0, 102, 255, 0.25)',
@@ -440,29 +440,13 @@ export default function LiveChat() {
         )}
 
         {/* Icon */}
-        <AnimatePresence mode="wait" initial={false}>
+        <span className="relative z-10 flex items-center justify-center">
           {isOpen ? (
-            <motion.div
-              key="close"
-              initial={{ rotate: -90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 90, opacity: 0 }}
-              transition={{ duration: 0.15 }}
-            >
-              <X className="h-6 w-6" />
-            </motion.div>
+            <X size={28} color="#ffffff" strokeWidth={2.5} />
           ) : (
-            <motion.div
-              key="open"
-              initial={{ rotate: 90, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: -90, opacity: 0 }}
-              transition={{ duration: 0.15 }}
-            >
-              <Headphones className="h-6 w-6" />
-            </motion.div>
+            <MessageCircle size={28} color="#ffffff" strokeWidth={2} fill="rgba(255,255,255,0.2)" />
           )}
-        </AnimatePresence>
+        </span>
 
         {/* Unread badge */}
         {!isOpen && unreadCount > 0 && (

@@ -2,8 +2,8 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Briefcase, Globe, Heart, Award } from 'lucide-react';
-import { AnimatedSection } from '@/components/animated-section';
 
 const stats = [
   {
@@ -86,58 +86,51 @@ function AnimatedCounter({
 export default function StatsBanner() {
   return (
     <section className="relative py-20 overflow-hidden">
-      {/* Gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0066FF] to-[#0040A0]" />
+      {/* Background */}
+      <div className="absolute inset-0 bg-[#0A1628]" />
+      {/* Subtle blue gradient */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#0066FF]/8 via-transparent to-[#338AFF]/6" />
+      {/* Dot pattern */}
+      <div className="absolute inset-0 stats-dot-pattern opacity-60" />
+      {/* Top/bottom lines */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#0066FF]/30 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/5 to-transparent" />
 
-      {/* Dot pattern overlay */}
-      <div className="absolute inset-0 stats-dot-pattern" />
-
-      {/* Decorative circles */}
-      <div className="absolute -top-20 -left-20 w-64 h-64 bg-white/5 rounded-full" />
-      <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/5 rounded-full" />
-
-      <AnimatedSection
-        variant="fade-up"
-        className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
-      >
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-0">
           {stats.map((stat, idx) => (
-            <div
+            <motion.div
               key={stat.label}
-              className="relative text-center flex flex-col items-center gap-2 group"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.5 }}
+              transition={{ duration: 0.5, delay: idx * 0.1 }}
+              className="relative text-center flex flex-col items-center gap-3 group px-4 lg:px-8"
             >
-              {/* Divider line (not on last item) */}
+              {/* Vertical divider */}
               {idx < stats.length - 1 && (
-                <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-20 bg-white/15" />
+                <div className="hidden lg:block absolute right-0 top-1/2 -translate-y-1/2 w-px h-16 bg-gradient-to-b from-transparent via-white/10 to-transparent" />
               )}
 
               {/* Icon */}
-              <div className="w-12 h-12 rounded-xl bg-white/10 backdrop-blur-sm flex items-center justify-center group-hover:bg-white/20 group-hover:scale-110 transition-all duration-300 mb-1">
-                <stat.icon className="w-6 h-6 text-white/90" />
+              <div className="w-11 h-11 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center group-hover:bg-[#0066FF]/20 group-hover:border-[#0066FF]/30 transition-all duration-300">
+                <stat.icon className="w-5 h-5 text-blue-300/70 group-hover:text-[#66B2FF] transition-colors duration-300" />
               </div>
 
               {/* Number */}
-              <div className="text-4xl sm:text-5xl font-bold text-white">
-                <AnimatedCounter
-                  target={stat.value}
-                  suffix={stat.suffix}
-                  duration={2}
-                />
+              <div className="text-4xl sm:text-5xl font-bold text-white tracking-tight stat-number">
+                <AnimatedCounter target={stat.value} suffix={stat.suffix} duration={2} />
               </div>
 
               {/* Label */}
-              <p className="text-sm sm:text-base text-blue-100/90 font-medium">
-                {stat.label}
-              </p>
-
-              {/* Description */}
-              <p className="text-xs text-blue-200/50 font-medium">
-                {stat.description}
-              </p>
-            </div>
+              <div>
+                <p className="text-sm font-semibold text-blue-100/80">{stat.label}</p>
+                <p className="text-xs text-blue-200/35 mt-0.5">{stat.description}</p>
+              </div>
+            </motion.div>
           ))}
         </div>
-      </AnimatedSection>
+      </div>
     </section>
   );
 }

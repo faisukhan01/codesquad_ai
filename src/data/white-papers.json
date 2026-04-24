@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "title": "The Future of Precision Agriculture: A Comprehensive Guide",
+    "description": "An in-depth analysis of how IoT, computer vision, and machine learning are shaping modern farming.",
+    "author": "James Chen",
+    "readTime": "15 min read",
+    "date": "Jan 8, 2025",
+    "tag": "Agriculture"
+  },
+  {
+    "id": 2,
+    "title": "Enterprise IoT Security: Threats and Solutions",
+    "description": "A thorough examination of the current threat landscape in enterprise IoT and countermeasures.",
+    "author": "CodeSquad Research",
+    "readTime": "20 min read",
+    "date": "Nov 28, 2024",
+    "tag": "IoT"
+  },
+  {
+    "id": 3,
+    "title": "Cloud-Native Architecture: A Strategic Framework",
+    "description": "Complete guide to designing, building, and deploying cloud-native applications at scale.",
+    "author": "Emily Rodriguez",
+    "readTime": "25 min read",
+    "date": "Oct 15, 2024",
+    "tag": "Cloud"
+  },
+  {
+    "id": 4,
+    "title": "AI Ethics in Healthcare: Navigating the Challenges",
+    "description": "Exploring ethical considerations and regulatory frameworks for AI deployment in healthcare.",
+    "author": "Dr. Robert Singh",
+    "readTime": "18 min read",
+    "date": "Sep 22, 2024",
+    "tag": "Healthcare"
+  },
+  {
+    "id": 5,
+    "title": "Digital Transformation Roadmap for Manufacturing",
+    "description": "Step-by-step guide to implementing Industry 4.0 technologies in manufacturing operations.",
+    "author": "CodeSquad Team",
+    "readTime": "22 min read",
+    "date": "Aug 10, 2024",
+    "tag": "Manufacturing"
+  },
+  {
+    "id": 6,
+    "title": "Computer Vision at the Edge: Technical Deep Dive",
+    "description": "Comprehensive analysis of deploying computer vision models on edge devices with limited resources.",
+    "author": "Lisa Wang",
+    "readTime": "30 min read",
+    "date": "Jul 5, 2024",
+    "tag": "Computer Vision"
+  }
+]

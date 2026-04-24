@@ -58,15 +58,18 @@ export default function Hero() {
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Permanent dark base — prevents any white flash between slides */}
+      <div className="absolute inset-0 z-0 bg-[#0A1628]" />
+
       {/* Background Image Slider */}
-      <div className="absolute inset-0 z-0">
-        <AnimatePresence mode="wait">
+      <div className="absolute inset-0 z-[1]">
+        <AnimatePresence>
           <motion.div
             key={currentSlide}
-            initial={{ opacity: 0, scale: 1.05 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
-            transition={{ duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.0, ease: 'easeInOut' }}
             className="absolute inset-0"
           >
             <div
@@ -82,7 +85,7 @@ export default function Hero() {
 
       {/* Subtle grid pattern overlay */}
       <div
-        className="absolute inset-0 z-[1] pointer-events-none opacity-[0.03]"
+        className="absolute inset-0 z-[2] pointer-events-none opacity-[0.03]"
         style={{
           backgroundImage: `
             linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
@@ -93,7 +96,7 @@ export default function Hero() {
       />
 
       {/* Main Content - Left Aligned */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 w-full">
+      <div className="relative z-[3] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 w-full">
         <div className="max-w-2xl">
           {/* Badge */}
           <motion.div
@@ -223,7 +226,7 @@ export default function Hero() {
       </div>
 
       {/* Bottom gradient line */}
-      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#0066FF]/30 to-transparent z-[11]" />
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#0066FF]/30 to-transparent z-[4]" />
     </section>
   );
 }

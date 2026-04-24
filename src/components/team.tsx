@@ -10,105 +10,108 @@ const teamMembers = [
   {
     name: 'Alex Rivera',
     title: 'CEO & Founder',
-    image: '/images/team-ceo.png',
     bio: 'Visionary tech leader with 15+ years of experience building enterprise software solutions for Fortune 500 companies.',
     initials: 'AR',
-    color: 'bg-blue-500',
+    gradient: 'from-[#0066FF] to-[#0052CC]',
+    skills: ['Strategy', 'Leadership', 'Enterprise'],
   },
   {
     name: 'Priya Sharma',
     title: 'Chief Technology Officer',
-    image: '/images/team-cto.png',
     bio: 'Architecture expert specializing in distributed systems, cloud-native technologies, and scalable microservices.',
     initials: 'PS',
-    color: 'bg-cyan-500',
+    gradient: 'from-violet-500 to-violet-700',
+    skills: ['Architecture', 'Cloud', 'DevOps'],
   },
   {
     name: 'Marcus Johnson',
     title: 'Head of Design',
-    image: '/images/team-lead.png',
     bio: 'Award-winning designer passionate about creating intuitive user experiences that drive business outcomes.',
     initials: 'MJ',
-    color: 'bg-teal-500',
+    gradient: 'from-emerald-500 to-teal-600',
+    skills: ['UI/UX', 'Branding', 'Research'],
   },
   {
     name: 'Sarah Mitchell',
     title: 'Head of Delivery',
-    image: '/images/team-pm.png',
     bio: 'PMP certified with expertise in agile methodologies, managing cross-functional teams across global offices.',
     initials: 'SM',
-    color: 'bg-sky-500',
+    gradient: 'from-amber-500 to-orange-600',
+    skills: ['Agile', 'Delivery', 'Scrum'],
   },
 ];
 
 export default function Team() {
   return (
-    <section id="team" className="section-padding bg-gray-50/50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <SectionHeader label="Our Team" title="Meet Our Leadership" description="The visionaries driving CodeSquad's mission to deliver excellence" />
+    <section id="team" className="relative py-20 md:py-28 overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-50/60 to-white" />
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent" />
 
-        {/* Team Grid */}
-        <AnimatedSection variant="stagger-children" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
-          {teamMembers.map((member) => (
-            <AnimatedItem key={member.name} variant="fade-up" delay={0.1}>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <SectionHeader
+          label="Our Team"
+          title={<>Meet Our <span className="gradient-text">Leadership</span></>}
+          description="The visionaries driving CodeSquad's mission to deliver excellence at every level."
+        />
+
+        <AnimatedSection variant="stagger-children" className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {teamMembers.map((member, idx) => (
+            <AnimatedItem key={member.name} variant="fade-up" delay={idx * 0.08}>
               <motion.div
-                whileHover={{ y: -8 }}
-                className="group bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-xl hover:shadow-blue-500/10 transition-all duration-300"
+                whileHover={{ y: -6, transition: { duration: 0.25, ease: 'easeOut' } }}
+                className="group bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-[0_16px_40px_-12px_rgba(0,0,0,0.1)] transition-all duration-300"
+                style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.03)' }}
               >
-                {/* Image */}
-                <div className="relative h-64 overflow-hidden">
-                  <motion.img
-                    src={member.image}
-                    alt={member.name}
-                    className="w-full h-full object-cover"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.5 }}
-                  />
+                {/* Avatar area */}
+                <div className="relative h-52 overflow-hidden">
+                  {/* Gradient background */}
+                  <div className={`absolute inset-0 bg-gradient-to-br ${member.gradient} opacity-10`} />
+                  <div className="absolute inset-0 bg-gradient-to-b from-gray-50 to-gray-100" />
+
+                  {/* Large initials */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className={`w-24 h-24 rounded-3xl bg-gradient-to-br ${member.gradient} flex items-center justify-center shadow-xl group-hover:scale-105 transition-transform duration-400`}>
+                      <span className="text-white font-bold text-3xl">{member.initials}</span>
+                    </div>
+                  </div>
+
                   {/* Social overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-3">
-                    <motion.a
-                      href="#"
-                      initial={{ y: 10, opacity: 0 }}
-                      whileHover={{ y: 0, opacity: 1 }}
-                      className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors"
-                    >
-                      <Linkedin className="w-4 h-4 text-white" />
-                    </motion.a>
-                    <motion.a
-                      href="#"
-                      initial={{ y: 10, opacity: 0 }}
-                      whileHover={{ y: 0, opacity: 1 }}
-                      className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors"
-                    >
-                      <Twitter className="w-4 h-4 text-white" />
-                    </motion.a>
-                    <motion.a
-                      href="#"
-                      initial={{ y: 10, opacity: 0 }}
-                      whileHover={{ y: 0, opacity: 1 }}
-                      className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition-colors"
-                    >
-                      <Globe className="w-4 h-4 text-white" />
-                    </motion.a>
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0A1628]/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-4 gap-3">
+                    {[Linkedin, Twitter, Globe].map((Icon, i) => (
+                      <motion.a
+                        key={i}
+                        href="#"
+                        initial={{ y: 8, opacity: 0 }}
+                        whileInView={{ y: 0, opacity: 1 }}
+                        transition={{ delay: i * 0.05 }}
+                        className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/35 transition-colors"
+                        onClick={(e) => e.preventDefault()}
+                      >
+                        <Icon className="w-4 h-4 text-white" />
+                      </motion.a>
+                    ))}
                   </div>
                 </div>
 
                 {/* Info */}
-                <div className="p-5 text-center">
-                  <h3 className="text-lg font-semibold text-[#0A1628] group-hover:text-[#0066FF] transition-colors duration-300">
+                <div className="p-5">
+                  <h3 className="text-base font-bold text-[#0A1628] group-hover:text-[#0066FF] transition-colors duration-300">
                     {member.name}
                   </h3>
-                  <p className="text-sm text-[#0066FF] font-medium mb-2">{member.title}</p>
-                  <p className="text-sm text-gray-500 leading-relaxed">{member.bio}</p>
-                  <div className="mt-3 pt-3 border-t border-gray-100">
-                    <div className="flex flex-wrap justify-center gap-1.5">
-                      {[member.name === 'Alex Rivera' ? ['Strategy', 'Leadership', 'Enterprise'] : member.name === 'Priya Sharma' ? ['Architecture', 'Cloud', 'DevOps'] : member.name === 'Marcus Johnson' ? ['UI/UX', 'Branding', 'Research'] : ['Agile', 'Delivery', 'Scrum']].map((skill) => (
-                        <span key={skill} className="text-[11px] font-medium text-gray-500 bg-gray-50 px-2 py-0.5 rounded">
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
+                  <p className="text-xs font-semibold text-[#0066FF]/70 mb-2.5 mt-0.5">{member.title}</p>
+                  <p className="text-sm text-gray-500 leading-relaxed mb-4">{member.bio}</p>
+
+                  {/* Skills */}
+                  <div className="flex flex-wrap gap-1.5 pt-3 border-t border-gray-100">
+                    {member.skills.map((skill) => (
+                      <span
+                        key={skill}
+                        className="text-[11px] font-semibold text-gray-500 bg-gray-50 border border-gray-100 px-2.5 py-1 rounded-lg"
+                      >
+                        {skill}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </motion.div>
