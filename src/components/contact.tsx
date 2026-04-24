@@ -37,9 +37,9 @@ const serviceOptions = [
 ];
 
 const contactDetails = [
-  { icon: Mail, label: 'Email', value: 'shah@codesquad.ai', href: 'mailto:shah@codesquad.ai' },
+  { icon: Mail, label: 'Email', value: 'info@codesquad.ai', href: 'mailto:info@codesquad.ai' },
   { icon: Phone, label: 'Phone', value: '+1 (555) 123-4567', href: 'tel:+15551234567' },
-  { icon: MapPin, label: 'Office', value: 'Tech Valley, CA 94025', href: '#' },
+  { icon: MapPin, label: 'Office', value: 'Johar Town J2, Lahore Pakistan', href: 'https://maps.app.goo.gl/uhAhYB7Ja5REpc3o9' },
 ];
 
 const socialLinks = [

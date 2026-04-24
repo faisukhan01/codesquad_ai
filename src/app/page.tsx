@@ -1,28 +1,37 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import LoadingScreen from '@/components/loading-screen';
 import ScrollProgress from '@/components/scroll-progress';
 import Navigation from '@/components/navigation';
 import Hero from '@/components/hero';
-import Clients from '@/components/clients';
-import Services from '@/components/services';
-import AlsoExpertIn from '@/components/also-expert-in';
-import Process from '@/components/process';
-import Industries from '@/components/industries';
-import Resources from '@/components/resources';
-import CTASection from '@/components/cta-section';
-import Contact from '@/components/contact';
-import FAQ from '@/components/faq';
-import Footer from '@/components/footer';
-import LiveChat from '@/components/live-chat';
-import CookieConsent from '@/components/cookie-consent';
+
+// Lazy load heavy components for better performance
+const Clients = lazy(() => import('@/components/clients'));
+const Services = lazy(() => import('@/components/services'));
+const Process = lazy(() => import('@/components/process'));
+const Industries = lazy(() => import('@/components/industries'));
+const Resources = lazy(() => import('@/components/resources'));
+const CTASection = lazy(() => import('@/components/cta-section'));
+const Contact = lazy(() => import('@/components/contact'));
+const FAQ = lazy(() => import('@/components/faq'));
+const Footer = lazy(() => import('@/components/footer'));
+const LiveChat = lazy(() => import('@/components/live-chat'));
+const CookieConsent = lazy(() => import('@/components/cookie-consent'));
+
+// Simple loading fallback
+const SectionFallback = () => (
+  <div className="w-full h-32 flex items-center justify-center">
+    <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+  </div>
+);
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1500);
+    // Reduce loading time from 1.5s to 0.5s for better UX
+    const timer = setTimeout(() => setIsLoading(false), 500);
     return () => clearTimeout(timer);
   }, []);
 
@@ -33,19 +42,40 @@ export default function Home() {
       <Navigation />
       <main className="flex-1 pb-4">
         <Hero />
-        <Clients />
-        <Services />
-        <AlsoExpertIn />
-        <Process />
-        <Industries />
-        <Resources />
-        <FAQ />
-        <CTASection />
-        <Contact />
+        <Suspense fallback={<SectionFallback />}>
+          <Clients />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <Services />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <Industries />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <Process />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <Resources />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <FAQ />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <CTASection />
+        </Suspense>
+        <Suspense fallback={<SectionFallback />}>
+          <Contact />
+        </Suspense>
       </main>
-      <Footer />
-      <LiveChat />
-      <CookieConsent />
+      <Suspense fallback={<SectionFallback />}>
+        <Footer />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <LiveChat />
+      </Suspense>
+      <Suspense fallback={<SectionFallback />}>
+        <CookieConsent />
+      </Suspense>
     </div>
   );
 }

@@ -22,20 +22,21 @@ export default function ParticleBackground() {
   const timeRef = useRef<number>(0);
 
   const initParticles = useCallback((width: number, height: number) => {
-    const count = Math.min(Math.floor((width * height) / 8000), 160);
+    // Significantly reduced particle count for better performance
+    const count = Math.min(Math.floor((width * height) / 15000), 60); // Reduced from 160 to 60
     const particles: Particle[] = [];
     for (let i = 0; i < count; i++) {
-      const isGlow = Math.random() < 0.15;
+      const isGlow = Math.random() < 0.1; // Reduced glow particles
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        radius: isGlow ? Math.random() * 3 + 2.5 : Math.random() * 2 + 0.8,
-        opacity: isGlow ? Math.random() * 0.4 + 0.4 : Math.random() * 0.5 + 0.2,
+        vx: (Math.random() - 0.5) * 0.2, // Slower movement
+        vy: (Math.random() - 0.5) * 0.2,
+        radius: isGlow ? Math.random() * 2 + 1.5 : Math.random() * 1.5 + 0.5,
+        opacity: isGlow ? Math.random() * 0.3 + 0.3 : Math.random() * 0.4 + 0.2,
         isGlow,
         pulsePhase: Math.random() * Math.PI * 2,
-        pulseSpeed: Math.random() * 0.02 + 0.01,
+        pulseSpeed: Math.random() * 0.015 + 0.008, // Slower pulse
       });
     }
     particlesRef.current = particles;
@@ -66,19 +67,19 @@ export default function ParticleBackground() {
       ctx.fillRect(0, 0, displayWidth, displayHeight);
 
       const particles = particlesRef.current;
-      const connectionDistance = 180;
+      const connectionDistance = 120; // Reduced from 180
       timeRef.current += 1;
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
-        // Mouse repulsion
+        // Simplified mouse repulsion
         if (mouseRef.current) {
           const mdx = p.x - mouseRef.current.x;
           const mdy = p.y - mouseRef.current.y;
           const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
-          if (mDist < 150 && mDist > 0) {
-            const force = (150 - mDist) / 150 * 0.3;
+          if (mDist < 100 && mDist > 0) { // Reduced from 150
+            const force = (100 - mDist) / 100 * 0.2; // Reduced force
             p.vx += (mdx / mDist) * force;
             p.vy += (mdy / mDist) * force;
           }
@@ -124,57 +125,56 @@ export default function ParticleBackground() {
         ctx.fillStyle = `rgba(120, 175, 255, ${p.opacity * pulseFactor})`;
         ctx.fill();
 
-        // Draw connections with gradient
-        for (let j = i + 1; j < particles.length; j++) {
-          const p2 = particles[j];
-          const dx = p.x - p2.x;
-          const dy = p.y - p2.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+        // Draw connections with reduced frequency
+        if (i % 2 === 0) { // Only draw connections for every other particle
+          for (let j = i + 2; j < particles.length; j += 2) {
+            const p2 = particles[j];
+            const dx = p.x - p2.x;
+            const dy = p.y - p2.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
 
-          if (dist < connectionDistance) {
-            const opacity = (1 - dist / connectionDistance) * 0.25;
-            const gradient = ctx.createLinearGradient(p.x, p.y, p2.x, p2.y);
-            gradient.addColorStop(0, `rgba(80, 150, 255, ${opacity})`);
-            gradient.addColorStop(1, `rgba(150, 200, 255, ${opacity * 0.5})`);
-            ctx.beginPath();
-            ctx.moveTo(p.x, p.y);
-            ctx.lineTo(p2.x, p2.y);
-            ctx.strokeStyle = gradient;
-            ctx.lineWidth = 0.6;
-            ctx.stroke();
+            if (dist < connectionDistance) {
+              const opacity = (1 - dist / connectionDistance) * 0.15; // Reduced opacity
+              const gradient = ctx.createLinearGradient(p.x, p.y, p2.x, p2.y);
+              gradient.addColorStop(0, `rgba(80, 150, 255, ${opacity})`);
+              gradient.addColorStop(1, `rgba(150, 200, 255, ${opacity * 0.5})`);
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(p2.x, p2.y);
+              ctx.strokeStyle = gradient;
+              ctx.lineWidth = 0.4; // Thinner lines
+              ctx.stroke();
+            }
           }
         }
 
-        // Mouse connection lines
-        if (mouseRef.current) {
+        // Simplified mouse connection lines
+        if (mouseRef.current && i % 3 === 0) { // Only for every 3rd particle
           const mdx = p.x - mouseRef.current.x;
           const mdy = p.y - mouseRef.current.y;
           const mDist = Math.sqrt(mdx * mdx + mdy * mdy);
-          if (mDist < 200) {
-            const opacity = (1 - mDist / 200) * 0.4;
-            const gradient = ctx.createLinearGradient(p.x, p.y, mouseRef.current.x, mouseRef.current.y);
-            gradient.addColorStop(0, `rgba(100, 180, 255, ${opacity})`);
-            gradient.addColorStop(1, `rgba(150, 210, 255, ${opacity * 0.3})`);
+          if (mDist < 120) { // Reduced from 200
+            const opacity = (1 - mDist / 120) * 0.2; // Reduced opacity
             ctx.beginPath();
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(mouseRef.current.x, mouseRef.current.y);
-            ctx.strokeStyle = gradient;
-            ctx.lineWidth = 0.8;
+            ctx.strokeStyle = `rgba(100, 180, 255, ${opacity})`;
+            ctx.lineWidth = 0.5;
             ctx.stroke();
           }
         }
       }
 
-      // Occasional random pulse effect
-      if (timeRef.current % 120 === 0 && particles.length > 0) {
+      // Reduced random pulse effect frequency
+      if (timeRef.current % 200 === 0 && particles.length > 0) { // Reduced frequency
         const randomIdx = Math.floor(Math.random() * particles.length);
         const rp = particles[randomIdx];
-        const flashGrad = ctx.createRadialGradient(rp.x, rp.y, 0, rp.x, rp.y, 30);
-        flashGrad.addColorStop(0, 'rgba(150, 200, 255, 0.3)');
-        flashGrad.addColorStop(0.5, 'rgba(100, 170, 255, 0.1)');
+        const flashGrad = ctx.createRadialGradient(rp.x, rp.y, 0, rp.x, rp.y, 20); // Smaller flash
+        flashGrad.addColorStop(0, 'rgba(150, 200, 255, 0.2)');
+        flashGrad.addColorStop(0.4, 'rgba(100, 170, 255, 0.05)');
         flashGrad.addColorStop(1, 'rgba(80, 150, 255, 0)');
         ctx.beginPath();
-        ctx.arc(rp.x, rp.y, 30, 0, Math.PI * 2);
+        ctx.arc(rp.x, rp.y, 20, 0, Math.PI * 2);
         ctx.fillStyle = flashGrad;
         ctx.fill();
       }

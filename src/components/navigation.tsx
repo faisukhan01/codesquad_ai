@@ -1,10 +1,12 @@
 'use client';
 
 import React, { useState, useEffect, useRef } from 'react';
+import BookingModal from '@/components/booking-modal';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Code2, Menu, X, Heart, Cpu, Sprout, Wrench, Microscope, ArrowRight } from 'lucide-react';
+import { Menu, X, Heart, Cpu, Sprout, Wrench, Microscope, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetTrigger, SheetContent, SheetTitle } from '@/components/ui/sheet';
+import Image from 'next/image';
 
 const navLinks = [
   { label: 'Services', href: '#services', hasDropdown: true },
@@ -26,6 +28,7 @@ export default function Navigation() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [showBooking, setShowBooking] = useState(false);
   const dropdownTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -61,6 +64,7 @@ export default function Navigation() {
   };
 
   return (
+    <>
     <motion.header
       initial={{ y: -100 }}
       animate={{ y: 0 }}
@@ -77,19 +81,17 @@ export default function Navigation() {
           <motion.a
             href="#"
             onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
-            className="flex items-center gap-2"
+            className="flex items-center"
             whileHover={{ scale: 1.02 }}
           >
-            <div className={`w-8 h-8 rounded-lg flex items-center justify-center transition-colors duration-300 ${
-              scrolled ? 'bg-[#0066FF]' : 'bg-white/10 backdrop-blur-sm'
-            }`}>
-              <Code2 className="w-4 h-4 text-white" />
-            </div>
-            <span className={`text-lg font-bold tracking-tight transition-colors duration-300 ${
-              scrolled ? 'text-[#0A1628]' : 'text-white'
-            }`}>
-              Code<span className="text-[#0066FF]">Squad</span>
-            </span>
+            <Image
+              src="/logo.png"
+              alt="Company Logo"
+              width={160}
+              height={48}
+              className="h-10 w-auto object-contain"
+              priority
+            />
           </motion.a>
 
           {/* Desktop Nav */}
@@ -121,10 +123,10 @@ export default function Navigation() {
                   <AnimatePresence>
                     {dropdownOpen && (
                       <motion.div
-                        initial={{ opacity: 0, y: 8, scale: 0.98 }}
+                        initial={{ opacity: 0, y: 4, scale: 0.98 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 8, scale: 0.98 }}
-                        transition={{ duration: 0.2 }}
+                        exit={{ opacity: 0, y: 4, scale: 0.98 }}
+                        transition={{ duration: 0.15 }} // Faster animation
                         className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-[480px] rounded-xl bg-white shadow-xl border border-gray-100 p-5 z-50"
                         onMouseEnter={handleDropdownEnter}
                         onMouseLeave={handleDropdownLeave}
@@ -161,14 +163,13 @@ export default function Navigation() {
 
           {/* Desktop CTA */}
           <div className="hidden lg:flex items-center gap-3">
-            <a href="https://calendly.com/code_squad/30min" target="_blank" rel="noopener noreferrer">
-              <Button
-                size="sm"
-                className="bg-[#0066FF] hover:bg-[#0052CC] text-white rounded-md shadow-md shadow-blue-500/20 hover:shadow-lg transition-all duration-300 h-9 text-sm font-medium px-5"
-              >
-                Book a Free Call
-              </Button>
-            </a>
+            <Button
+              size="sm"
+              onClick={() => setShowBooking(true)}
+              className="bg-[#0066FF] hover:bg-[#0052CC] text-white rounded-md shadow-md shadow-blue-500/20 hover:shadow-lg transition-all duration-300 h-9 text-sm font-medium px-5"
+            >
+              Book a Free Call
+            </Button>
           </div>
 
           {/* Mobile Menu */}
@@ -183,11 +184,14 @@ export default function Navigation() {
                 <SheetTitle className="sr-only">Navigation</SheetTitle>
                 <div className="flex flex-col h-full">
                   <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-lg bg-[#0066FF] flex items-center justify-center">
-                        <Code2 className="w-4 h-4 text-white" />
-                      </div>
-                      <span className="text-lg font-bold text-[#0A1628]">Code<span className="text-[#0066FF]">Squad</span></span>
+                    <div className="flex items-center">
+                      <Image
+                        src="/logo.png"
+                        alt="Company Logo"
+                        width={140}
+                        height={42}
+                        className="h-9 w-auto object-contain"
+                      />
                     </div>
                   </div>
                   <div className="flex-1 px-4 py-6">
@@ -208,13 +212,13 @@ export default function Navigation() {
                       ))}
                     </div>
                   </div>
-                  <div className="px-6 py-4 border-t border-gray-100 space-y-3">
-                    <a href="https://codesquad-form.vercel.app/" target="_blank" rel="noopener noreferrer" className="block">
-                      <Button className="w-full bg-[#0066FF] hover:bg-[#0052CC] text-white rounded-lg h-11 text-sm font-medium">Get Free Checklist</Button>
-                    </a>
-                    <a href="https://calendly.com/code_squad/30min" target="_blank" rel="noopener noreferrer" className="block">
-                      <Button variant="outline" className="w-full border-gray-200 text-gray-700 rounded-lg h-11 text-sm font-medium">Book a Free Call</Button>
-                    </a>
+                  <div className="px-6 py-4 border-t border-gray-100">
+                    <Button
+                      className="w-full bg-[#0066FF] hover:bg-[#0052CC] text-white rounded-lg h-11 text-sm font-medium"
+                      onClick={() => { setMobileOpen(false); setShowBooking(true); }}
+                    >
+                      Book a Free Call
+                    </Button>
                   </div>
                 </div>
               </SheetContent>
@@ -223,5 +227,7 @@ export default function Navigation() {
         </div>
       </nav>
     </motion.header>
+    {showBooking && <BookingModal onClose={() => setShowBooking(false)} />}
+    </>
   );
 }

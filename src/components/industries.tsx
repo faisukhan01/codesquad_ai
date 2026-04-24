@@ -9,7 +9,6 @@ import {
   Wrench,
   Building2,
   GraduationCap,
-  ArrowUpRight,
   TrendingUp,
 } from 'lucide-react';
 import { AnimatedSection, AnimatedItem } from '@/components/animated-section';
@@ -33,11 +32,11 @@ const industries: Industry[] = [
     icon: Heart,
     title: 'Healthcare',
     description: 'HIPAA-compliant platforms for telemedicine, AI-powered diagnostics, and real-time patient engagement systems.',
-    cardGradient: 'linear-gradient(135deg, #FAFCFE 0%, #F8FBFF 50%, #FFFFFF 100%)',
-    iconGradient: 'linear-gradient(135deg, #0EA5E9, #3B82F6)',
-    accentColor: '#0EA5E9',
-    glowColor: 'rgba(14, 165, 233, 0.08)',
-    tagBg: 'bg-blue-50/40 text-blue-700 border-blue-100/50',
+    cardGradient: 'linear-gradient(135deg, #F0F7FF 0%, #F5FAFF 50%, #FFFFFF 100%)',
+    iconGradient: 'linear-gradient(135deg, #0066FF, #338AFF)',
+    accentColor: '#0066FF',
+    glowColor: 'rgba(0, 102, 255, 0.08)',
+    tagBg: 'bg-blue-50/50 text-blue-700 border-blue-100/50',
     tags: ['HIPAA', 'AI Diagnostics', 'Telehealth'],
     stat: '30+ Projects',
   },
@@ -45,11 +44,11 @@ const industries: Industry[] = [
     icon: Sprout,
     title: 'Agriculture',
     description: 'Precision farming platforms with IoT sensor integration, crop analytics, and automated irrigation systems.',
-    cardGradient: 'linear-gradient(135deg, #FAFEFB 0%, #F7FEF9 50%, #FFFFFF 100%)',
-    iconGradient: 'linear-gradient(135deg, #10B981, #34D399)',
-    accentColor: '#10B981',
-    glowColor: 'rgba(16, 185, 129, 0.08)',
-    tagBg: 'bg-emerald-50/40 text-emerald-700 border-emerald-100/50',
+    cardGradient: 'linear-gradient(135deg, #F0F7FF 0%, #F5FAFF 50%, #FFFFFF 100%)',
+    iconGradient: 'linear-gradient(135deg, #0066FF, #338AFF)',
+    accentColor: '#0066FF',
+    glowColor: 'rgba(0, 102, 255, 0.08)',
+    tagBg: 'bg-blue-50/50 text-blue-700 border-blue-100/50',
     tags: ['IoT Sensors', 'Drone Analytics', 'Precision Ag'],
     stat: '20+ Projects',
   },
@@ -57,11 +56,11 @@ const industries: Industry[] = [
     icon: Cpu,
     title: 'Computer Vision',
     description: 'Image recognition, object detection, and autonomous systems powered by deep learning architectures.',
-    cardGradient: 'linear-gradient(135deg, #FDFAFF 0%, #FCF9FF 50%, #FFFFFF 100%)',
-    iconGradient: 'linear-gradient(135deg, #A855F7, #C084FC)',
-    accentColor: '#A855F7',
-    glowColor: 'rgba(168, 85, 247, 0.08)',
-    tagBg: 'bg-purple-50/40 text-purple-700 border-purple-100/50',
+    cardGradient: 'linear-gradient(135deg, #F0F7FF 0%, #F5FAFF 50%, #FFFFFF 100%)',
+    iconGradient: 'linear-gradient(135deg, #0066FF, #338AFF)',
+    accentColor: '#0066FF',
+    glowColor: 'rgba(0, 102, 255, 0.08)',
+    tagBg: 'bg-blue-50/50 text-blue-700 border-blue-100/50',
     tags: ['Deep Learning', 'OCR', 'Autonomous'],
     stat: '25+ Projects',
   },
@@ -69,11 +68,11 @@ const industries: Industry[] = [
     icon: Wrench,
     title: 'Manufacturing',
     description: 'Industrial automation, digital twins, and predictive maintenance solutions for smart factories.',
-    cardGradient: 'linear-gradient(135deg, #FFFCF5 0%, #FFFBF0 50%, #FFFFFF 100%)',
-    iconGradient: 'linear-gradient(135deg, #F59E0B, #FBBF24)',
-    accentColor: '#F59E0B',
-    glowColor: 'rgba(245, 158, 11, 0.08)',
-    tagBg: 'bg-amber-50/40 text-amber-700 border-amber-100/50',
+    cardGradient: 'linear-gradient(135deg, #F0F7FF 0%, #F5FAFF 50%, #FFFFFF 100%)',
+    iconGradient: 'linear-gradient(135deg, #0066FF, #338AFF)',
+    accentColor: '#0066FF',
+    glowColor: 'rgba(0, 102, 255, 0.08)',
+    tagBg: 'bg-blue-50/50 text-blue-700 border-blue-100/50',
     tags: ['Digital Twins', 'SCADA', 'Predictive Mx'],
     stat: '15+ Projects',
   },
@@ -81,11 +80,11 @@ const industries: Industry[] = [
     icon: Building2,
     title: 'Enterprise & Fintech',
     description: 'Financial analytics, PCI-compliant payment systems, and enterprise resource management platforms.',
-    cardGradient: 'linear-gradient(135deg, #FAFAFF 0%, #F8F9FF 50%, #FFFFFF 100%)',
-    iconGradient: 'linear-gradient(135deg, #6366F1, #818CF8)',
-    accentColor: '#6366F1',
-    glowColor: 'rgba(99, 102, 241, 0.08)',
-    tagBg: 'bg-indigo-50/40 text-indigo-700 border-indigo-100/50',
+    cardGradient: 'linear-gradient(135deg, #F0F7FF 0%, #F5FAFF 50%, #FFFFFF 100%)',
+    iconGradient: 'linear-gradient(135deg, #0066FF, #338AFF)',
+    accentColor: '#0066FF',
+    glowColor: 'rgba(0, 102, 255, 0.08)',
+    tagBg: 'bg-blue-50/50 text-blue-700 border-blue-100/50',
     tags: ['PCI-DSS', 'ERP', 'Analytics'],
     stat: '40+ Projects',
   },
@@ -93,11 +92,11 @@ const industries: Industry[] = [
     icon: GraduationCap,
     title: 'Education',
     description: 'Interactive LMS platforms, virtual classrooms with gamification, and adaptive learning engines.',
-    cardGradient: 'linear-gradient(135deg, #FFFAFB 0%, #FFF8FA 50%, #FFFFFF 100%)',
-    iconGradient: 'linear-gradient(135deg, #EF4444, #F87171)',
-    accentColor: '#EF4444',
-    glowColor: 'rgba(239, 68, 68, 0.08)',
-    tagBg: 'bg-red-50/40 text-red-700 border-red-100/50',
+    cardGradient: 'linear-gradient(135deg, #F0F7FF 0%, #F5FAFF 50%, #FFFFFF 100%)',
+    iconGradient: 'linear-gradient(135deg, #0066FF, #338AFF)',
+    accentColor: '#0066FF',
+    glowColor: 'rgba(0, 102, 255, 0.08)',
+    tagBg: 'bg-blue-50/50 text-blue-700 border-blue-100/50',
     tags: ['LMS', 'Gamification', 'VR Classrooms'],
     stat: '18+ Projects',
   },
@@ -203,19 +202,6 @@ export default function Industries() {
                       ))}
                     </div>
 
-                    {/* CTA */}
-                    <div className="flex items-center justify-between mt-auto pt-4 border-t border-white/50">
-                      <span className="text-sm font-semibold text-gray-700 group-hover:text-gray-900 transition-colors duration-300">
-                        View case studies
-                      </span>
-                      <motion.div
-                        whileHover={{ x: 3, y: -3 }}
-                        className="flex h-9 w-9 items-center justify-center rounded-full shadow-md group-hover:shadow-lg transition-all duration-300"
-                        style={{ background: industry.iconGradient }}
-                      >
-                        <ArrowUpRight className="h-4 w-4 text-white" />
-                      </motion.div>
-                    </div>
                   </div>
 
                   {/* Bottom accent bar */}

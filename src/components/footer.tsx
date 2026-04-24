@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-  Code2,
   Linkedin,
   Twitter,
   Github,
@@ -16,6 +15,7 @@ import {
   Microscope,
   Send,
 } from 'lucide-react';
+import Image from 'next/image';
 
 const footerServices = [
   { label: 'Healthcare Solutions', icon: Heart },
@@ -45,7 +45,7 @@ const socialLinks = [
   { icon: Linkedin, label: 'LinkedIn', href: 'https://www.linkedin.com/in/shahzaibhamid/' },
   { icon: Twitter, label: 'Twitter', href: '#' },
   { icon: Github, label: 'GitHub', href: '#' },
-  { icon: Mail, label: 'Mail', href: 'mailto:shah@codesquad.ai' },
+  { icon: Mail, label: 'Mail', href: 'mailto:info@codesquad.ai' },
 ];
 
 const FooterLink = ({
@@ -115,13 +115,14 @@ export default function Footer() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <div className="flex items-center gap-2.5 mb-5">
-                <div className="w-9 h-9 rounded-lg bg-[#0066FF] flex items-center justify-center shadow-lg shadow-blue-600/25">
-                  <Code2 className="w-5 h-5 text-white" />
-                </div>
-                <span className="text-xl font-bold tracking-tight">
-                  Code<span className="text-[#338AFF]">Squad</span>
-                </span>
+              <div className="mb-5">
+                <Image
+                  src="/logo.png"
+                  alt="Company Logo"
+                  width={180}
+                  height={54}
+                  className="h-12 w-auto object-contain"
+                />
               </div>
 
               <p className="text-gray-400 text-sm leading-relaxed mb-6 max-w-xs">
@@ -250,11 +251,11 @@ export default function Footer() {
               <ul className="space-y-3.5">
                 <li>
                   <a
-                    href="mailto:shah@codesquad.ai"
+                    href="mailto:info@codesquad.ai"
                     className="text-sm text-gray-400 hover:text-white transition-colors duration-200 inline-flex items-center gap-2 group"
                   >
                     <Mail className="w-3.5 h-3.5 text-gray-500 group-hover:text-[#0066FF] transition-colors duration-200" />
-                    shah@codesquad.ai
+                    info@codesquad.ai
                   </a>
                 </li>
                 <li>
@@ -266,9 +267,14 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <p className="text-sm text-gray-400">
-                    Tech Valley, CA 94025
-                  </p>
+                  <a
+                    href="https://maps.app.goo.gl/uhAhYB7Ja5REpc3o9"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
+                  >
+                    Johar Town J2, Lahore Pakistan
+                  </a>
                 </li>
               </ul>
             </motion.div>
@@ -280,7 +286,7 @@ export default function Footer() {
       <div className="relative border-t border-white/[0.06]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-xs text-gray-500">
-            &copy; {new Date().getFullYear()} CodeSquad. All rights reserved.
+            &copy; {new Date().getFullYear()} All rights reserved.
           </p>
           <div className="flex gap-6">
             <a

@@ -90,10 +90,11 @@ export default function Awards() {
                   y: -6,
                   transition: { duration: 0.3 },
                 }}
-                className="group relative bg-white rounded-2xl border border-gray-100 shadow-sm p-6 hover:shadow-xl hover:shadow-amber-500/5 hover:border-amber-200/60 transition-all duration-300"
+                className="group relative rounded-2xl border border-blue-100/60 shadow-sm p-6 hover:shadow-xl hover:shadow-blue-500/8 hover:border-blue-200/60 transition-all duration-300"
+                style={{ background: 'linear-gradient(135deg, #F0F7FF 0%, #F5FAFF 50%, #FFFFFF 100%)' }}
               >
                 {/* Icon with muted amber/gold gradient */}
-                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-amber-400 to-amber-500/90 flex items-center justify-center mb-5 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-amber-400/20 transition-all duration-300">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center mb-5 group-hover:scale-110 group-hover:shadow-lg group-hover:shadow-blue-500/20 transition-all duration-300" style={{ background: 'linear-gradient(135deg, #0066FF, #338AFF)' }}>
                   <award.icon className="w-5 h-5 text-white" />
                 </div>
 

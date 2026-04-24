@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
+import PerformanceMonitor from "@/components/performance-monitor";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,9 +22,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "CodeSquad | Engineering Digital Excellence",
+  title: "Engineering Digital Excellence",
   description:
-    "CodeSquad is a leading software development company delivering custom software solutions, cloud infrastructure, AI/ML platforms, and mobile applications. Trusted by 50+ companies worldwide with 200+ projects delivered and 99% client satisfaction.",
+    "A leading software development company delivering custom software solutions, cloud infrastructure, AI/ML platforms, and mobile applications. Trusted by 50+ companies worldwide with 200+ projects delivered and 99% client satisfaction.",
   keywords: [
     "software development company",
     "custom software development",
@@ -41,11 +42,10 @@ export const metadata: Metadata = {
     "DevOps",
     "agile development",
     "digital transformation",
-    "CodeSquad",
   ],
-  authors: [{ name: "CodeSquad", url: "https://codesquad.dev" }],
-  creator: "CodeSquad",
-  publisher: "CodeSquad",
+  authors: [{ name: "Your Company", url: "https://example.com" }],
+  creator: "Your Company",
+  publisher: "Your Company",
   robots: {
     index: true,
     follow: true,
@@ -57,13 +57,13 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  metadataBase: new URL("https://codesquad.dev"),
+  metadataBase: new URL("https://example.com"),
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://codesquad.dev",
-    siteName: "CodeSquad",
-    title: "CodeSquad | Engineering Digital Excellence",
+    url: "https://example.com",
+    siteName: "Your Company",
+    title: "Engineering Digital Excellence",
     description:
       "We build world-class software solutions that transform businesses. Custom development, cloud, AI/ML, and mobile apps — trusted by 50+ companies worldwide.",
     images: [
@@ -71,19 +71,19 @@ export const metadata: Metadata = {
         url: "/images/hero-bg.png",
         width: 1920,
         height: 1080,
-        alt: "CodeSquad - Engineering Digital Excellence",
+        alt: "Engineering Digital Excellence",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "CodeSquad | Engineering Digital Excellence",
+    title: "Engineering Digital Excellence",
     description:
       "We build world-class software solutions that transform businesses. Custom development, cloud, AI/ML, and mobile apps.",
     images: ["/images/hero-bg.png"],
   },
   alternates: {
-    canonical: "https://codesquad.dev",
+    canonical: "https://example.com",
   },
 };
 
@@ -95,13 +95,17 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
+        <link rel="icon" href="/favicon.png" type="image/png" sizes="64x64" />
+        <link rel="apple-touch-icon" href="/favicon.png" />
+        <link rel="shortcut icon" href="/favicon.png" type="image/png" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
         {children}
         <Toaster />
+        {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
       </body>
     </html>
   );

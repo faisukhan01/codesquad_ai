@@ -2,16 +2,16 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Lightbulb, Code2, ShieldCheck, Rocket, ArrowRight } from 'lucide-react';
+import { ScanSearch, Code2, Workflow, Rocket, ArrowRight } from 'lucide-react';
 import { AnimatedSection, AnimatedItem } from '@/components/animated-section';
 import SectionHeader from '@/components/section-header';
 
 const steps = [
   {
     number: '01',
-    icon: Lightbulb,
-    title: 'Discovery & Strategy',
-    description: 'Deep-dive into your vision, define technical architecture, and chart a clear path forward.',
+    icon: ScanSearch,
+    title: 'Discovery & Auditing',
+    description: 'We audit your SEO, content gaps, ad tracking, and existing tools — then map a tailored growth strategy for your market.',
     color: '#0066FF',
     bg: 'from-blue-500/5 to-blue-600/3',
     border: 'border-gray-100',
@@ -23,33 +23,33 @@ const steps = [
     icon: Code2,
     title: 'Design & Development',
     description: 'Agile sprints, pixel-perfect design, and iterative builds with continuous feedback.',
-    color: '#7C3AED',
-    bg: 'from-violet-500/5 to-violet-600/3',
+    color: '#0066FF',
+    bg: 'from-blue-500/5 to-blue-600/3',
     border: 'border-gray-100',
-    iconBg: 'from-violet-500 to-violet-700',
-    shadow: 'shadow-violet-500/10',
+    iconBg: 'from-[#0066FF] to-[#0052CC]',
+    shadow: 'shadow-blue-500/10',
   },
   {
     number: '03',
-    icon: ShieldCheck,
-    title: 'Testing & QA',
-    description: 'Comprehensive automated testing, code reviews, and performance benchmarking.',
-    color: '#059669',
-    bg: 'from-emerald-500/5 to-emerald-600/3',
+    icon: Workflow,
+    title: 'Automation & Integration',
+    description: 'We build and connect your automation workflows — linking your CRM, booking system, content pipeline, and ads tracking into one seamless system.',
+    color: '#0066FF',
+    bg: 'from-blue-500/5 to-blue-600/3',
     border: 'border-gray-100',
-    iconBg: 'from-emerald-500 to-emerald-700',
-    shadow: 'shadow-emerald-500/10',
+    iconBg: 'from-[#0066FF] to-[#0052CC]',
+    shadow: 'shadow-blue-500/10',
   },
   {
     number: '04',
     icon: Rocket,
     title: 'Launch & Support',
     description: 'Zero-downtime deployment, monitoring, and dedicated ongoing support.',
-    color: '#D97706',
-    bg: 'from-amber-500/5 to-amber-600/3',
+    color: '#0066FF',
+    bg: 'from-blue-500/5 to-blue-600/3',
     border: 'border-gray-100',
-    iconBg: 'from-amber-500 to-amber-700',
-    shadow: 'shadow-amber-500/10',
+    iconBg: 'from-[#0066FF] to-[#0052CC]',
+    shadow: 'shadow-blue-500/10',
   },
 ];
 
@@ -64,7 +64,7 @@ export default function Process() {
         <SectionHeader
           label="Our Process"
           title={<>How We Bring <span className="gradient-text">Ideas to Life</span></>}
-          description="A proven four-step framework that turns your vision into a polished, production-ready product."
+          description="A proven four-step framework that takes you from audit to full automation — driving consistent growth for your clinic or business."
         />
 
         {/* Desktop: horizontal flow */}

@@ -159,6 +159,79 @@ function CiscoLogo({ size = 36 }: { size?: number }) {
   );
 }
 
+function MakeLogo({ size = 36 }: { size?: number }) {
+  return (
+    <svg width={size * 1.6} height={size} viewBox="0 0 58 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="10" cy="18" r="5" fill="#6B2DEB" />
+      <circle cx="29" cy="10" r="5" fill="#9B59F6" />
+      <circle cx="29" cy="26" r="5" fill="#9B59F6" />
+      <circle cx="48" cy="18" r="5" fill="#6B2DEB" />
+      <line x1="15" y1="18" x2="24" y2="11" stroke="#6B2DEB" strokeWidth="2" />
+      <line x1="15" y1="18" x2="24" y2="25" stroke="#6B2DEB" strokeWidth="2" />
+      <line x1="34" y1="11" x2="43" y2="18" stroke="#6B2DEB" strokeWidth="2" />
+      <line x1="34" y1="25" x2="43" y2="18" stroke="#6B2DEB" strokeWidth="2" />
+    </svg>
+  );
+}
+
+function N8NLogo({ size = 36 }: { size?: number }) {
+  return (
+    <svg width={size * 1.5} height={size} viewBox="0 0 54 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="2" y="8" width="14" height="20" rx="4" fill="#EA4B71" />
+      <rect x="20" y="8" width="14" height="20" rx="4" fill="#FF6D42" />
+      <rect x="38" y="8" width="14" height="20" rx="4" fill="#EA4B71" />
+      <text x="5.5" y="23" fontFamily="Arial, sans-serif" fontWeight="800" fontSize="11" fill="white">n</text>
+      <text x="23" y="23" fontFamily="Arial, sans-serif" fontWeight="800" fontSize="11" fill="white">8</text>
+      <text x="41" y="23" fontFamily="Arial, sans-serif" fontWeight="800" fontSize="11" fill="white">n</text>
+    </svg>
+  );
+}
+
+function InstantlyLogo({ size = 36 }: { size?: number }) {
+  return (
+    <svg width={size * 1.8} height={size} viewBox="0 0 65 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="65" height="36" rx="8" fill="#0EA5E9" opacity="0" />
+      <path d="M6 10l7 8-7 8h5l7-8-7-8z" fill="#0EA5E9" />
+      <text x="20" y="24" fontFamily="Arial, sans-serif" fontWeight="700" fontSize="13" fill="#0A1628">instantly</text>
+    </svg>
+  );
+}
+
+function ZapierLogo({ size = 36 }: { size?: number }) {
+  return (
+    <svg width={size * 1.5} height={size} viewBox="0 0 54 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="54" height="36" rx="8" fill="#FF4A00" opacity="0" />
+      <path d="M27 4l-6 14h6l-6 14 14-16h-8l8-12z" fill="#FF4A00" />
+      <text x="32" y="26" fontFamily="Arial, sans-serif" fontWeight="800" fontSize="12" fill="#FF4A00">apier</text>
+    </svg>
+  );
+}
+
+function HubSpotLogo({ size = 36 }: { size?: number }) {
+  return (
+    <svg width={size * 1.6} height={size} viewBox="0 0 58 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="14" cy="18" r="7" fill="#FF7A59" />
+      <circle cx="14" cy="9" r="3" fill="#FF7A59" />
+      <line x1="14" y1="12" x2="14" y2="11" stroke="#FF7A59" strokeWidth="2" />
+      <rect x="21" y="11" width="3" height="14" rx="1.5" fill="#FF7A59" />
+      <text x="27" y="24" fontFamily="Arial, sans-serif" fontWeight="700" fontSize="13" fill="#FF7A59">ubSpot</text>
+    </svg>
+  );
+}
+
+function PipedreamLogo({ size = 36 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="20" cy="20" r="18" fill="#1DA462" opacity="0.12" />
+      <circle cx="20" cy="10" r="5" fill="#1DA462" />
+      <circle cx="20" cy="30" r="5" fill="#1DA462" />
+      <rect x="18" y="15" width="4" height="10" fill="#1DA462" />
+      <path d="M20 20 l8-6" stroke="#1DA462" strokeWidth="2" strokeLinecap="round" />
+      <circle cx="29" cy="13" r="3" fill="#2ECC71" />
+    </svg>
+  );
+}
+
 function ReactLogo({ size = 36 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -351,6 +424,12 @@ interface LogoItem {
 }
 
 const enterpriseLogos: LogoItem[] = [
+  { name: 'Make.com', component: MakeLogo, textWidth: 58 },
+  { name: 'n8n', component: N8NLogo, textWidth: 54 },
+  { name: 'Instantly', component: InstantlyLogo, textWidth: 65 },
+  { name: 'Zapier', component: ZapierLogo, textWidth: 54 },
+  { name: 'HubSpot', component: HubSpotLogo, textWidth: 58 },
+  { name: 'Pipedream', component: PipedreamLogo },
   { name: 'Microsoft', component: MicrosoftLogo },
   { name: 'Google Cloud', component: GoogleCloudLogo },
   { name: 'AWS', component: AWSLogo, textWidth: 56 },
@@ -405,9 +484,11 @@ function LogoCard({ item }: { item: LogoItem }) {
 function MarqueeRow({
   items,
   reverse = false,
+  duration = '45s',
 }: {
   items: LogoItem[];
   reverse?: boolean;
+  duration?: string;
 }) {
   // Triple the items for seamless infinite loop
   const tripled = [...items, ...items, ...items];
@@ -416,7 +497,10 @@ function MarqueeRow({
     <div className="marquee-container overflow-hidden">
       <div
         className="flex animate-marquee-slow whitespace-nowrap"
-        style={reverse ? { animationDirection: 'reverse' } : undefined}
+        style={{
+          animationDuration: duration,
+          ...(reverse ? { animationDirection: 'reverse' } : {}),
+        }}
       >
         {tripled.map((item, i) => (
           <LogoCard key={`${item.name}-${i}`} item={item} />
@@ -464,7 +548,7 @@ export default function Clients() {
 
       {/* Row 1 – Enterprise / Cloud logos scrolling left */}
       <AnimatedSection variant="fade-up" delay={0.15}>
-        <MarqueeRow items={enterpriseLogos} />
+        <MarqueeRow items={enterpriseLogos} duration="28s" />
       </AnimatedSection>
 
       {/* Divider */}

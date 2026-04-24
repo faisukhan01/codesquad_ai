@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Code2 } from 'lucide-react';
+import Image from 'next/image';
 
 interface LoadingScreenProps {
   isVisible: boolean;
@@ -22,12 +23,13 @@ export default function LoadingScreen({ isVisible }: LoadingScreenProps) {
 
   useEffect(() => {
     if (!showAnimated) return;
+    // Reduce animation frequency for better performance
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) return 100;
-        return prev + Math.random() * 15 + 5;
+        return prev + Math.random() * 20 + 10; // Faster progress
       });
-    }, 200);
+    }, 100); // Reduced from 200ms to 100ms
     return () => clearInterval(interval);
   }, [showAnimated]);
 
@@ -38,9 +40,14 @@ export default function LoadingScreen({ isVisible }: LoadingScreenProps) {
   if (!showAnimated) {
     return (
       <div ref={containerRef} className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#0A1628]">
-        <div className="w-12 h-12 rounded-xl bg-[#0066FF] flex items-center justify-center">
-          <Code2 className="w-7 h-7 text-white" />
-        </div>
+        <Image
+          src="/logo.png"
+          alt="Company Logo"
+          width={120}
+          height={60}
+          className="h-12 w-auto object-contain"
+          priority
+        />
       </div>
     );
   }
@@ -63,9 +70,9 @@ export default function LoadingScreen({ isVisible }: LoadingScreenProps) {
           <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-[#0066FF]/10 rounded-full blur-3xl" />
           <div className="absolute bottom-1/4 right-1/4 w-48 h-48 bg-[#338AFF]/10 rounded-full blur-3xl" />
 
-          {/* Animated floating particles */}
+          {/* Reduced floating particles for better performance */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {[...Array(12)].map((_, i) => (
+            {[...Array(6)].map((_, i) => (
               <motion.div
                 key={i}
                 className="absolute w-1 h-1 rounded-full bg-blue-400/20"
@@ -78,9 +85,9 @@ export default function LoadingScreen({ isVisible }: LoadingScreenProps) {
                   opacity: [0, 0.4, 0.4, 0],
                 }}
                 transition={{
-                  duration: 3 + Math.random() * 4,
+                  duration: 4 + Math.random() * 3, // Slower animation
                   repeat: Infinity,
-                  delay: Math.random() * 3,
+                  delay: Math.random() * 4,
                   ease: 'linear',
                 }}
               />
@@ -93,23 +100,18 @@ export default function LoadingScreen({ isVisible }: LoadingScreenProps) {
               initial={{ scale: 0.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5, ease: 'backOut' }}
-              className="flex items-center gap-3"
+              className="flex items-center justify-center"
             >
-              <motion.div
-                animate={{ rotate: [0, 360] }}
-                transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-                className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#0066FF] to-[#0052CC] flex items-center justify-center shadow-xl shadow-blue-500/30"
-              >
-                <Code2 className="w-8 h-8 text-white" />
-              </motion.div>
-              <motion.span
-                initial={{ opacity: 0, x: -10 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3, duration: 0.4 }}
-                className="text-2xl font-bold text-white tracking-tight"
-              >
-                Code<span className="text-[#338AFF]">Squad</span>
-              </motion.span>
+              <div className="relative">
+                <Image
+                  src="/logo.png"
+                  alt="Company Logo"
+                  width={120}
+                  height={60}
+                  className="h-12 w-auto object-contain"
+                  priority
+                />
+              </div>
             </motion.div>
 
             {/* Loading bar */}

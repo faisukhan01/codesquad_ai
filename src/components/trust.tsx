@@ -92,7 +92,8 @@ export default function Trust() {
               <motion.div
                 whileHover={{ y: -4 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                className="group bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-lg hover:border-gray-200 transition-colors duration-300 flex flex-col"
+                className="group rounded-2xl border border-blue-100/60 p-6 shadow-sm hover:shadow-lg hover:shadow-blue-500/8 hover:border-blue-200/60 transition-all duration-300 flex flex-col"
+                style={{ background: 'linear-gradient(135deg, #F0F7FF 0%, #F5FAFF 50%, #FFFFFF 100%)' }}
               >
                 {/* Gradient icon */}
                 <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#0066FF] to-[#338AFF] flex items-center justify-center mb-4 shadow-sm group-hover:scale-110 transition-transform duration-300">
