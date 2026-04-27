@@ -3,54 +3,54 @@
     "id": 1,
     "title": "How AI is Revolutionizing Healthcare Diagnostics",
     "description": "Explore the latest advancements in AI-powered medical imaging and diagnostic tools transforming patient care.",
-    "author": "Dr. Sarah Mitchell",
+    "author": "Shahzaib Hamid",
     "readTime": "8 min read",
-    "date": "Jan 15, 2025",
+    "date": "Mar 15, 2026",
     "tag": "Healthcare"
   },
   {
     "id": 2,
     "title": "Computer Vision in Quality Control: Lessons from 50+ Implementations",
     "description": "Key insights and battle-tested best practices from deploying computer vision systems worldwide.",
-    "author": "Alex Rivera",
+    "author": "Shahzaib Hamid",
     "readTime": "6 min read",
-    "date": "Dec 20, 2024",
+    "date": "Feb 20, 2026",
     "tag": "Computer Vision"
   },
   {
     "id": 3,
     "title": "Building HIPAA-Compliant Applications: A Developer's Guide",
     "description": "Essential guidelines for building healthcare applications that meet regulatory requirements.",
-    "author": "Priya Sharma",
+    "author": "Shahzaib Hamid",
     "readTime": "10 min read",
-    "date": "Dec 12, 2024",
+    "date": "Jan 12, 2026",
     "tag": "Healthcare"
   },
   {
     "id": 4,
     "title": "The Role of Machine Learning in Predictive Maintenance",
     "description": "How ML algorithms are helping industries predict equipment failures before they happen.",
-    "author": "Michael Chen",
+    "author": "Shahzaib Hamid",
     "readTime": "7 min read",
-    "date": "Nov 30, 2024",
+    "date": "Dec 30, 2025",
     "tag": "IoT"
   },
   {
     "id": 5,
     "title": "Scaling Microservices: Best Practices from the Trenches",
     "description": "Real-world lessons learned from scaling microservices architectures in production environments.",
-    "author": "Jessica Park",
+    "author": "Shahzaib Hamid",
     "readTime": "9 min read",
-    "date": "Nov 15, 2024",
+    "date": "Nov 15, 2025",
     "tag": "Engineering"
   },
   {
     "id": 6,
     "title": "Edge Computing in Agriculture: A Game Changer",
     "description": "Discover how edge computing is enabling real-time decision making in modern farming operations.",
-    "author": "David Kumar",
+    "author": "Shahzaib Hamid",
     "readTime": "8 min read",
-    "date": "Oct 28, 2024",
+    "date": "Oct 28, 2025",
     "tag": "Agriculture"
   }
 ]

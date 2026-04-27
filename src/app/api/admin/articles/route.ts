@@ -1,9 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { dbOperations } from '@/lib/db';
+import { dbOperations, initializeTables, seedInitialData } from '@/lib/db';
+
+// Initialize database on first request
+let isInitialized = false;
+
+async function ensureInitialized() {
+  if (!isInitialized) {
+    try {
+      await initializeTables();
+      await seedInitialData();
+      isInitialized = true;
+    } catch (error) {
+      console.error('Database initialization error:', error);
+      // Continue anyway - table might already exist
+      isInitialized = true;
+    }
+  }
+}
 
 // GET - Fetch articles by type
 export async function GET(request: NextRequest) {
   try {
+    await ensureInitialized();
+
     const searchParams = request.nextUrl.searchParams;
     const type = searchParams.get('type') as 'article' | 'white-paper' | 'podcast' | null;
 
@@ -11,7 +30,7 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: 'Type parameter is required' }, { status: 400 });
     }
 
-    const items = dbOperations.getByType(type);
+    const items = await dbOperations.getByType(type);
     return NextResponse.json(items);
   } catch (error) {
     console.error('Error fetching articles:', error);
@@ -22,6 +41,8 @@ export async function GET(request: NextRequest) {
 // POST - Create new article
 export async function POST(request: NextRequest) {
   try {
+    await ensureInitialized();
+
     const body = await request.json();
     const { title, description, author, readTime, date, tag, type, youtubeId } = body;
 
@@ -33,7 +54,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const newItem = dbOperations.create({
+    const newItem = await dbOperations.create({
       title,
       description,
       author,
@@ -54,6 +75,8 @@ export async function POST(request: NextRequest) {
 // DELETE - Delete article
 export async function DELETE(request: NextRequest) {
   try {
+    await ensureInitialized();
+
     const searchParams = request.nextUrl.searchParams;
     const id = searchParams.get('id');
 
@@ -61,7 +84,7 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json({ error: 'ID parameter is required' }, { status: 400 });
     }
 
-    const success = dbOperations.delete(parseInt(id));
+    const success = await dbOperations.delete(parseInt(id));
 
     if (!success) {
       return NextResponse.json({ error: 'Article not found' }, { status: 404 });
@@ -77,6 +100,8 @@ export async function DELETE(request: NextRequest) {
 // PUT - Update article
 export async function PUT(request: NextRequest) {
   try {
+    await ensureInitialized();
+
     const body = await request.json();
     const { id, ...updateData } = body;
 
@@ -84,7 +109,7 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json({ error: 'ID is required' }, { status: 400 });
     }
 
-    const updatedItem = dbOperations.update(parseInt(id), updateData);
+    const updatedItem = await dbOperations.update(parseInt(id), updateData);
 
     if (!updatedItem) {
       return NextResponse.json({ error: 'Article not found' }, { status: 404 });

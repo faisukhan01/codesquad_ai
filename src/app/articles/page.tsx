@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Clock, Calendar, FileText, ChevronRight } from 'lucide-react';
-import { dbOperations } from '@/lib/db';
+import { dbOperations, initializeTables, seedInitialData } from '@/lib/db';
 
 function getInitials(name: string) {
   return name
@@ -17,8 +17,21 @@ export const metadata = {
   description: 'Expert perspectives and actionable ideas from the CodeSquad team.',
 };
 
-export default function ArticlesPage() {
-  const articlesData = dbOperations.getByType('article');
+async function getArticles() {
+  try {
+    await initializeTables();
+    await seedInitialData();
+    const articles = await dbOperations.getByType('article');
+    return articles;
+  } catch (error) {
+    console.error('Error fetching articles:', error);
+    return [];
+  }
+}
+
+export default async function ArticlesPage() {
+  const articlesData = await getArticles();
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-white via-blue-50/20 to-white">
       {/* Hero */}
@@ -59,7 +72,7 @@ export default function ArticlesPage() {
       {/* Articles Grid */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7">
-          {articlesData.map((article) => (
+          {articlesData.map((article: any) => (
             <article
               key={article.id}
               className="group relative bg-white rounded-3xl overflow-hidden border border-gray-100 hover:border-transparent shadow-sm hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 flex flex-col cursor-pointer"
@@ -114,7 +127,7 @@ export default function ArticlesPage() {
                   <div className="flex items-center gap-2">
                     <span className="hidden sm:flex items-center gap-1 text-[11px] text-gray-400">
                       <Clock className="w-3 h-3" />
-                      {article.readTime}
+                      {article.readtime}
                     </span>
                     <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 -translate-x-1 group-hover:translate-x-0">
                       <ChevronRight className="w-3.5 h-3.5 text-white" />

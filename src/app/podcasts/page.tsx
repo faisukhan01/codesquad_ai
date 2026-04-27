@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Clock, Calendar, Headphones } from 'lucide-react';
-import { dbOperations } from '@/lib/db';
+import { dbOperations, initializeTables, seedInitialData } from '@/lib/db';
 
 function getInitials(name: string) {
   return name
@@ -17,8 +17,20 @@ export const metadata = {
   description: 'Video podcasts and conversations from the CodeSquad team.',
 };
 
-export default function PodcastsPage() {
-  const podcastsData = dbOperations.getByType('podcast');
+async function getPodcasts() {
+  try {
+    await initializeTables();
+    await seedInitialData();
+    const podcasts = await dbOperations.getByType('podcast');
+    return podcasts;
+  } catch (error) {
+    console.error('Error fetching podcasts:', error);
+    return [];
+  }
+}
+
+export default async function PodcastsPage() {
+  const podcastsData = await getPodcasts();
   return (
     <main className="min-h-screen bg-gradient-to-b from-white via-emerald-50/20 to-white">
       {/* Hero */}
@@ -59,7 +71,7 @@ export default function PodcastsPage() {
       {/* Podcasts Grid */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7">
-          {podcastsData.map((podcast) => (
+          {podcastsData.map((podcast: any) => (
             <article
               key={podcast.id}
               className="group relative bg-white rounded-3xl overflow-hidden border border-gray-100 hover:border-transparent shadow-sm hover:shadow-2xl hover:shadow-emerald-500/10 transition-all duration-300 flex flex-col"

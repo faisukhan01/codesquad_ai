@@ -78,7 +78,7 @@ const typeConfig: Record<
   },
 };
 
-const filterTabs: FilterTab[] = ['Articles', 'White Papers', 'Podcasts'];
+const filterTabs: FilterTab[] = ['Articles', 'White Papers']; // Podcasts hidden
 
 const tabToType: Record<FilterTab, ResourceType> = {
   Articles: 'Article',
@@ -101,9 +101,9 @@ const resources: Resource[] = [
     title: 'How AI is Revolutionizing Healthcare Diagnostics',
     description:
       'Explore the latest advancements in AI-powered medical imaging and diagnostic tools transforming patient care.',
-    author: 'Dr. Sarah Mitchell',
+    author: 'Shahzaib Hamid',
     readTime: '8 min read',
-    date: 'Jan 15, 2025',
+    date: 'Mar 15, 2026',
     tag: 'Healthcare',
   },
   {
@@ -112,9 +112,9 @@ const resources: Resource[] = [
     title: 'Computer Vision in Quality Control: Lessons from 50+ Implementations',
     description:
       'Key insights and battle-tested best practices from deploying computer vision systems worldwide.',
-    author: 'Alex Rivera',
+    author: 'Shahzaib Hamid',
     readTime: '6 min read',
-    date: 'Dec 20, 2024',
+    date: 'Feb 20, 2026',
     tag: 'Computer Vision',
   },
   {
@@ -123,9 +123,9 @@ const resources: Resource[] = [
     title: "Building HIPAA-Compliant Applications: A Developer's Guide",
     description:
       'Essential guidelines for building healthcare applications that meet regulatory requirements.',
-    author: 'Priya Sharma',
+    author: 'Shahzaib Hamid',
     readTime: '10 min read',
-    date: 'Dec 12, 2024',
+    date: 'Jan 12, 2026',
     tag: 'Healthcare',
   },
   {
@@ -134,9 +134,9 @@ const resources: Resource[] = [
     title: 'The Future of Precision Agriculture: A Comprehensive Guide',
     description:
       'An in-depth analysis of how IoT, computer vision, and machine learning are shaping modern farming.',
-    author: 'James Chen',
+    author: 'Shahzaib Hamid',
     readTime: '15 min read',
-    date: 'Jan 8, 2025',
+    date: 'Mar 8, 2026',
     tag: 'Agriculture',
   },
   {
@@ -145,9 +145,9 @@ const resources: Resource[] = [
     title: 'Enterprise IoT Security: Threats and Solutions',
     description:
       'A thorough examination of the current threat landscape in enterprise IoT and countermeasures.',
-    author: 'CodeSquad Research',
+    author: 'Shahzaib Hamid',
     readTime: '20 min read',
-    date: 'Nov 28, 2024',
+    date: 'Feb 28, 2026',
     tag: 'IoT',
   },
   {
@@ -156,9 +156,9 @@ const resources: Resource[] = [
     title: 'TechTalk: Engineering IoT for Smart Manufacturing',
     description:
       'Our engineering leads discuss real-world IoT implementations and their impact on industrial efficiency.',
-    author: 'CodeSquad Team',
+    author: 'Shahzaib Hamid',
     readTime: '32 min listen',
-    date: 'Dec 28, 2024',
+    date: 'Mar 28, 2026',
     tag: 'IoT',
   },
 ];

@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { ArrowLeft, Clock, Calendar, BookOpen, ChevronRight } from 'lucide-react';
-import { dbOperations } from '@/lib/db';
+import { dbOperations, initializeTables, seedInitialData } from '@/lib/db';
 
 function getInitials(name: string) {
   return name
@@ -17,8 +17,20 @@ export const metadata = {
   description: 'In-depth research and technical white papers from the CodeSquad team.',
 };
 
-export default function WhitePapersPage() {
-  const whitePapersData = dbOperations.getByType('white-paper');
+async function getWhitePapers() {
+  try {
+    await initializeTables();
+    await seedInitialData();
+    const whitePapers = await dbOperations.getByType('white-paper');
+    return whitePapers;
+  } catch (error) {
+    console.error('Error fetching white papers:', error);
+    return [];
+  }
+}
+
+export default async function WhitePapersPage() {
+  const whitePapersData = await getWhitePapers();
   return (
     <main className="min-h-screen bg-gradient-to-b from-white via-indigo-50/20 to-white">
       {/* Hero */}
@@ -59,7 +71,7 @@ export default function WhitePapersPage() {
       {/* White Papers Grid */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-7">
-          {whitePapersData.map((paper) => (
+          {whitePapersData.map((paper: any) => (
             <article
               key={paper.id}
               className="group relative bg-white rounded-3xl overflow-hidden border border-gray-100 hover:border-transparent shadow-sm hover:shadow-2xl hover:shadow-indigo-500/10 transition-all duration-300 flex flex-col cursor-pointer"
