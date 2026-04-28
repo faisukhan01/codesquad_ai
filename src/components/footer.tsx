@@ -97,7 +97,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative overflow-hidden mt-auto">
+    <footer className="relative overflow-hidden mt-48">
       {/* Background layers */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#071020] via-[#0A1628] to-[#071020]" />
       <div className="absolute inset-0 grid-pattern opacity-15" />
@@ -105,28 +105,28 @@ export default function Footer() {
       {/* Top gradient divider */}
       <div className="relative h-px animated-gradient-line" />
 
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 lg:pt-20 pb-10">
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
-          {/* Column 1: Logo + Description + Socials */}
-          <div className="col-span-2 sm:col-span-2">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+          {/* Column 1: Logo + Description */}
+          <div className="lg:col-span-1">
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <div className="mb-5">
+              <div className="mb-4">
                 <Image
                   src="/logo.png"
                   alt="Company Logo"
-                  width={180}
-                  height={54}
-                  className="h-12 w-auto object-contain"
+                  width={160}
+                  height={48}
+                  className="h-11 w-auto object-contain"
                 />
               </div>
 
-              <p className="text-gray-400 text-sm leading-relaxed mb-6 max-w-xs">
-                Building intelligent software solutions that transform industries -- from healthcare and agriculture to computer vision and IoT.
+              <p className="text-gray-400 text-sm leading-relaxed mb-5 max-w-xs">
+                Building intelligent software solutions that transform industries.
               </p>
 
               {/* Social Links */}
@@ -144,37 +144,10 @@ export default function Footer() {
                   </motion.a>
                 ))}
               </div>
-
-              {/* Newsletter Mini-section */}
-              <form
-                onSubmit={handleSubscribe}
-                className="mt-8 max-w-xs"
-              >
-                <p className="text-xs font-medium uppercase tracking-wider text-gray-500 mb-3">
-                  Stay Updated
-                </p>
-                <div className="flex gap-2">
-                  <input
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Your email"
-                    className="flex-1 h-9 bg-white/5 border border-white/10 rounded-lg px-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-[#0066FF]/50 focus:ring-1 focus:ring-[#0066FF]/25 transition-all duration-200"
-                  />
-                  <motion.button
-                    type="submit"
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="h-9 w-9 rounded-lg bg-[#0066FF] hover:bg-[#0052CC] flex items-center justify-center text-white transition-colors duration-200 shadow-lg shadow-blue-600/20 shrink-0"
-                  >
-                    <Send className="w-4 h-4" />
-                  </motion.button>
-                </div>
-              </form>
             </motion.div>
           </div>
 
-          {/* Column 2: Services */}
+          {/* Column 2: Quick Links */}
           <div>
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -182,20 +155,19 @@ export default function Footer() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.1 }}
             >
-              <h4 className="text-xs font-semibold uppercase tracking-widest text-gray-300 mb-5">
-                Services
+              <h4 className="text-xs font-semibold uppercase tracking-widest text-gray-300 mb-4">
+                Company
               </h4>
-              <ul className="space-y-3">
-                {footerServices.map((service) => (
-                  <FooterLink key={service.label} href="#services" showArrow>
-                    {service.label}
-                  </FooterLink>
-                ))}
+              <ul className="space-y-2.5">
+                <FooterLink href="#about">About Us</FooterLink>
+                <FooterLink href="#services">Services</FooterLink>
+                <FooterLink href="#portfolio">Portfolio</FooterLink>
+                <FooterLink href="#contact">Contact</FooterLink>
               </ul>
             </motion.div>
           </div>
 
-          {/* Column 3: Company */}
+          {/* Column 3: Resources */}
           <div>
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -203,20 +175,19 @@ export default function Footer() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.15 }}
             >
-              <h4 className="text-xs font-semibold uppercase tracking-widest text-gray-300 mb-5">
-                Company
+              <h4 className="text-xs font-semibold uppercase tracking-widest text-gray-300 mb-4">
+                Resources
               </h4>
-              <ul className="space-y-3">
-                {footerCompany.map((item) => (
-                  <FooterLink key={item.label} href={item.href}>
-                    {item.label}
-                  </FooterLink>
-                ))}
+              <ul className="space-y-2.5">
+                <FooterLink href="#resources">Articles</FooterLink>
+                <FooterLink href="#resources">White Papers</FooterLink>
+                <FooterLink href="#resources">Podcasts</FooterLink>
+                <FooterLink href="#portfolio">Case Studies</FooterLink>
               </ul>
             </motion.div>
           </div>
 
-          {/* Column 4: Resources */}
+          {/* Column 4: Contact */}
           <div>
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -224,59 +195,53 @@ export default function Footer() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              <h4 className="text-xs font-semibold uppercase tracking-widest text-gray-300 mb-5">
-                Resources
-              </h4>
-              <ul className="space-y-3">
-                {footerResources.map((item) => (
-                  <FooterLink key={item.label} href={item.href}>
-                    {item.label}
-                  </FooterLink>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-
-          {/* Column 5: Contact */}
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.25 }}
-            >
-              <h4 className="text-xs font-semibold uppercase tracking-widest text-gray-300 mb-5">
+              <h4 className="text-xs font-semibold uppercase tracking-widest text-gray-300 mb-4">
                 Contact
               </h4>
-              <ul className="space-y-3.5">
-                <li>
+              <div className="space-y-3">
+                {/* Email */}
+                <div>
                   <a
                     href="mailto:info@codesquad.ai"
-                    className="text-sm text-gray-400 hover:text-white transition-colors duration-200 inline-flex items-center gap-2 group"
+                    className="text-sm text-gray-400 hover:text-white transition-colors duration-200 block"
                   >
-                    <Mail className="w-3.5 h-3.5 text-gray-500 group-hover:text-[#0066FF] transition-colors duration-200" />
                     info@codesquad.ai
                   </a>
-                </li>
-                <li>
+                </div>
+
+                {/* Phone */}
+                <div>
                   <a
-                    href="tel:+15551234567"
-                    className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
+                    href="tel:+14177645309"
+                    className="text-sm text-gray-400 hover:text-white transition-colors duration-200 block"
                   >
-                    +1 (555) 123-4567
+                    +1 (417) 764-5309
                   </a>
-                </li>
-                <li>
+                </div>
+
+                {/* Offices Label */}
+                <div className="pt-2">
+                  <p className="text-[10px] uppercase tracking-wider text-gray-500 mb-2">Offices</p>
+                  
+                  {/* Pakistan Office */}
                   <a
                     href="https://maps.app.goo.gl/uhAhYB7Ja5REpc3o9"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-sm text-gray-400 hover:text-white transition-colors duration-200"
+                    className="text-sm italic text-gray-400 hover:text-white transition-colors duration-200 block mb-2"
                   >
-                    Johar Town J2, Lahore Pakistan
+                    Johar Town J2, Lahore, Pakistan
                   </a>
-                </li>
-              </ul>
+                  
+                  {/* USA Office */}
+                  <a
+                    href="#"
+                    className="text-sm italic text-gray-400 hover:text-white transition-colors duration-200 block leading-relaxed"
+                  >
+                    8 The Green Ste 14681, Dover, DE 19901, USA
+                  </a>
+                </div>
+              </div>
             </motion.div>
           </div>
         </div>
@@ -284,20 +249,20 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="relative border-t border-white/[0.06]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-gray-500">
-            &copy; {new Date().getFullYear()} All rights reserved.
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <p className="text-[10px] text-gray-500">
+            &copy; {new Date().getFullYear()} CodeSquad. All rights reserved.
           </p>
-          <div className="flex gap-6">
+          <div className="flex gap-4">
             <a
               href="#"
-              className="text-xs text-gray-500 hover:text-gray-300 transition-colors duration-200"
+              className="text-[10px] text-gray-500 hover:text-gray-300 transition-colors duration-200"
             >
               Privacy Policy
             </a>
             <a
               href="#"
-              className="text-xs text-gray-500 hover:text-gray-300 transition-colors duration-200"
+              className="text-[10px] text-gray-500 hover:text-gray-300 transition-colors duration-200"
             >
               Terms of Service
             </a>

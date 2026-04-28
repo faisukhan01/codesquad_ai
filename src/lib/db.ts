@@ -1,38 +1,50 @@
-import { neon } from '@neondatabase/serverless';
+import mysql from 'mysql2/promise';
 
-// Get database connection
+// Create connection pool for MySQL
+let pool: mysql.Pool | null = null;
+
 function getDb() {
   if (!process.env.DATABASE_URL) {
     throw new Error('DATABASE_URL environment variable is not set');
   }
-  return neon(process.env.DATABASE_URL);
+
+  if (!pool) {
+    pool = mysql.createPool({
+      uri: process.env.DATABASE_URL,
+      waitForConnections: true,
+      connectionLimit: 10,
+      queueLimit: 0,
+      enableKeepAlive: true,
+      keepAliveInitialDelay: 0,
+    });
+  }
+
+  return pool;
 }
 
 // Initialize database tables
 export async function initializeTables() {
   try {
-    const sql = getDb();
+    const db = getDb();
     
     // Create articles table if it doesn't exist
-    await sql`
+    await db.execute(`
       CREATE TABLE IF NOT EXISTS articles (
-        id SERIAL PRIMARY KEY,
+        id INT AUTO_INCREMENT PRIMARY KEY,
         title TEXT NOT NULL,
         description TEXT NOT NULL,
-        author TEXT NOT NULL,
-        readTime TEXT,
-        date TEXT NOT NULL,
-        tag TEXT,
-        type TEXT NOT NULL DEFAULT 'article',
-        youtubeId TEXT,
+        author VARCHAR(255) NOT NULL,
+        readTime VARCHAR(50),
+        date VARCHAR(50) NOT NULL,
+        tag VARCHAR(100),
+        type VARCHAR(50) NOT NULL DEFAULT 'article',
+        youtubeId VARCHAR(255),
         createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-      )
-    `;
-
-    // Create indexes for faster queries
-    await sql`CREATE INDEX IF NOT EXISTS idx_articles_type ON articles(type)`;
-    await sql`CREATE INDEX IF NOT EXISTS idx_articles_date ON articles(date)`;
+        updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        INDEX idx_type (type),
+        INDEX idx_date (date)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+    `);
 
     console.log('Database tables initialized successfully');
   } catch (error) {
@@ -44,11 +56,11 @@ export async function initializeTables() {
 // Seed initial data from JSON files (only if table is empty)
 export async function seedInitialData() {
   try {
-    const sql = getDb();
+    const db = getDb();
     
     // Check if data already exists
-    const result = await sql`SELECT COUNT(*) as count FROM articles`;
-    const count = parseInt(result[0].count);
+    const [rows] = await db.execute('SELECT COUNT(*) as count FROM articles');
+    const count = (rows as any)[0].count;
 
     if (count > 0) {
       console.log('Database already has data, skipping seed');
@@ -64,31 +76,31 @@ export async function seedInitialData() {
 
     // Seed articles
     for (const article of articlesData.default) {
-      await sql`
-        INSERT INTO articles (title, description, author, readTime, date, tag, type)
-        VALUES (${article.title}, ${article.description}, ${article.author}, 
-                ${article.readTime}, ${article.date}, ${article.tag}, 'article')
-      `;
+      await db.execute(
+        `INSERT INTO articles (title, description, author, readTime, date, tag, type)
+         VALUES (?, ?, ?, ?, ?, ?, 'article')`,
+        [article.title, article.description, article.author, article.readTime, article.date, article.tag]
+      );
     }
     console.log(`Seeded ${articlesData.default.length} articles`);
 
     // Seed white papers
     for (const paper of whitePapersData.default) {
-      await sql`
-        INSERT INTO articles (title, description, author, readTime, date, tag, type)
-        VALUES (${paper.title}, ${paper.description}, ${paper.author}, 
-                ${paper.readTime}, ${paper.date}, ${paper.tag}, 'white-paper')
-      `;
+      await db.execute(
+        `INSERT INTO articles (title, description, author, readTime, date, tag, type)
+         VALUES (?, ?, ?, ?, ?, ?, 'white-paper')`,
+        [paper.title, paper.description, paper.author, paper.readTime, paper.date, paper.tag]
+      );
     }
     console.log(`Seeded ${whitePapersData.default.length} white papers`);
 
     // Seed podcasts
     for (const podcast of podcastsData.default) {
-      await sql`
-        INSERT INTO articles (title, description, author, readTime, date, tag, type, youtubeId)
-        VALUES (${podcast.title}, ${podcast.description}, ${podcast.author}, 
-                ${podcast.readTime}, ${podcast.date}, ${podcast.tag}, 'podcast', ${podcast.youtubeId})
-      `;
+      await db.execute(
+        `INSERT INTO articles (title, description, author, readTime, date, tag, type, youtubeId)
+         VALUES (?, ?, ?, ?, ?, ?, 'podcast', ?)`,
+        [podcast.title, podcast.description, podcast.author, podcast.readTime, podcast.date, podcast.tag, podcast.youtubeId]
+      );
     }
     console.log(`Seeded ${podcastsData.default.length} podcasts`);
 
@@ -104,12 +116,11 @@ export const dbOperations = {
   // Get all items by type
   getByType: async (type: 'article' | 'white-paper' | 'podcast') => {
     try {
-      const sql = getDb();
-      const rows = await sql`
-        SELECT * FROM articles 
-        WHERE type = ${type} 
-        ORDER BY date DESC
-      `;
+      const db = getDb();
+      const [rows] = await db.execute(
+        'SELECT * FROM articles WHERE type = ? ORDER BY date DESC',
+        [type]
+      );
       return rows;
     } catch (error) {
       console.error('Error fetching by type:', error);
@@ -120,12 +131,12 @@ export const dbOperations = {
   // Get single item by ID
   getById: async (id: number) => {
     try {
-      const sql = getDb();
-      const rows = await sql`
-        SELECT * FROM articles 
-        WHERE id = ${id}
-      `;
-      return rows[0] || null;
+      const db = getDb();
+      const [rows] = await db.execute(
+        'SELECT * FROM articles WHERE id = ?',
+        [id]
+      );
+      return (rows as any[])[0] || null;
     } catch (error) {
       console.error('Error fetching by ID:', error);
       throw error;
@@ -144,15 +155,24 @@ export const dbOperations = {
     youtubeId?: string;
   }) => {
     try {
-      const sql = getDb();
-      const rows = await sql`
-        INSERT INTO articles (title, description, author, readTime, date, tag, type, youtubeId)
-        VALUES (${data.title}, ${data.description}, ${data.author}, 
-                ${data.readTime || ''}, ${data.date}, ${data.tag || ''}, 
-                ${data.type}, ${data.youtubeId || null})
-        RETURNING *
-      `;
-      return rows[0];
+      const db = getDb();
+      const [result] = await db.execute(
+        `INSERT INTO articles (title, description, author, readTime, date, tag, type, youtubeId)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        [
+          data.title,
+          data.description,
+          data.author,
+          data.readTime || '',
+          data.date,
+          data.tag || '',
+          data.type,
+          data.youtubeId || null
+        ]
+      );
+      
+      const insertId = (result as any).insertId;
+      return await dbOperations.getById(insertId);
     } catch (error) {
       console.error('Error creating item:', error);
       throw error;
@@ -173,38 +193,38 @@ export const dbOperations = {
     }
   ) => {
     try {
-      const sql = getDb();
+      const db = getDb();
       
       // Build dynamic update query
       const updates: string[] = [];
       const values: any[] = [];
       
       if (data.title !== undefined) {
-        updates.push('title = $' + (values.length + 1));
+        updates.push('title = ?');
         values.push(data.title);
       }
       if (data.description !== undefined) {
-        updates.push('description = $' + (values.length + 1));
+        updates.push('description = ?');
         values.push(data.description);
       }
       if (data.author !== undefined) {
-        updates.push('author = $' + (values.length + 1));
+        updates.push('author = ?');
         values.push(data.author);
       }
       if (data.readTime !== undefined) {
-        updates.push('readTime = $' + (values.length + 1));
+        updates.push('readTime = ?');
         values.push(data.readTime);
       }
       if (data.date !== undefined) {
-        updates.push('date = $' + (values.length + 1));
+        updates.push('date = ?');
         values.push(data.date);
       }
       if (data.tag !== undefined) {
-        updates.push('tag = $' + (values.length + 1));
+        updates.push('tag = ?');
         values.push(data.tag);
       }
       if (data.youtubeId !== undefined) {
-        updates.push('youtubeId = $' + (values.length + 1));
+        updates.push('youtubeId = ?');
         values.push(data.youtubeId);
       }
 
@@ -212,19 +232,12 @@ export const dbOperations = {
         return await dbOperations.getById(id);
       }
 
-      updates.push('updatedAt = CURRENT_TIMESTAMP');
       values.push(id);
 
-      const query = `
-        UPDATE articles 
-        SET ${updates.join(', ')}
-        WHERE id = $${values.length}
-        RETURNING *
-      `;
-
-      // Use raw query for dynamic updates
-      const rows = await sql(query, values);
-      return rows[0] || null;
+      const query = `UPDATE articles SET ${updates.join(', ')} WHERE id = ?`;
+      await db.execute(query, values);
+      
+      return await dbOperations.getById(id);
     } catch (error) {
       console.error('Error updating item:', error);
       throw error;
@@ -234,12 +247,12 @@ export const dbOperations = {
   // Delete item
   delete: async (id: number) => {
     try {
-      const sql = getDb();
-      const result = await sql`
-        DELETE FROM articles 
-        WHERE id = ${id}
-      `;
-      return result.length > 0 || result.count > 0;
+      const db = getDb();
+      const [result] = await db.execute(
+        'DELETE FROM articles WHERE id = ?',
+        [id]
+      );
+      return (result as any).affectedRows > 0;
     } catch (error) {
       console.error('Error deleting item:', error);
       throw error;
@@ -249,19 +262,17 @@ export const dbOperations = {
   // Get all items (for homepage)
   getAll: async (limit?: number) => {
     try {
-      const sql = getDb();
+      const db = getDb();
       if (limit) {
-        const rows = await sql`
-          SELECT * FROM articles 
-          ORDER BY date DESC 
-          LIMIT ${limit}
-        `;
+        const [rows] = await db.execute(
+          'SELECT * FROM articles ORDER BY date DESC LIMIT ?',
+          [limit]
+        );
         return rows;
       } else {
-        const rows = await sql`
-          SELECT * FROM articles 
-          ORDER BY date DESC
-        `;
+        const [rows] = await db.execute(
+          'SELECT * FROM articles ORDER BY date DESC'
+        );
         return rows;
       }
     } catch (error) {
@@ -273,12 +284,11 @@ export const dbOperations = {
   // Get latest items for homepage
   getLatest: async (limit: number = 6) => {
     try {
-      const sql = getDb();
-      const rows = await sql`
-        SELECT * FROM articles 
-        ORDER BY date DESC 
-        LIMIT ${limit}
-      `;
+      const db = getDb();
+      const [rows] = await db.execute(
+        'SELECT * FROM articles ORDER BY date DESC LIMIT ?',
+        [limit]
+      );
       return rows;
     } catch (error) {
       console.error('Error fetching latest items:', error);

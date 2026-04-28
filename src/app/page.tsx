@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, Suspense, lazy } from 'react';
 import LoadingScreen from '@/components/loading-screen';
-import ScrollProgress from '@/components/scroll-progress';
 import Navigation from '@/components/navigation';
 import Hero from '@/components/hero';
 
@@ -38,7 +37,6 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col">
       <LoadingScreen isVisible={isLoading} />
-      <ScrollProgress />
       <Navigation />
       <main className="flex-1 pb-4">
         <Hero />
